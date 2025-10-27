@@ -1,0 +1,1481 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gerbang Silam - Sejarah Indonesia</title>
+<link rel="icon" type="image/x-icon" href="logogs.ico">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  font-family: 'Poppins', sans-serif;
+
+  /* Background full layar */
+  background: 
+    linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), /* overlay gelap */
+    url('penjajahan.jpg') center/cover no-repeat;
+  background-attachment: fixed;
+  color: #fff;
+}
+
+/* CORAK VINTAGE INDONESIA */
+.colonial-pattern {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(circle at 20% 30%, rgba(120, 60, 20, 0.05) 2%, transparent 10%),
+    radial-gradient(circle at 80% 70%, rgba(120, 60, 20, 0.05) 2%, transparent 10%);
+  z-index: -1;
+}
+
+
+
+/* HEADER DI ATAS KIRI */
+#hud {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 10;
+}
+
+#location {
+  background: rgba(0, 0, 0, 0.9);
+  padding: 15px 25px;
+  border-radius: 25px;
+  color: #cf1717;
+  font-weight: 700;
+  font-size: 1.1rem;
+  backdrop-filter: blur(15px);
+  box-shadow: 0 8px 30px rgba(177, 132, 132, 0.6);
+  text-align: center;
+  letter-spacing: 1px;
+  max-width: 300px;
+  border: 2px solid #560c0c;
+}
+
+/* PROGRESS INDICATOR DI ATAS KANAN */
+.progress-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(40, 35, 32, 0.9);
+  padding: 15px 20px;
+  border-radius: 25px;
+  backdrop-filter: blur(15px);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #d4af37;
+  font-size: 0.9rem;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+  z-index: 10;
+  max-width: 220px;
+  border: 2px solid #171411;
+}
+
+.progress-bar {
+  width: 100px;
+  height: 8px;
+  background: rgba(122, 97, 82, 0.9);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #d4af37, #b8945f, #9b7b4f);
+  border-radius: 4px;
+  transition: width 0.5s ease;
+  width: 0%;
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-fill::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+/* ARTEFAK DENGAN EFEK GUA DAN TEPI BLUR HALUS */
+.artifacts-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* Setiap artefak hanya berupa gambar bercahaya */
+.artifact {
+  position: absolute;
+  cursor: pointer;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  overflow: visible;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.4s ease, filter 0.4s ease;
+  animation: float 6s infinite ease-in-out alternate;
+  z-index: 5;
+  filter: drop-shadow(0 0 15px rgba(255, 210, 120, 0.4));
+}
+
+.artifact:hover {
+  transform: scale(1.2) rotate(4deg);
+  filter: drop-shadow(0 0 25px rgba(255, 220, 150, 0.8));
+  z-index: 10;
+}
+
+/* Efek lembut di sekitar gambar, seolah ada kabut gua */
+.artifact::before {
+  content: "";
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  top: -50%;
+  left: -50%;
+  background: radial-gradient(circle, rgba(255, 220, 150, 0.25), transparent 70%);
+  filter: blur(25px);
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+}
+
+.artifact:hover::before {
+  opacity: 1;
+}
+
+/* Gambar utama */
+.artifact img {
+  width: 130%;
+  height: 130%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px rgba(255, 240, 200, 0.3))
+          blur(1.5px);
+  border-radius: 50%;
+  position: relative;
+  z-index: 2;
+}
+
+@keyframes float {
+  from { transform: translateY(0px) rotate(-1deg); }
+  to { transform: translateY(-15px) rotate(1deg); }
+}
+
+/* PETUNJUK UNLOCK LEVEL */
+.unlock-hint {
+  position: absolute;
+  bottom: 140px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(40, 25, 15, 0.95);
+  padding: 20px 35px;
+  border-radius: 25px;
+  color: #d4af37;
+  text-align: center;
+  backdrop-filter: blur(15px);
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.7);
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 0.5s;
+  border: 2px solid #171411;
+}
+
+.unlock-hint.show {
+  opacity: 1;
+}
+
+.unlock-hint i {
+  color: #d4af37;
+  margin-right: 10px;
+  font-size: 1.2rem;
+}
+
+/* QUIZ STYLES */
+#quiz {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 500px;
+  background: rgba(35, 20, 10, 0.95);
+  border-radius: 25px;
+  padding: 35px;
+  text-align: center;
+  color: #d4af37;
+  backdrop-filter: blur(25px);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8);
+  z-index: 100;
+  animation: popupAppear 0.4s ease-out;
+  border: 2px solid #171411;
+}
+
+.quiz-question {
+  font-size: 1.3rem;
+  margin-bottom: 25px;
+  color: #d4af37;
+  font-weight: 600;
+}
+
+.quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 25px;
+}
+
+.quiz-option {
+  background: rgba(40, 35, 32, 0.9);
+  padding: 15px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: left;
+  border: 2px solid transparent;
+  color: #d4af37;
+}
+
+.quiz-option:hover {
+  background: rgba(80, 50, 25, 0.8);
+  transform: translateY(-2px);
+}
+
+.quiz-option.correct {
+  background: rgba(76, 175, 80, 0.3);
+  border-color: #4caf50;
+}
+
+.quiz-option.incorrect {
+  background: rgba(244, 67, 54, 0.3);
+  border-color: #f44336;
+}
+
+.quiz-result {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 12px;
+  font-weight: 600;
+  display: none;
+}
+
+.quiz-result.success {
+  background: rgba(76, 175, 80, 0.3);
+  color: #c8e6c9;
+  display: block;
+}
+
+.quiz-result.error {
+  background: rgba(244, 67, 54, 0.3);
+  color: #ffcdd2;
+  display: block;
+}
+
+/* POPUP INFORMASI YANG DIPERBAIKI */
+#popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 850px;
+  max-height: 85vh;
+  background: rgba(78, 20, 20, 0.95);
+  border-radius: 25px;
+  padding: 0;
+  color: #d4af37;
+  backdrop-filter: blur(25px);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8);
+  z-index: 100;
+  animation: popupAppear 0.4s ease-out;
+  border: 2px solid #171411;
+  overflow: hidden;
+}
+
+.popup-content {
+  display: flex;
+  height: 100%;
+}
+
+.popup-left {
+  flex: 1;
+  padding: 35px;
+  overflow-y: auto;
+  max-height: 75vh;
+}
+
+.popup-right {
+  flex: 0 0 35%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  background: rgba(78, 20, 20, 0.95);
+  border-left: 2px solid #171411;
+}
+
+@keyframes popupAppear {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+#popup h2 {
+  color: #d4af37;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+
+#popupImg {
+  width: 100%;
+  max-width: 250px;
+  height: auto;
+  object-fit: contain;
+  border-radius: 15px;
+  background: rgba(29, 22, 17, 0.8);
+  padding: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  margin-bottom: 20px;
+  border: 2px solid #171411;
+}
+
+.article-content {
+  line-height: 1.7;
+  color: #e6d5b8;
+  font-size: 1.05rem;
+  text-align: justify;
+}
+
+.article-content p {
+  margin-bottom: 20px;
+}
+
+.article-content h3 {
+  color: #d4af37;
+  margin: 25px 0 15px;
+  font-size: 1.3rem;
+  border-bottom: 1px solid #171411;
+  padding-bottom: 5px;
+}
+
+.article-content ul {
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
+
+.article-content li {
+  margin-bottom: 8px;
+  position: relative;
+  padding-left: 10px;
+}
+
+.article-content li:before {
+  content: "•";
+  color: #d4af37;
+  position: absolute;
+  left: -15px;
+}
+
+.popup-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 25px;
+  flex-wrap: wrap;
+}
+
+#popupLink {
+  color: #d4af37;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(40, 35, 32, 0.9);
+  padding: 12px 20px;
+  border-radius: 12px;
+  margin-top: 10px;
+  border: 2px solid #171411;
+}
+
+#popupLink:hover {
+  color: #ffb347;
+  background: rgba(80, 50, 25, 0.8);
+}
+
+/* TOMBOL */
+.btn {
+  background: linear-gradient(135deg, #9b5a2a 0%, #7a451f 100%);
+  border: 2px solid #171411;
+  padding: 16px 32px;
+  color: #fff;
+  border-radius: 15px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1.05rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(135deg, #b06a32 0%, #8b5124 100%);
+}
+
+.btn:hover::before {
+  left: 100%;
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #b8945f 0%, #9b7b4f 100%);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #c8a86f 0%, #ad8a57 100%);
+}
+
+/* TOMBOL KEMBALI */
+#backBtn {
+  display: none;
+  position: fixed;
+  bottom: 35px;
+  right: 35px;
+  z-index: 50;
+  padding: 18px 32px;
+  font-size: 1.1rem;
+  background: linear-gradient(135deg, #2d6a4f 0%, #1b4332 100%);
+  border: 2px solid #1b4332;
+}
+
+#backBtn:hover {
+  background: linear-gradient(135deg, #40916c 0%, #2d6a4f 100%);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  #hud {
+    left: 10px;
+    top: 10px;
+  }
+  
+  #location {
+    font-size: 1rem;
+    padding: 12px 20px;
+    max-width: 250px;
+  }
+  
+  .progress-container {
+    right: 10px;
+    top: 10px;
+    padding: 12px 15px;
+    max-width: 180px;
+  }
+  
+  .progress-bar {
+    width: 80px;
+  }
+  
+  .artifact {
+    width: 80px;
+    height: 80px;
+  }
+  
+  #popup, #quiz {
+    width: 95%;
+    padding: 25px;
+  }
+  
+  .wall-left, .wall-right {
+    width: 100px;
+  }
+  
+  .popup-content {
+    flex-direction: column-reverse;
+  }
+  
+  .popup-right {
+    border-left: none;
+    border-top: 2px solid #000000;
+    padding: 20px;
+  }
+  
+  .popup-left {
+    padding: 25px;
+  }
+  
+  #popup {
+    max-height: 90vh;
+  }
+}
+
+/* ANIMASI UNTUK PETUNJUK LEVEL */
+@keyframes pulseHint {
+  0% { transform: translateX(-50%) scale(1); }
+  50% { transform: translateX(-50%) scale(1.05); }
+  100% { transform: translateX(-50%) scale(1); }
+}
+
+.unlock-hint.show {
+  animation: pulseHint 2s infinite;
+}
+
+/* AUDIO CONTROLS */
+.audio-controls {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 100;
+  display: flex;
+  gap: 10px;
+}
+
+.audio-btn {
+  background: rgba(40, 25, 15, 0.9);
+  border: 2px solid #171411;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  color: #d4af37;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+}
+
+.audio-btn:hover {
+  transform: scale(1.1);
+  background: rgba(50, 30, 15, 0.9);
+}
+
+/* OVERLAY BENDERA */
+.flag-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    linear-gradient(180deg, 
+      rgba(255, 0, 0, 0.03) 0%, 
+      rgba(255, 0, 0, 0.03) 50%, 
+      rgba(255, 255, 255, 0.03) 50%, 
+      rgba(255, 255, 255, 0.03) 100%);
+  z-index: -1;
+  opacity: 0.2;
+}
+</style>
+</head>
+<body>
+
+<!-- BACKGROUND PENJAJAHAN INDONESIA -->
+<div class="colonial-bg"></div>
+<div class="colonial-pattern"></div>
+<div class="wall-left"></div>
+<div class="wall-right"></div>
+<div class="flag-overlay"></div>
+
+<!-- HUD DI KIRI ATAS -->
+<div id="hud">
+  <div id="location">Masa Penjajahan Indonesia</div>
+</div>
+
+<!-- PROGRESS INDICATOR DI KANAN ATAS -->
+<div class="progress-container">
+  <i class="fas fa-scroll"></i>
+  <span>Penemuan:</span>
+  <div class="progress-bar">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+  <span id="progressText">0/7</span>
+</div>
+
+<!-- PETUNJUK UNLOCK LEVEL -->
+<div class="unlock-hint" id="unlockHint">
+  <i class="fas fa-lock-open"></i> 
+  <strong>Pengetahuan Meningkat!</strong> Baca juga artikel Masa Kemerdekaan
+</div>
+
+<!-- QUIZ CONTAINER -->
+<div id="quiz">
+  <h2><i class="fas fa-brain"></i> Quiz Penjajahan Indonesia</h2>
+  <p class="quiz-question" id="quizQuestion">Memuat pertanyaan...</p>
+  
+  <div class="quiz-options" id="quizOptions">
+    <!-- Opsi jawaban akan diisi oleh JavaScript -->
+  </div>
+  
+  <div class="quiz-result" id="quizResult"></div>
+  
+  <div class="popup-buttons">
+    <button id="nextQuizBtn" class="btn" style="display:none;">
+      <i class="fas fa-arrow-right"></i> Pertanyaan Berikutnya
+    </button>
+    <button id="finishQuizBtn" class="btn btn-primary" style="display:none;">
+      <i class="fas fa-trophy"></i> Selesaikan Quiz
+    </button>
+  </div>
+</div>
+
+<!-- ARTEFAK PENJAJAHAN INDONESIA -->
+<div class="artifacts-container">
+  <div class="artifact" style="top:20%;left:15%;" data-title="VOC Belanda" data-desc="Vereenigde Oostindische Compagnie (VOC) adalah perusahaan dagang Belanda yang memonopoli perdagangan rempah-rempah di Indonesia sejak 1602. VOC memiliki hak istimewa termasuk mencetak uang dan memiliki tentara." data-link="https://id.wikipedia.org/wiki/Vereenigde_Oostindische_Compagnie">
+    <div class="artifact-bg"></div>
+    <img src="voc.png" alt="VOC Belanda" loading="lazy">
+  </div>
+  
+  <div class="artifact" style="top:60%;left:20%;" data-title="Pangeran Diponegoro" data-desc="Pahlawan nasional yang memimpin Perang Jawa (1825-1830) melawan Belanda. Perang ini merupakan salah satu perlawanan terbesar dalam sejarah penjajahan Belanda di Indonesia." data-link="https://id.wikipedia.org/wiki/Diponegoro">
+    <div class="artifact-bg"></div>
+    <img src="Diponegoro.jpg" alt="Pangeran Diponegoro" loading="lazy">
+  </div>
+  
+  <div class="artifact" style="top:15%;left:45%;" data-title="Cut Nyak Dien" data-desc="Pahlawan nasional dari Aceh yang memimpin perlawanan terhadap Belanda dalam Perang Aceh. Ia terus berjuang meskipun suaminya Teuku Umar gugur dalam pertempuran." data-link="https://id.wikipedia.org/wiki/Cut_Nyak_Dhien">
+    <div class="artifact-bg"></div>
+    <img src="Cut_Nyak_Dien.jpg" alt="Cut Nyak Dien" loading="lazy">
+  </div>
+  
+  <div class="artifact" style="top:50%;left:50%;" data-title="Tanam Paksa" data-desc="Sistem Cultuurstelsel (1830-1870) yang memaksa rakyat menanam tanaman ekspor seperti kopi, tebu, dan nila. Kebijakan ini menyebabkan kelaparan dan penderitaan massal." data-link="https://id.wikipedia.org/wiki/Tanam_paksa">
+    <div class="artifact-bg"></div>
+    <img src="cultuurstelses.jpg" alt="Tanam Paksa" loading="lazy">
+  </div>
+  
+  <div class="artifact" style="top:30%;left:70%;" data-title="Perlawanan Rakyat" data-desc="Berbagai perlawanan rakyat Indonesia terhadap penjajah, seperti Perang Padri, Perang Banjar, Perang Aceh, dan perlawanan lainnya di berbagai daerah." data-link="https://www.ruangguru.com/blog/strategi-perlawanan-bangsa-indonesia-terhadap-penjajahan-belanda">
+    <div class="artifact-bg"></div>
+    <img src="imambonjol.jpg" alt="Perlawanan Rakyat" loading="lazy">
+  </div>
+  
+  <div class="artifact" style="top:65%;left:65%;" data-title="Penjajahan Jepang" data-desc="Jepang menjajah Indonesia dari 1942-1945. Masa penjajahan ini singkat namun sangat keras, dengan kebijakan romusha yang menyengsarakan rakyat." data-link="https://id.wikipedia.org/wiki/Pendudukan_Jepang_di_Indonesia">
+    <div class="artifact-bg"></div>
+    <img src="jepang.jpg" alt="Penjajahan Jepang" loading="lazy">
+  </div>
+  
+  <div class="artifact" style="top:45%;left:85%;" data-title="Kongres Pemuda" data-desc="Kongres Pemuda II (1928) melahirkan Sumpah Pemuda yang menjadi momentum penting persatuan bangsa Indonesia melawan penjajahan." data-link="https://www.detik.com/jatim/budaya/d-7004144/sejarah-kongres-pemuda-i-dan-ii">
+    <div class="artifact-bg"></div>
+    <img src="kongres.jpg" alt="Kongres Pemuda" loading="lazy">
+  </div>
+</div>
+
+<!-- POPUP INFORMASI YANG DIPERBAIKI -->
+<div id="popup">
+  <div class="popup-content">
+    <div class="popup-left">
+      <h2 id="popupTitle">Judul Artefak</h2>
+      <div class="article-content" id="popupDesc">
+        <!-- Konten artikel akan diisi oleh JavaScript -->
+      </div>
+      <div class="popup-buttons">
+        <a id="popupLink" target="_blank"><i class="fas fa-external-link-alt"></i> Baca artikel lebih lanjut</a>
+        <button id="closePopup" class="btn"><i class="fas fa-times"></i> Tutup</button>
+      </div>
+    </div>
+    <div class="popup-right">
+      <img id="popupImg" src="" alt="">
+    </div>
+  </div>
+</div>
+
+
+
+<!-- TOMBOL KEMBALI -->
+<button id="backBtn" class="btn"><i class="fas fa-arrow-left"></i> Kembali ke Gerbang Silam</button>
+
+<!-- AUDIO CONTROLS -->
+<div class="audio-controls">
+  <button id="bgMusicToggle" class="audio-btn">
+    <i class="fas fa-volume-up"></i>
+  </button>
+  <button id="sfxToggle" class="audio-btn">
+    <i class="fas fa-bell"></i>
+  </button>
+</div>
+
+<!-- AUDIO ELEMENTS - SAMA SEPERTI SEBELUMNYA -->
+<audio id="bgMusic" loop>
+  <source src="Musik Instrumental - Tanah Airku.mp3" type="audio/mpeg">
+</audio>
+<audio id="clickSound" preload="auto">
+  <source src="data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQQAAAAAAA==" type="audio/wav">
+</audio>
+<audio id="successSound" preload="auto">
+  <source src="data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQQAAAAAAA==" type="audio/wav">
+</audio>
+
+<script>
+// === SISTEM PROGRESS LEVEL ===
+const levelOrder = ['purba', 'kerajaan', 'penjajahan', 'kemerdekaan'];
+
+function getPlayerProgress() {
+  return JSON.parse(localStorage.getItem('playerProgress')) || { completedLevels: [], currentLevel: 'purba' };
+}
+
+function savePlayerProgress(progress) {
+  localStorage.setItem('playerProgress', JSON.stringify(progress));
+}
+
+function completeLevel(level) {
+  const progress = getPlayerProgress();
+  if (!progress.completedLevels.includes(level)) {
+    progress.completedLevels.push(level);
+    const currentIndex = levelOrder.indexOf(level);
+    if (currentIndex < levelOrder.length - 1) {
+      progress.currentLevel = levelOrder[currentIndex + 1];
+    }
+    savePlayerProgress(progress);
+    return true;
+  }
+  return false;
+}
+
+// CEK AKSES LEVEL PENJAJAHAN
+const progress = getPlayerProgress();
+if (!progress.completedLevels.includes('kerajaan')) {
+  alert('Anda harus menyelesaikan level Masa Kerajaan terlebih dahulu!');
+  window.location.href = 'kerajaan.html'; // atau index.html tergantung struktur
+}
+
+
+// === INISIALISASI ===
+document.addEventListener('DOMContentLoaded', function() {
+  // === VARIABEL ===
+  const artifacts = document.querySelectorAll('.artifact');
+  const popup = document.getElementById('popup');
+  const popupTitle = document.getElementById('popupTitle');
+  const popupImg = document.getElementById('popupImg');
+  const popupDesc = document.getElementById('popupDesc');
+  const popupLink = document.getElementById('popupLink');
+  const closePopup = document.getElementById('closePopup');
+  const backBtn = document.getElementById('backBtn');
+  const progressFill = document.getElementById('progressFill');
+  const progressText = document.getElementById('progressText');
+  const unlockHint = document.getElementById('unlockHint');
+  
+  // Audio elements - sama seperti sebelumnya
+  const bgMusic = document.getElementById('bgMusic');
+  const clickSound = document.getElementById('clickSound');
+  const successSound = document.getElementById('successSound');
+  const bgMusicToggle = document.getElementById('bgMusicToggle');
+  const sfxToggle = document.getElementById('sfxToggle');
+  
+  // Quiz elements
+  const quiz = document.getElementById('quiz');
+  const quizQuestion = document.getElementById('quizQuestion');
+  const quizOptions = document.getElementById('quizOptions');
+  const quizResult = document.getElementById('quizResult');
+  const nextQuizBtn = document.getElementById('nextQuizBtn');
+  const finishQuizBtn = document.getElementById('finishQuizBtn');
+  
+  let visited = new Set();
+  let allArtifactsRead = false;
+  let quizCompleted = false;
+  let currentQuestion = 0;
+  let score = 0;
+  let bgMusicEnabled = true;
+  let sfxEnabled = true;
+
+  // Data quiz penjajahan Indonesia
+  const quizData = [
+    {
+      question: "Perusahaan dagang Belanda yang menjajah Indonesia disebut?",
+      options: ["EIC", "VOC", "Portugis", "Spanyol"],
+      correct: 1
+    },
+    {
+      question: "Sistem tanam paksa yang menyengsarakan rakyat disebut?",
+      options: ["Romusha", "Cultuurstelsel", "Kerja Rodi", "Heren XVII"],
+      correct: 1
+    },
+    {
+      question: "Pahlawan dari Aceh yang terkenal melawan Belanda adalah?",
+      options: ["R.A. Kartini", "Dewi Sartika", "Cut Nyak Dien", "Martha Christina Tiahahu"],
+      correct: 2
+    }
+  ];
+
+  // === MULAI APLIKASI ===
+  function initApp() {
+    // Hapus status level completion setiap kali masuk
+    localStorage.removeItem('colonialLevelCompleted');
+    
+    // Preload gambar dengan lazy loading
+    preloadImages();
+    
+    // Update progress
+    updateProgress();
+    
+    // Setup audio controls
+    setupAudioControls();
+    
+    // Mulai background music setelah interaksi pertama
+    setupAudioInteraction();
+  }
+
+  // === SETUP AUDIO CONTROLS ===
+  function setupAudioControls() {
+    // Background music toggle
+    bgMusicToggle.addEventListener('click', () => {
+      bgMusicEnabled = !bgMusicEnabled;
+      if (bgMusicEnabled) {
+        bgMusic.play().catch(e => console.log("Autoplay prevented:", e));
+        bgMusicToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
+      } else {
+        bgMusic.pause();
+        bgMusicToggle.innerHTML = '<i class="fas fa-volume-mute"></i>';
+      }
+    });
+    
+    // Sound effects toggle
+    sfxToggle.addEventListener('click', () => {
+      sfxEnabled = !sfxEnabled;
+      if (sfxEnabled) {
+        sfxToggle.innerHTML = '<i class="fas fa-bell"></i>';
+      } else {
+        sfxToggle.innerHTML = '<i class="fas fa-bell-slash"></i>';
+      }
+    });
+  }
+
+  // === SETUP AUDIO INTERACTION ===
+  function setupAudioInteraction() {
+    // Set volume untuk semua audio
+    bgMusic.volume = 0.3;
+    
+    // Tunggu interaksi pertama untuk memulai audio
+    const startAudio = () => {
+      if (bgMusicEnabled) {
+        bgMusic.play().catch(e => console.log("Audio play error:", e));
+      }
+      
+      // Hapus event listeners setelah interaksi pertama
+      document.removeEventListener('click', startAudio);
+      document.removeEventListener('touchstart', startAudio);
+    };
+    
+    document.addEventListener('click', startAudio);
+    document.addEventListener('touchstart', startAudio);
+  }
+
+  // === PLAY SOUND EFFECT - SAMA SEPERTI SEBELUMNYA ===
+  function playSoundEffect(type) {
+    if (!sfxEnabled) return;
+    
+    try {
+      // Buat audio context untuk sound effect yang lebih andal
+      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+      
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+      
+      if (type === 'click') {
+        // Sound effect untuk klik - pendek dan tajam
+        oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+        oscillator.type = 'sine';
+        gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+        oscillator.start(audioContext.currentTime);
+        oscillator.stop(audioContext.currentTime + 0.1);
+      } else if (type === 'success') {
+        // Sound effect untuk sukses - lebih cerah
+        oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime); // C5
+        oscillator.frequency.setValueAtTime(659.25, audioContext.currentTime + 0.1); // E5
+        oscillator.frequency.setValueAtTime(783.99, audioContext.currentTime + 0.2); // G5
+        oscillator.type = 'sine';
+        gainNode.gain.setValueAtTime(0.4, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+        oscillator.start(audioContext.currentTime);
+        oscillator.stop(audioContext.currentTime + 0.5);
+      }
+    } catch (e) {
+      console.log("Web Audio API tidak didukung:", e);
+      // Fallback menggunakan HTML5 Audio
+      try {
+        const sound = type === 'click' ? clickSound : successSound;
+        const soundClone = sound.cloneNode();
+        soundClone.volume = 0.5;
+        soundClone.play().catch(err => console.log("Fallback audio error:", err));
+      } catch (fallbackError) {
+        console.log("Semua metode audio gagal");
+      }
+    }
+  }
+
+  // === PRELOAD IMAGES ===
+  function preloadImages() {
+    artifacts.forEach(artifact => {
+      const img = artifact.querySelector('img');
+      if (img.complete) {
+        artifact.classList.add('loaded');
+      } else {
+        img.addEventListener('load', () => {
+          artifact.classList.add('loaded');
+        });
+        img.addEventListener('error', () => {
+          console.warn('Gagal memuat gambar:', img.src);
+          // Placeholder jika gambar gagal dimuat
+          img.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjMjgxYTA4Ii8+CjxwYXRoIGQ9Ik01MCAyNVY3NU03NSA1MEgyNSIgc3Ryb2tlPSIjZDRhZjM3IiBzdHJva2Utd2lkdGg9IjgiLz4KPC9zdmc+';
+        });
+      }
+    });
+  }
+
+  // === UPDATE PROGRESS ===
+  function updateProgress() {
+    const progress = (visited.size / artifacts.length) * 100;
+    progressFill.style.width = `${progress}%`;
+    progressText.textContent = `${visited.size}/${artifacts.length}`;
+    
+    // Jika semua artefak sudah dikunjungi
+    if (visited.size === artifacts.length && !allArtifactsRead) {
+      allArtifactsRead = true;
+      showUnlockHint();
+    }
+  }
+
+  // === TAMPILKAN PETUNJUK UNLOCK LEVEL ===
+  function showUnlockHint() {
+    unlockHint.classList.add('show');
+    playSoundEffect('success');
+    
+    // Setelah 3 detik, tampilkan quiz
+    setTimeout(() => {
+      unlockHint.classList.remove('show');
+      startQuiz();
+    }, 3000);
+  }
+
+  // === MULAI QUIZ ===
+  function startQuiz() {
+    currentQuestion = 0;
+    score = 0;
+    quizCompleted = false;
+    showQuestion();
+    quiz.style.display = 'block';
+  }
+
+  // === TAMPILKAN PERTANYAAN QUIZ ===
+  function showQuestion() {
+    if (currentQuestion >= quizData.length) {
+      finishQuiz();
+      return;
+    }
+
+    const question = quizData[currentQuestion];
+    quizQuestion.textContent = question.question;
+    quizOptions.innerHTML = '';
+    quizResult.className = 'quiz-result';
+    quizResult.style.display = 'none';
+    nextQuizBtn.style.display = 'none';
+    finishQuizBtn.style.display = 'none';
+
+    question.options.forEach((option, index) => {
+      const optionElement = document.createElement('div');
+      optionElement.className = 'quiz-option';
+      optionElement.textContent = option;
+      optionElement.addEventListener('click', () => checkAnswer(index));
+      quizOptions.appendChild(optionElement);
+    });
+  }
+
+  // === CEK JAWABAN QUIZ ===
+  function checkAnswer(selectedIndex) {
+    const question = quizData[currentQuestion];
+    const options = quizOptions.querySelectorAll('.quiz-option');
+    
+    // Nonaktifkan semua opsi
+    options.forEach(option => {
+      option.style.pointerEvents = 'none';
+    });
+
+    // Tandai jawaban yang benar dan salah
+    options[question.correct].classList.add('correct');
+    if (selectedIndex !== question.correct) {
+      options[selectedIndex].classList.add('incorrect');
+    }
+
+    // Tampilkan hasil
+    if (selectedIndex === question.correct) {
+      score++;
+      quizResult.textContent = 'Benar! 🎉';
+      quizResult.className = 'quiz-result success';
+      playSoundEffect('success');
+    } else {
+      quizResult.textContent = 'Salah! Coba lagi.';
+      quizResult.className = 'quiz-result error';
+    }
+    quizResult.style.display = 'block';
+
+    // Tampilkan tombol berikutnya
+    if (currentQuestion < quizData.length - 1) {
+      nextQuizBtn.style.display = 'block';
+    } else {
+      finishQuizBtn.style.display = 'block';
+    }
+  }
+
+  // === PERTANYAAN BERIKUTNYA ===
+  nextQuizBtn.addEventListener('click', () => {
+    currentQuestion++;
+    showQuestion();
+  });
+
+  // === SELESAI QUIZ - GANTI DENGAN INI ===
+function finishQuiz() {
+  quizCompleted = true;
+  quiz.style.display = 'none';
+  
+  // Tampilkan tombol kembali
+  backBtn.style.display = 'block';
+  
+  // SIMPAN PROGRESS KE LOCALSTORAGE - INI YANG PENTING!
+  if (completeLevel('penjajahan')) {
+    console.log('Level penjajahan berhasil diselesaikan!');
+  }
+  
+  // Tampilkan hasil akhir
+  setTimeout(() => {
+    alert(`🎉 Quiz selesai! Skor Anda: ${score}/${quizData.length}\n\nLevel Masa Kemerdekaan sekarang terbuka!\n\nKlik tombol "Kembali ke Gerbang Silam" untuk melanjutkan.`);
+  }, 500);
+}
+  finishQuizBtn.addEventListener('click', finishQuiz);
+
+  // === INTERAKSI ARTEFAK - DIPERBAIKI ===
+  artifacts.forEach(artifact => {
+    artifact.addEventListener('click', () => {
+      const title = artifact.dataset.title;
+      const desc = artifact.dataset.desc;
+      const link = artifact.dataset.link;
+      const imgSrc = artifact.querySelector('img').src;
+      
+      // Play click sound effect
+      playSoundEffect('click');
+      
+      // Tampilkan popup
+      popupTitle.textContent = title;
+      popupImg.src = imgSrc;
+      popupLink.href = link;
+      
+      // Isi konten artikel berdasarkan artefak yang diklik
+      const articleContent = generateArticleContent(title, desc);
+      popupDesc.innerHTML = articleContent;
+      
+      popup.style.display = 'block';
+      
+      // Tambah ke daftar kunjungan jika belum
+      if (!visited.has(title)) {
+        visited.add(title);
+        updateProgress();
+      }
+    });
+  });
+
+  // === FUNGSI UNTUK MEMBUAT KONTEN ARTIKEL PANJANG ===
+  function generateArticleContent(title, baseDesc) {
+    // Artikel untuk setiap topik penjajahan
+    const articles = {
+      "VOC Belanda": `
+        <p>${baseDesc}</p>
+        
+        <h3>Sejarah Pendirian VOC</h3>
+        <p>Vereenigde Oostindische Compagnie (VOC) didirikan pada 20 Maret 1602 melalui penggabungan beberapa perusahaan dagang Belanda. VOC diberikan hak monopoli perdagangan di wilayah timur Tanjung Harapan dan hak untuk melakukan peperangan, membuat perjanjian, mendirikan benteng, dan mengadili.</p>
+        
+        <h3>Kekuasaan dan Monopoli</h3>
+        <p>VOC menerapkan sistem monopoli yang ketat terhadap perdagangan rempah-rempah seperti pala, cengkeh, dan lada. Mereka menggunakan berbagai cara untuk mempertahankan monopoli ini:</p>
+        <ul>
+          <li>Pelayaran Hongi untuk menghancurkan tanaman rempah di luar kontrol VOC</li>
+          <li>Sistem contingenten (pajak hasil bumi)</li>
+          <li>Verplichte leverantie (penyerahan wajib)</li>
+          <li>Preanger stelsel di Jawa Barat</li>
+        </ul>
+        
+        <h3>Pengaruh di Nusantara</h3>
+        <p>VOC mendirikan pusat-pusat kekuasaan di berbagai wilayah Nusantara:</p>
+        <ul>
+          <li>Batavia (Jakarta) sebagai pusat pemerintahan</li>
+          <li>Benteng-benteng di Ambon, Banda, Ternate, dan Makassar</li>
+          <li>Kantor dagang di berbagai pelabuhan penting</li>
+        </ul>
+        
+        <h3>Kebangkrutan dan Akhir VOC</h3>
+        <p>VOC mengalami kebangkrutan pada akhir abad ke-18 karena:</p>
+        <ul>
+          <li>Korupsi yang merajalela di kalangan pegawai VOC</li>
+          <li>Biaya perang yang besar untuk memadamkan perlawanan</li>
+          <li>Persaingan dengan Inggris dan negara Eropa lainnya</li>
+          <li>Perubahan politik di Eropa</li>
+        </ul>
+        <p>VOC akhirnya dibubarkan secara resmi pada 31 Desember 1799, dan wilayah-wilayahnya diambil alih oleh pemerintah Belanda.</p>
+      `,
+      
+      "Pangeran Diponegoro": `
+        <p>${baseDesc}</p>
+        
+        <h3>Latar Belakang Perlawanan</h3>
+        <p>Perang Diponegoro (1825-1830) merupakan perlawanan terbesar yang dihadapi Belanda di Jawa. Penyebab utama perang ini adalah:</p>
+        <ul>
+          <li>Kekecewaan Pangeran Diponegoro terhadap campur tangan Belanda dalam urusan internal keraton</li>
+          <li>Pembuatan jalan yang melintasi makam leluhur Diponegoro tanpa izin</li>
+          <li>Penderitaan rakyat akibat berbagai pajak dan kerja paksa</li>
+          <li>Penurunan martabat bangsawan Jawa di bawah pengaruh Belanda</li>
+        </ul>
+        
+        <h3>Strategi Perang Gerilya</h3>
+        <p>Pangeran Diponegoro menerapkan strategi perang gerilya yang efektif:</p>
+        <ul>
+          <li>Memanfaatkan medan yang sulit di Jawa Tengah dan Jawa Timur</li>
+          <li>Membangun basis-basis perlawanan di daerah pedalaman</li>
+          <li>Melakukan serangan mendadak dan menghindari pertempuran terbuka</li>
+          <li>Mendapat dukungan luas dari rakyat dan ulama</li>
+        </ul>
+        
+        <h3>Tokoh-Tokoh Pendukung</h3>
+        <p>Perang Diponegoro didukung oleh berbagai tokoh penting:</p>
+        <ul>
+          <li>Sentot Alibasya Prawirodirjo - Panglima perang yang handal</li>
+          <li>Kyai Mojo - Penasihat spiritual dan pemimpin agama</li>
+          <li>Pangeran Mangkubumi - Paman Diponegoro yang berpengalaman</li>
+          <li>Banyak bupati dan ulama di Jawa Tengah dan Jawa Timur</li>
+        </ul>
+        
+        <h3>Akhir Perang dan Pengkhianatan</h3>
+        <p>Perang berakhir dengan pengkhianatan Belanda. Pangeran Diponegoro diundang untuk berunding di Magelang pada 28 Maret 1830, namun kemudian ditangkap dan diasingkan ke Manado, kemudian dipindahkan ke Makassar hingga wafat pada 8 Januari 1855.</p>
+        
+        <h3>Warisan dan Pengakuan</h3>
+        <p>Pangeran Diponegoro diakui sebagai Pahlawan Nasional Indonesia. Perjuangannya menginspirasi generasi berikutnya dan menjadi simbol perlawanan terhadap penjajahan. Pada 2013, UNESCO menetapkan naskah otobiografi Diponegoro sebagai Memory of the World.</p>
+      `,
+      
+      "Cut Nyak Dien": `
+        <p>${baseDesc}</p>
+        
+        <h3>Latar Belakang dan Keluarga</h3>
+        <p>Cut Nyak Dien lahir pada 1848 di Lampadang, Kerajaan Aceh. Ia berasal dari keluarga bangsawan yang taat beragama. Pada usia muda, ia menikah dengan Teuku Cek Ibrahim Lamnga, yang gugur dalam pertempuran melawan Belanda.</p>
+        
+        <h3>Perjuangan Bersama Teuku Umar</h3>
+        <p>Setelah kematian suami pertamanya, Cut Nyak Dien menikah dengan Teuku Umar, seorang panglima perang yang terkenal. Bersama suami keduanya, ia melanjutkan perjuangan melawan Belanda dengan strategi yang lebih terorganisir.</p>
+        
+        <h3>Strategi Perang Gerilya</h3>
+        <p>Cut Nyak Dien dikenal dengan strategi perang gerilya yang cerdik:</p>
+        <ul>
+          <li>Memanfaatkan pengetahuan medan yang sulit di Aceh</li>
+          <li>Melakukan serangan mendadak terhadap pos-pos Belanda</li>
+          <li>Membangun jaringan perlawanan yang luas</li>
+          <li>Mempertahankan semangat juang pasukan meski dalam kondisi sulit</li>
+        </ul>
+        
+        <h3>Pengkhianatan dan Penangkapan</h3>
+        <p>Setelah Teuku Umar gugur dalam pertempuran pada 1899, Cut Nyak Dien terus melanjutkan perjuangan sendirian. Karena pengkhianatan salah satu pengikutnya, Pang Laot, posisinya diketahui Belanda. Ia ditangkap pada 1905 setelah bertahun-tahun memimpin perlawanan.</p>
+        
+        <h3>Pengasingan dan Akhir Hidup</h3>
+        <p>Setelah ditangkap, Cut Nyak Dien diasingkan ke Sumedang, Jawa Barat. Meskipun sudah tua dan hampir buta, ia tetap tegar dan menjadi sumber inspirasi bagi tahanan politik lainnya. Ia wafat pada 6 November 1908 dan dimakamkan di Sumedang.</p>
+        
+        <h3>Warisan dan Pengakuan</h3>
+        <p>Cut Nyak Dien ditetapkan sebagai Pahlawan Nasional Indonesia pada 1964. Kisah perjuangannya menjadi simbol keteguhan hati dan keberanian wanita Indonesia melawan penjajahan. Namanya diabadikan dalam berbagai bentuk, termasuk jalan, universitas, dan karya seni.</p>
+      `,
+      
+      "Tanam Paksa": `
+        <p>${baseDesc}</p>
+        
+        <h3>Latar Belakang Cultuurstelsel</h3>
+        <p>Sistem Tanam Paksa (Cultuurstelsel) diperkenalkan oleh Gubernur Jenderal Johannes van den Bosch pada 1830. Sistem ini dibuat untuk mengisi kas Belanda yang kosong setelah Perang Diponegoro dan Perang Belgia.</p>
+        
+        <h3>Ketentuan Sistem Tanam Paksa</h3>
+        <p>Sistem ini mewajibkan petani menanam tanaman ekspor dengan ketentuan:</p>
+        <ul>
+          <li>Menyediakan 1/5 tanahnya untuk tanaman ekspor</li>
+          <li>Pekerjaan untuk tanaman ekspor tidak melebihi pekerjaan untuk tanaman pangan</li>
+          <li>Kelebihan hasil panen akan dikembalikan kepada petani</li>
+          <li>Kegagalan panen menjadi tanggung jawab pemerintah</li>
+          <li>Pekerjaan dilakukan di bawah pengawasan kepala desa</li>
+        </ul>
+        
+        <h3>Penyimpangan dalam Pelaksanaan</h3>
+        <p>Dalam praktiknya, terjadi banyak penyimpangan:</p>
+        <ul>
+          <li>Tanah yang disediakan sering lebih dari 1/5</li>
+          <li>Waktu kerja untuk tanaman ekspor melebihi tanaman pangan</li>
+          <li>Kelebihan hasil tidak dikembalikan kepada petani</li>
+          <li>Kegagalan panen tetap menjadi beban petani</li>
+          <li>Pekerjaan dilakukan dengan paksaan dan kekerasan</li>
+        </ul>
+        
+        <h3>Dampak terhadap Rakyat Indonesia</h3>
+        <p>Sistem Tanam Paksa menyebabkan penderitaan besar:</p>
+        <ul>
+          <li>Kelaparan dan kemiskinan yang meluas</li>
+          <li>Penyakit dan kematian akibat kerja berat</li>
+          <li>Penurunan produksi pangan</li>
+          <li>Migrasi penduduk untuk menghindari tanam paksa</li>
+          <li>Kerusakan lingkungan akibat monokultur</li>
+        </ul>
+        
+        <h3>Peran Para Penentang</h3>
+        <p>Beberapa tokoh Belanda menentang sistem ini:</p>
+        <ul>
+          <li>Eduard Douwes Dekker (Multatuli) melalui buku Max Havelaar</li>
+          <li>Baron van Hoëvell melalui kritik di parlemen Belanda</li>
+          <li>Kelompok liberal yang menginginkan perdagangan bebas</li>
+        </ul>
+        
+        <h3>Akhir Sistem Tanam Paksa</h3>
+        <p>Tekanan dari berbagai pihak menyebabkan sistem Tanam Paksa secara bertahap dihapuskan antara 1870-1919. Sistem ini digantikan oleh Politik Pintu Terbuka yang memberikan kesempatan kepada pengusaha swasta untuk menanamkan modal di Indonesia.</p>
+      `,
+      
+      "Perlawanan Rakyat": `
+        <p>${baseDesc}</p>
+        
+        <h3>Berbagai Bentuk Perlawanan</h3>
+        <p>Rakyat Indonesia melakukan berbagai bentuk perlawanan terhadap penjajahan:</p>
+        <ul>
+          <li><strong>Perang Fisik</strong> - Perlawanan bersenjata melawan penjajah</li>
+          <li><strong>Perlawanan Politik</strong> - Melalui organisasi dan diplomasi</li>
+          <li><strong>Perlawanan Budaya</strong> - Mempertahankan tradisi dan identitas</li>
+          <li><strong>Perlawanan Ekonomi</strong> - Boikot dan kemandirian ekonomi</li>
+        </ul>
+        
+        <h3>Perlawanan Regional Terkenal</h3>
+        <p>Beberapa perlawanan regional yang penting:</p>
+        <ul>
+          <li><strong>Perang Padri (1803-1838)</strong> - Dipimpin Tuanku Imam Bonjol di Minangkabau</li>
+          <li><strong>Perang Banjar (1859-1905)</strong> - Dipimpin Pangeran Antasari di Kalimantan</li>
+          <li><strong>Perang Aceh (1873-1904)</strong> - Perlawanan terpanjang melawan Belanda</li>
+          <li><strong>Perang Bali (1846-1908)</strong> - Perlawanan kerajaan-kerajaan Bali</li>
+          <li><strong>Perang Sisingamangaraja (1878-1907)</strong> - Dipimpin Sisingamangaraja XII di Batak</li>
+        </ul>
+        
+        <h3>Strategi Perlawanan</h3>
+        <p>Rakyat Indonesia mengembangkan berbagai strategi perlawanan:</p>
+        <ul>
+          <li>Perang gerilya dan taktik hit-and-run</li>
+          <li>Pemanfaatan medan yang sulit dan pengetahuan lokal</li>
+          <li>Pembentukan aliansi antar kerajaan dan suku</li>
+          <li>Penggunaan senjata tradisional yang dimodifikasi</li>
+          <li>Perlawanan melalui media dan karya sastra</li>
+        </ul>
+        
+        <h3>Faktor Penghambat Perlawanan</h3>
+        <p>Beberapa faktor yang menghambat perlawanan rakyat:</p>
+        <ul>
+          <li>Persenjataan yang tidak seimbang</li>
+          <li>Politik divide et impera (adu domba) Belanda</li>
+          <li>Kurangnya koordinasi antar daerah</li>
+          <li>Pengkhianatan dari dalam</li>
+          <li>Keterbatasan sumber daya dan logistik</li>
+        </ul>
+        
+        <h3>Warisan Perlawanan</h3>
+        <p>Meskipun banyak perlawanan fisik berakhir dengan kekalahan, semangat perlawanan ini tidak pernah padam. Perlawanan rakyat menjadi fondasi bagi pergerakan nasional Indonesia dan akhirnya mencapai kemerdekaan pada 1945.</p>
+      `,
+      
+      "Penjajahan Jepang": `
+        <p>${baseDesc}</p>
+        
+        <h3>Kedatangan Jepang ke Indonesia</h3>
+        <p>Jepang mendarat di Indonesia pada awal 1942 dan dalam waktu singkat berhasil mengusir Belanda. Kedatangan Jepang awalnya disambut baik oleh rakyat Indonesia karena dianggap sebagai "saudara tua" Asia yang akan membebaskan dari penjajahan Barat.</p>
+        
+        <h3>Kebijakan Jepang di Indonesia</h3>
+        <p>Jepang menerapkan berbagai kebijakan selama pendudukannya:</p>
+        <ul>
+          <li><strong>Romusha</strong> - Kerja paksa untuk proyek-proyek militer</li>
+          <li><strong>Kinrohosi</strong> - Kerja bakti tanpa upah</li>
+          <li><strong>Heiho</strong> - Pembantu tentara Jepang</li>
+          <li><strong>PETA</strong> - Pembela Tanah Air, tentara sukarela Indonesia</li>
+          <li><strong>Jawa Hokokai</strong> - Organisasi massa untuk mendukung Jepang</li>
+        </ul>
+        
+        <h3>Penderitaan Rakyat</h3>
+        <p>Masa pendudukan Jepang membawa penderitaan besar:</p>
+        <ul>
+          <li>Kelaparan akibat penjarahan hasil bumi untuk perang</li>
+          <li>Kematian massal romusha di proyek-proyek militer</li>
+          <li>Penyiksaan dan hukuman mati tanpa pengadilan</li>
+          <li>Penindasan kebebasan berpendapat dan berkumpul</li>
+          <li>Eksploitasi sumber daya alam secara besar-besaran</li>
+        </ul>
+        
+        <h3>Dampak Positif Tak Terduga</h3>
+        <p>Meskipun keras, pendudukan Jepang membawa beberapa dampak positif tak terduga:</p>
+        <ul>
+          <li>Pelatihan militer bagi pemuda Indonesia melalui PETA</li>
+          <li>Penggunaan bahasa Indonesia dalam administrasi</li>
+          <li>Kesempatan bagi tokoh nasionalis untuk berorganisasi</li>
+          <li>Melemahnya pengaruh Belanda dan Eropa</li>
+          <li>Persiapan kemerdekaan melalui BPUPKI dan PPKI</li>
+        </ul>
+        
+        <h3>Akhir Pendudukan Jepang</h3>
+        <p>Pendudukan Jepang berakhir setelah bom atom dijatuhkan di Hiroshima dan Nagasaki pada Agustus 1945. Kekosongan kekuasaan ini dimanfaatkan oleh para tokoh Indonesia untuk memproklamasikan kemerdekaan pada 17 Agustus 1945.</p>
+      `,
+      
+      "Kongres Pemuda": `
+        <p>${baseDesc}</p>
+        
+        <h3>Latar Belakang Kongres Pemuda</h3>
+        <p>Kongres Pemuda II dilaksanakan pada 27-28 Oktober 1928 di Jakarta. Kongres ini merupakan puncak dari pergerakan pemuda Indonesia yang telah dimulai sejak awal abad ke-20 melalui berbagai organisasi pemuda daerah.</p>
+        
+        <h3>Organisasi Peserta Kongres</h3>
+        <p>Kongres dihadiri oleh perwakilan dari berbagai organisasi pemuda:</p>
+        <ul>
+          <li>Jong Java (Pemuda Jawa)</li>
+          <li>Jong Sumatranen Bond (Pemuda Sumatra)</li>
+          <li>Jong Ambon (Pemuda Ambon)</li>
+          <li>Jong Celebes (Pemuda Sulawesi)</li>
+          <li>Jong Batak (Pemuda Batak)</li>
+          <li>Perhimpunan Pelajar-Pelajar Indonesia (PPPI)</li>
+          <li>Dan organisasi pemuda lainnya</li>
+        </ul>
+        
+        <h3>Tokoh-Tokoh Penting Kongres</h3>
+        <p>Beberapa tokoh penting dalam Kongres Pemuda II:</p>
+        <ul>
+          <li>Sugondo Djojopuspito (Ketua PPPI) sebagai ketua kongres</li>
+          <li>Muhammad Yamin sebagai sekretaris</li>
+          <li>W.R. Supratman yang memainkan lagu Indonesia Raya</li>
+          <li>Soegondo Djojopuspito, Amir Sjarifuddin, dan tokoh lainnya</li>
+        </ul>
+        
+        <h3>Isi Sumpah Pemuda</h3>
+        <p>Kongres menghasilkan Sumpah Pemuda yang berisi tiga ikrar:</p>
+        <ul>
+          <li><strong>Pertama:</strong> Kami putra dan putri Indonesia, mengaku bertumpah darah yang satu, tanah Indonesia.</li>
+          <li><strong>Kedua:</strong> Kami putra dan putri Indonesia, mengaku berbangsa yang satu, bangsa Indonesia.</li>
+          <li><strong>Ketiga:</strong> Kami putra dan putri Indonesia, menjunjung bahasa persatuan, bahasa Indonesia.</li>
+        </ul>
+        
+        <h3>Signifikansi Historis</h3>
+        <p>Kongres Pemuda II memiliki arti penting dalam sejarah Indonesia:</p>
+        <ul>
+          <li>Pertama kalinya lagu Indonesia Raya dikumandangkan</li>
+          <li>Pengakuan bahasa Indonesia sebagai bahasa persatuan</li>
+          <li>Penegasan konsep bangsa Indonesia yang melampaui identitas kesukuan</li>
+          <li>Awal dari pergerakan nasional yang terpadu</li>
+          <li>Inspirasi bagi perjuangan kemerdekaan selanjutnya</li>
+        </ul>
+        
+        <h3>Warisan dan Peringatan</h3>
+        <p>Sumpah Pemuda diperingati setiap tahun pada 28 Oktober. Nilai-nilai Sumpah Pemuda tetap relevan hingga sekarang sebagai pengingat pentingnya persatuan dalam keberagaman. Museum Sumpah Pemuda di Jakarta menjaga warisan sejarah ini untuk generasi mendatang.</p>
+      `
+    };
+    
+    // Kembalikan artikel yang sesuai atau artikel default
+    return articles[title] || `
+      <p>${baseDesc}</p>
+      
+      <h3>Signifikansi Sejarah</h3>
+      <p>Peristiwa ini memiliki arti penting dalam perjalanan sejarah Indonesia melawan penjajahan dan memperjuangkan kemerdekaan.</p>
+      
+      <h3>Warisan Perjuangan</h3>
+      <p>Perjuangan melawan penjajahan meninggalkan warisan nilai-nilai kepahlawanan, persatuan, dan semangat pantang menyerah yang terus menginspirasi generasi penerus bangsa.</p>
+    `;
+  }
+
+  // === TUTUP POPUP ===
+  closePopup.addEventListener('click', () => {
+    popup.style.display = 'none';
+  });
+
+  // === KEMBALI KE LOBI ===
+  backBtn.addEventListener('click', () => {
+    // Hanya bisa kembali jika quiz sudah selesai
+    if (quizCompleted) {
+      // Animasi keluar sebelum kembali
+      document.body.style.opacity = '0';
+      document.body.style.transition = 'opacity 0.5s ease';
+      
+      setTimeout(() => {
+        window.location.href = 'index.html';
+      }, 500);
+    } else {
+      alert('Selesaikan quiz terlebih dahulu untuk membuka level berikutnya!');
+    }
+  });
+
+  // === INISIALISASI APLIKASI ===
+  initApp();
+});
+
+// === OPTIMASI PERFORMANCE ===
+// Mencegah behavior drag pada gambar
+document.addEventListener('dragstart', (e) => {
+  if (e.target.tagName === 'IMG') {
+    e.preventDefault();
+  }
+});
+
+// Handle visibility change untuk optimasi
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) {
+    // Hentikan animasi saat tab tidak aktif
+    document.body.style.animationPlayState = 'paused';
+  } else {
+    document.body.style.animationPlayState = 'running';
+  }
+});
+
+
+</script>
+</body>
+</html>

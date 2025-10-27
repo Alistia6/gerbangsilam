@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gerbang Silam - Sejarah Indonesia</title>
+<link rel="icon" type="image/x-icon" href="logogs.ico">
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Marcellus+SC&family=Cormorant+Garamond:wght@600&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body, html {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: radial-gradient(circle at center, #3a2f1c, #1c1a12);
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+}
+
+#lobby {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#windCanvas {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0; 
+  left: 0;
+  z-index: 0;
+}
+
+/* =============================
+   TAMPILAN TENGAH
+============================= */
+.center-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 1200px;
+}
+
+/* =============================
+   JUDUL GERBANG SILAM
+============================= */
+#title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  margin-bottom: 30px;
+  gap: 3px;
+}
+
+#title span {
+  display: inline-block;
+  font-size: 4.2rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  transition: transform 0.3s ease;
+  text-shadow: 3px 3px 8px rgba(0,0,0,0.6);
+}
+
+#title span:hover {
+  transform: scale(1.1) rotate(-3deg);
+}
+
+/* Tema huruf dengan font realistis */
+.wood { 
+  color: #d7b48a; 
+  font-family: 'Marcellus SC', serif; 
+  text-shadow: 2px 2px 6px #4a3422; 
+}
+.stone { 
+  color: #c9c7c3; 
+  font-family: 'Cinzel', serif; 
+  text-shadow: 2px 2px 6px #3b3b3b; 
+}
+.bone { 
+  color: #e8dcc4; 
+  font-family: 'Cormorant Garamond', serif; 
+  text-shadow: 1px 1px 5px #5c4f41; 
+}
+.metal { 
+  color: #b7b7b7; 
+  font-family: 'Cinzel', serif; 
+  text-shadow: 2px 2px 8px #7c7c7c; 
+}
+.spear { 
+  color: #b07944; 
+  font-family: 'Marcellus SC', serif; 
+  text-shadow: 2px 2px 7px #2e1b0c; 
+}
+
+.timeline-container {
+  position: relative;
+  width: 100%;
+  height: 350px;
+  margin-top: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 5;
+}
+
+/* Garis alur timeline */
+.timeline-path {
+  position: absolute;
+  width: 90%;
+  height: 100%;
+  left: 5%;
+  top: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Node tiap zaman */
+.timeline {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.node {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 3;
+  pointer-events: auto;
+}
+
+.node img {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: radial-gradient(circle at top left, #d1b48a, #7a4e22);
+  box-shadow: 0 0 18px rgba(255,215,100,0.3);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: 3px solid rgba(80,40,10,0.8);
+}
+
+.node:hover img {
+  transform: scale(1.15);
+  box-shadow: 0 0 25px gold, 0 0 60px rgba(255,215,0,0.4);
+}
+
+.node p {
+  margin-top: 10px;
+  font-family: 'Cinzel', serif;
+  font-weight: bold;
+  color: #f4ebc3;
+  text-shadow: 0 0 6px #000;
+  font-size: 1rem;
+  white-space: nowrap;
+}
+
+/* Gaya untuk node yang terkunci */
+.node.locked {
+  pointer-events: none;
+}
+
+.node.locked img {
+  filter: grayscale(80%) brightness(0.6);
+  cursor: not-allowed;
+}
+
+.node.locked p {
+  color: #888;
+}
+
+/* Gembok di atas node terkunci */
+.lock-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.lock-icon {
+  font-size: 3rem;
+  color: rgba(255, 255, 255, 0.8);
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+/* Indikator level selesai */
+.level-completed {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: gold;
+  color: #3a2f1c;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 0.8rem;
+  z-index: 5;
+  box-shadow: 0 0 10px gold;
+}
+
+/* Responsif */
+@media (max-width: 768px) {
+  .timeline-container {
+    height: 500px;
+  }
+  .timeline-path {
+    display: none;
+  }
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    align-items: center;
+    justify-content: center;
+  }
+  .node {
+    position: static;
+    transform: none;
+  }
+  .node img {
+    width: 120px;
+    height: 120px;
+  }
+}
+
+/* Tombol kontrol suara */
+#soundControl {
+  position: fixed;
+  bottom: 20px;
+  right: 25px;
+  font-size: 1.8rem;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.2s ease;
+  z-index: 999;
+}
+
+#team-section {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 800px;
+  background: rgba(40, 30, 10, 0.6);
+  border-top: 2px solid rgba(255, 220, 120, 0.4);
+  border-radius: 20px 20px 0 0;
+  text-align: center;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 -5px 25px rgba(0,0,0,0.5);
+  transition: all 0.5s ease;
+  z-index: 999;
+  font-family: 'Cinzel', serif;
+}
+
+#team-header {
+  padding: 10px 0;
+  cursor: pointer;
+  color: #f8e2b0;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+  text-shadow: 0 0 10px rgba(255,215,150,0.7);
+  transition: all 0.3s ease;
+  user-select: none;
+}
+
+#team-header:hover {
+  color: gold;
+  transform: scale(1.05);
+}
+
+#team-list {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.6s ease;
+  color: #fdf4d0;
+  font-size: 1rem;
+  padding: 0 0 10px 0;
+}
+
+#team-list p {
+  margin: 6px 0;
+  text-shadow: 0 0 5px rgba(255,255,180,0.3);
+}
+
+/* Saat terbuka */
+#team-section.active #team-list {
+  max-height: 600px;
+}
+
+/* Modal untuk konfirmasi */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: linear-gradient(to bottom, #3a2f1c, #1c1a12);
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+  border: 2px solid #d7b48a;
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.modal h2 {
+  font-family: 'Cinzel', serif;
+  color: #f4ebc3;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+}
+
+.modal p {
+  margin-bottom: 25px;
+  line-height: 1.6;
+  color: #e8dcc4;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.modal-btn {
+  padding: 10px 25px;
+  border: none;
+  border-radius: 5px;
+  font-family: 'Cinzel', serif;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.modal-btn.cancel {
+  background: #7a4e22;
+  color: #f4ebc3;
+}
+
+.modal-btn.confirm {
+  background: #d7b48a;
+  color: #3a2f1c;
+}
+
+.modal-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+/* Progress bar */
+.progress-container {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+  background: rgba(40, 30, 10, 0.7);
+  border-radius: 10px;
+  padding: 10px;
+  z-index: 999;
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 220, 120, 0.3);
+}
+
+.progress-text {
+  text-align: center;
+  font-family: 'Cinzel', serif;
+  color: #f4ebc3;
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: rgba(80, 40, 10, 0.5);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(to right, #d7b48a, gold);
+  border-radius: 4px;
+  transition: width 0.5s ease;
+  width: 0%;
+}
+</style>
+</head>
+<body>
+
+<div id="lobby">
+  <canvas id="windCanvas"></canvas>
+
+  <!-- Progress Bar -->
+  <div class="progress-container">
+    <div class="progress-text">Progress Pembelajaran: <span id="progress-percent">0%</span></div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+  </div>
+
+  <div class="center-content">
+    <h1 id="title"></h1>
+
+    <section class="timeline-container">
+      <!-- SVG dengan jalur yang terhubung langsung ke node -->
+      <svg class="timeline-path" viewBox="0 0 1000 300" preserveAspectRatio="none">
+        <!-- Garis timeline yang menghubungkan setiap node -->
+        <path id="timeline-connector" d="" 
+              fill="none" 
+              stroke="rgba(255,215,150,0.6)" 
+              stroke-width="10" 
+              stroke-linecap="round"
+              filter="url(#glow)"/>
+        <defs>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="4.5" result="coloredBlur"/>
+            <feMerge>
+              <feMergeNode in="coloredBlur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
+      </svg>
+
+      <div class="timeline">
+        <!-- Node dengan posisi yang seimbang -->
+        <div class="node" style="--x:10%; --y:70%;" data-level="purba">
+          <a href="purba.html">
+            <img src="purba.png" alt="Manusia Purba">
+            <p>MANUSIA PURBA</p>
+          </a>
+        </div>
+
+        <div class="node locked" style="--x:30%; --y:30%;" data-level="kerajaan">
+          <div class="lock-overlay">
+            <div class="lock-icon">🔒</div>
+          </div>
+          <img src="kerajaan.jpg" alt="Kerajaan Nusantara">
+          <p>KERAJAAN NUSANTARA</p>
+        </div>
+
+        <div class="node locked" style="--x:55%; --y:70%;" data-level="penjajahan">
+          <div class="lock-overlay">
+            <div class="lock-icon">🔒</div>
+          </div>
+          <img src="penjajahan.jpg" alt="Masa Penjajahan">
+          <p>MASA PENJAJAHAN</p>
+        </div>
+
+        <div class="node locked" style="--x:80%; --y:30%;" data-level="kemerdekaan">
+          <div class="lock-overlay">
+            <div class="lock-icon">🔒</div>
+          </div>
+          <img src="kemerdekaan.jpg" alt="Masa Kemerdekaan">
+          <p>MASA KEMERDEKAAN</p>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- Modal untuk konfirmasi level terkunci -->
+<div id="lockedModal" class="modal">
+  <div class="modal-content">
+    <h2>Level Terkunci</h2>
+    <p id="modalMessage">Anda harus menyelesaikan level sebelumnya untuk membuka level ini.</p>
+    <div class="modal-buttons">
+      <button class="modal-btn cancel" onclick="closeModal()">Tutup</button>
+    </div>
+  </div>
+</div>
+
+<audio id="bgm" loop autoplay>
+  <source src="time-372688.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Tombol kontrol di pojok kanan bawah -->
+<div id="soundControl">🔈</div>
+
+<section id="team-section">
+  <div id="team-header">Tentang website</div>
+  <div id="team-list">
+   <p>
+  Website <b>Gerbang Silam</b> dibuat sebagai media pembelajaran interaktif 
+  untuk mengenalkan perjalanan sejarah Indonesia. 
+  Proyek ini ditujukan khususnya bagi siswa <b>SD</b> agar dapat memahami sejarah dengan 
+  cara yang lebih menarik, visual, dan mudah diingat. 
+  Pemilihan topik sejarah ini didasari oleh kenyataan bahwa banyak pelajar 
+  sering melupakan materi sejarah meskipun telah dipelajari di sekolah. 
+  Melalui media ini, kami berharap dapat membantu meningkatkan minat belajar 
+  serta mendukung peningkatan <b>literasi sejarah di Indonesia</b> yang kini cenderung menurun.
+</p>
+<p>
+  Di setiap level Gerbang Silam, beberapa gambar akan tampak buram — melambangkan keadaan ketika sejarah masih tampak kabur dan belum sepenuhnya dipahami.
+Namun, saat pemain mengklik gambar tersebut, kejernihan akan muncul, gambar berubah menjadi jelas, seolah tabir waktu tersingkap dan kebenaran masa lalu akhirnya terungkap.
+
+Efek ini bukan sekadar hiasan, tetapi simbol dari perjalanan pengetahuan — dari ketidaktahuan menuju pemahaman, dari bayangan masa silam menuju cahaya fakta sejarah.
+Melalui pengalaman ini, pemain diajak untuk tidak hanya melihat sejarah, tetapi menemukannya dengan mata pengetahuan dan hati yang ingin memahami.
+</p>
+<p>Dikembangkan oleh:</p>
+    <p><strong>*</strong> Alistia (2303010031)</p>
+    <p><strong>*</strong> Intan Permatasari (2303010069)</p>
+    <p><strong>*</strong> Nadya Salsabila Putri (2303010061)</p>
+    <p><strong>*</strong> Ahmad Fadhil Rizki (2303010090)</p>
+  </div>
+</section>
+
+<script>
+// ==========================
+// Sistem Progress Level - FIXED
+// ==========================
+
+// Urutan level dari awal sampai akhir
+const levelOrder = ['purba', 'kerajaan', 'penjajahan', 'kemerdekaan'];
+
+// Fungsi untuk mendapatkan progress pemain dari localStorage
+function getPlayerProgress() {
+  const progress = JSON.parse(localStorage.getItem('playerProgress')) || {
+    completedLevels: [],
+    currentLevel: 'purba'
+  };
+  console.log('Progress loaded:', progress);
+  return progress;
+}
+
+// Fungsi untuk menyimpan progress pemain
+function savePlayerProgress(progress) {
+  localStorage.setItem('playerProgress', JSON.stringify(progress));
+  console.log('Progress saved:', progress);
+}
+
+// Fungsi untuk menandai level sebagai selesai
+function completeLevel(level) {
+  const progress = getPlayerProgress();
+  
+  if (!progress.completedLevels.includes(level)) {
+    progress.completedLevels.push(level);
+    
+    // Tentukan level berikutnya
+    const currentIndex = levelOrder.indexOf(level);
+    if (currentIndex < levelOrder.length - 1) {
+      progress.currentLevel = levelOrder[currentIndex + 1];
+    }
+    
+    savePlayerProgress(progress);
+    updateLevelLocks();
+    updateProgressBar();
+    
+    // Tampilkan notifikasi jika level baru terbuka
+    if (currentIndex < levelOrder.length - 1) {
+      setTimeout(() => {
+        alert(`Selamat! Level ${level.toUpperCase()} telah selesai!\nLevel ${levelOrder[currentIndex + 1].toUpperCase()} sekarang terbuka!`);
+      }, 500);
+    }
+    return true;
+  }
+  return false;
+}
+
+// FUNGSI UTAMA UNTUK MEMBUKA/GEMBOK LEVEL
+function updateLevelLocks() {
+  const progress = getPlayerProgress();
+  const nodes = document.querySelectorAll('.node');
+  
+  console.log('=== UPDATE LEVEL LOCKS ===');
+  console.log('Completed levels:', progress.completedLevels);
+  
+  nodes.forEach(node => {
+    const level = node.dataset.level;
+    const isCompleted = progress.completedLevels.includes(level);
+    const levelIndex = levelOrder.indexOf(level);
+    
+    // Tentukan apakah level harus terbuka atau terkunci
+    let shouldBeUnlocked = false;
+    
+    if (level === 'purba') {
+      // Level purba selalu terbuka
+      shouldBeUnlocked = true;
+    } else {
+      // Level lain terbuka jika level sebelumnya sudah selesai
+      const previousLevel = levelOrder[levelIndex - 1];
+      const isPreviousCompleted = progress.completedLevels.includes(previousLevel);
+      shouldBeUnlocked = isPreviousCompleted;
+    }
+    
+    console.log(`Level ${level}: unlocked=${shouldBeUnlocked}, completed=${isCompleted}`);
+    
+    if (shouldBeUnlocked) {
+      // BUKA GEMBOK - Level bisa diakses
+      node.classList.remove('locked');
+      
+      // Hapus overlay gembok
+      const lockOverlay = node.querySelector('.lock-overlay');
+      if (lockOverlay) {
+        lockOverlay.remove();
+      }
+      
+      // Pastikan ada link
+      if (!node.querySelector('a')) {
+        const img = node.querySelector('img');
+        const p = node.querySelector('p');
+        const a = document.createElement('a');
+        a.href = `${level}.html`;
+        
+        // Pindahkan img dan p ke dalam link
+        node.innerHTML = '';
+        a.appendChild(img);
+        a.appendChild(p);
+        node.appendChild(a);
+      }
+      
+      // Tambah tanda centang jika level sudah selesai
+      if (isCompleted && !node.querySelector('.level-completed')) {
+        const completedBadge = document.createElement('div');
+        completedBadge.className = 'level-completed';
+        completedBadge.innerHTML = '✓';
+        node.appendChild(completedBadge);
+      }
+    } else {
+      // TUTUP GEMBOK - Level terkunci
+      node.classList.add('locked');
+      
+      // Tambah overlay gembok
+      if (!node.querySelector('.lock-overlay')) {
+        const lockOverlay = document.createElement('div');
+        lockOverlay.className = 'lock-overlay';
+        lockOverlay.innerHTML = '<div class="lock-icon">🔒</div>';
+        node.appendChild(lockOverlay);
+      }
+      
+      // Hapus link
+      const a = node.querySelector('a');
+      if (a) {
+        const img = a.querySelector('img');
+        const p = a.querySelector('p');
+        node.removeChild(a);
+        node.appendChild(img);
+        node.appendChild(p);
+      }
+      
+      // Hapus tanda centang
+      const completedBadge = node.querySelector('.level-completed');
+      if (completedBadge) {
+        completedBadge.remove();
+      }
+    }
+  });
+}
+
+// Fungsi untuk memperbarui progress bar
+function updateProgressBar() {
+  const progress = getPlayerProgress();
+  const totalLevels = levelOrder.length;
+  const completedLevels = progress.completedLevels.length;
+  const progressPercent = (completedLevels / totalLevels) * 100;
+  
+  document.getElementById('progress-fill').style.width = `${progressPercent}%`;
+  document.getElementById('progress-percent').textContent = `${Math.round(progressPercent)}%`;
+}
+
+// Fungsi untuk menampilkan modal level terkunci
+function showLockedModal(level) {
+  const modal = document.getElementById('lockedModal');
+  const modalMessage = document.getElementById('modalMessage');
+  
+  const levelIndex = levelOrder.indexOf(level);
+  const previousLevel = levelOrder[levelIndex - 1];
+  
+  modalMessage.textContent = `Anda harus menyelesaikan level ${previousLevel.toUpperCase()} terlebih dahulu untuk membuka level ${level.toUpperCase()}.`;
+  modal.style.display = 'flex';
+}
+
+// Fungsi untuk menutup modal
+function closeModal() {
+  const modal = document.getElementById('lockedModal');
+  modal.style.display = 'none';
+}
+
+// Event listener untuk node yang terkunci
+document.addEventListener('click', function(e) {
+  const node = e.target.closest('.node.locked');
+  if (node) {
+    e.preventDefault();
+    showLockedModal(node.dataset.level);
+  }
+});
+
+// ==========================
+// Kode yang sudah ada sebelumnya
+// ==========================
+
+const bgm = document.getElementById('bgm');
+const soundBtn = document.getElementById('soundControl');
+let isPlaying = true;
+
+soundBtn.title = "Hidupkan / Matikan Suara";
+
+bgm.volume = 0.7;
+document.addEventListener('click', () => {
+  if (bgm.paused) bgm.play();
+}, { once: true });
+
+soundBtn.addEventListener('click', () => {
+  if (isPlaying) {
+    bgm.pause();
+    soundBtn.textContent = '🔊';
+    soundBtn.style.transform = 'scale(1)';
+  } else {
+    bgm.play();
+    soundBtn.textContent = '🔈';
+    soundBtn.style.transform = 'scale(1.2)';
+  }
+  isPlaying = !isPlaying;
+});
+
+const title = document.getElementById('title');
+const text = [
+  { char: 'G', theme: 'stone' },
+  { char: 'E', theme: 'wood' },
+  { char: 'R', theme: 'spear' },
+  { char: 'B', theme: 'bone' },
+  { char: 'A', theme: 'metal' },
+  { char: 'N', theme: 'wood' },
+  { char: 'G', theme: 'stone' },
+  { char: ' ', theme: '' },
+  { char: 'S', theme: 'metal' },
+  { char: 'I', theme: 'bone' },
+  { char: 'L', theme: 'spear' },
+  { char: 'A', theme: 'wood' },
+  { char: 'M', theme: 'stone' }
+];
+
+let i = 0;
+function typeWriter() {
+  if (i < text.length) {
+    const span = document.createElement('span');
+    span.textContent = text[i].char;
+    if (text[i].theme) span.classList.add(text[i].theme);
+    span.style.opacity = 0;
+    title.appendChild(span);
+    setTimeout(() => {
+      span.style.transition = "opacity 0.4s ease";
+      span.style.opacity = 1;
+    }, 50);
+    i++;
+    setTimeout(typeWriter, 150);
+  }
+}
+typeWriter();
+
+// ==========================
+// Efek Pusaran Waktu (Blackhole Portal)
+// ==========================
+const canvas = document.getElementById('windCanvas');
+const ctx = canvas.getContext('2d');
+canvas.width = innerWidth;
+canvas.height = innerHeight;
+
+class Particle {
+  constructor(angle, radius, speed) {
+    this.angle = angle;
+    this.radius = radius;
+    this.speed = speed;
+    this.size = Math.random() * 2 + 0.5;
+  }
+  update() {
+    this.angle += this.speed;
+    this.radius *= 0.992; // perlahan tersedot ke tengah
+    if (this.radius < 2) this.radius = Math.random() * Math.min(canvas.width, canvas.height) / 2;
+  }
+  draw() {
+    const x = canvas.width / 2 + Math.cos(this.angle) * this.radius;
+    const y = canvas.height / 2 + Math.sin(this.angle) * this.radius;
+    ctx.beginPath();
+    ctx.arc(x, y, this.size, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(255, 255, 200, 0.6)';
+    ctx.fill();
+  }
+}
+
+const particles = [];
+for (let i = 0; i < 300; i++) {
+  const angle = Math.random() * Math.PI * 2;
+  const radius = Math.random() * (Math.min(canvas.width, canvas.height) / 1.5);
+  const speed = (Math.random() * 0.02) + 0.005;
+  particles.push(new Particle(angle, radius, speed));
+}
+
+function animate() {
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.25)';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // efek pusaran bercahaya di tengah
+  const gradient = ctx.createRadialGradient(
+    canvas.width / 2, canvas.height / 2, 0,
+    canvas.width / 2, canvas.height / 2, 300
+  );
+  gradient.addColorStop(0, 'rgba(255, 230, 180, 0.4)');
+  gradient.addColorStop(0.3, 'rgba(100, 80, 40, 0.3)');
+  gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  particles.forEach(p => {
+    p.update();
+    p.draw();
+  });
+
+  requestAnimationFrame(animate);
+}
+animate();
+
+// ==========================
+// Garis Timeline yang Terhubung dengan Node
+// ==========================
+function updateTimelinePath() {
+  const nodes = document.querySelectorAll('.node');
+  const path = document.getElementById('timeline-connector');
+  
+  if (nodes.length === 0) return;
+  
+  // Hitung posisi node dalam koordinat SVG
+  const svg = document.querySelector('.timeline-path');
+  const svgRect = svg.getBoundingClientRect();
+  
+  let pathData = '';
+  
+  nodes.forEach((node, index) => {
+    const nodeRect = node.getBoundingClientRect();
+    const x = ((nodeRect.left + nodeRect.width/2) - svgRect.left) / svgRect.width * 1000;
+    const y = ((nodeRect.top + nodeRect.height/2) - svgRect.top) / svgRect.height * 300;
+    
+    if (index === 0) {
+      pathData = `M ${x} ${y}`;
+    } else {
+      // Buat garis lurus antara node
+      pathData += ` L ${x} ${y}`;
+    }
+  });
+  
+  path.setAttribute('d', pathData);
+}
+
+// Update path saat halaman dimuat dan di-resize
+window.addEventListener('load', () => {
+  updateTimelinePath();
+  updateLevelLocks(); // Update status gembok saat halaman dimuat
+  updateProgressBar(); // Update progress bar
+});
+window.addEventListener('resize', updateTimelinePath);
+
+// Update path setelah animasi judul selesai
+setTimeout(updateTimelinePath, 2500);
+
+addEventListener('resize', () => {
+  canvas.width = innerWidth;
+  canvas.height = innerHeight;
+  updateTimelinePath();
+});
+
+const teamSection = document.getElementById('team-section');
+const teamHeader = document.getElementById('team-header');
+
+teamHeader.addEventListener('click', () => {
+  teamSection.classList.toggle('active');
+});
+
+// Tombol reset progress (untuk testing)
+const resetBtn = document.createElement('button');
+resetBtn.textContent = 'Reset Progress';
+resetBtn.style.position = 'fixed';
+resetBtn.style.top = '20px';
+resetBtn.style.right = '20px';
+resetBtn.style.zIndex = '1000';
+resetBtn.style.padding = '5px 10px';
+resetBtn.style.background = '#7a4e22';
+resetBtn.style.color = '#f4ebc3';
+resetBtn.style.border = 'none';
+resetBtn.style.borderRadius = '5px';
+resetBtn.style.cursor = 'pointer';
+resetBtn.style.fontFamily = 'Cinzel';
+resetBtn.onclick = function() {
+  localStorage.removeItem('playerProgress');
+  updateLevelLocks();
+  updateProgressBar();
+  alert('Progress telah direset!');
+};
+document.body.appendChild(resetBtn);
+</script>
+
+</body>
+</html>

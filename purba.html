@@ -1,0 +1,1439 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gerbang Silam - Sejarah Indonesia</title>
+<link rel="icon" type="image/x-icon" href="logogs.ico">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+  background: #0a0602;
+  color: #fff;
+}
+
+/* BACKGROUND GUA DENGAN GAMBAR */
+.cave-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    linear-gradient(rgba(10, 6, 2, 0.7), rgba(10, 6, 2, 0.9)),
+    url('purba.png') center/cover;
+  z-index: -2;
+}
+
+/* CORAK PURBA DI SISI-SISI */
+.cave-pattern {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(circle at 20% 30%, rgba(120, 80, 40, 0.1) 2%, transparent 10%),
+    radial-gradient(circle at 80% 70%, rgba(120, 80, 40, 0.1) 2%, transparent 10%),
+    radial-gradient(circle at 40% 80%, rgba(120, 80, 40, 0.1) 2%, transparent 10%);
+  z-index: -1;
+}
+
+/* BATU-BATUAN DI SISI */
+.rock-left, .rock-right {
+  position: absolute;
+  top: 0;
+  width: 150px;
+  height: 100%;
+  background: 
+    linear-gradient(90deg, rgba(40, 25, 10, 0.8), transparent),
+    url('purba..png') left/cover;
+  z-index: -1;
+}
+
+.rock-left {
+  left: 0;
+}
+
+.rock-right {
+  right: 0;
+  transform: rotateY(180deg);
+}
+
+/* HEADER MODERN DI ATAS KIRI */
+#hud {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 10;
+}
+
+#location {
+  background: rgba(40, 25, 10, 0.85);
+  padding: 15px 25px;
+  border-radius: 25px;
+  color: #ffd27f;
+  font-weight: 700;
+  font-size: 1.1rem;
+  backdrop-filter: blur(15px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  letter-spacing: 1px;
+  max-width: 250px;
+}
+
+/* PROGRESS INDICATOR DI ATAS KANAN */
+.progress-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(40, 25, 10, 0.85);
+  padding: 15px 20px;
+  border-radius: 25px;
+  backdrop-filter: blur(15px);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #ffe9c4;
+  font-size: 0.9rem;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+  z-index: 10;
+  max-width: 220px;
+}
+
+.progress-bar {
+  width: 100px;
+  height: 8px;
+  background: rgba(60, 40, 20, 0.7);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ffd27f, #ffb347, #ff8c00);
+  border-radius: 4px;
+  transition: width 0.5s ease;
+  width: 0%;
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-fill::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+/* OBOR BESAR DI TENGAH */
+.torch-container {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 300px;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.torch-stand {
+  width: 20px;
+  height: 150px;
+  background: linear-gradient(to bottom, #8b4513, #5d2906, #8b4513);
+  border-radius: 10px 10px 0 0;
+  position: relative;
+}
+
+.torch-stand::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 20px;
+  background: #5d2906;
+  border-radius: 50%;
+}
+
+.torch-head {
+  width: 60px;
+  height: 80px;
+  background: radial-gradient(ellipse at center, #8b4513, #5d2906);
+  border-radius: 50% 50% 40% 40%;
+  position: relative;
+  margin-top: -10px;
+  z-index: 2;
+}
+
+.fire-large {
+  position: relative;
+  width: 100px;
+  height: 180px;
+  margin-top: -70px;
+}
+
+.flame-large {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 40px;
+  height: 120px;
+  border-radius: 50% 50% 20% 20%;
+  background: radial-gradient(ellipse at center, #ff8c00 10%, #ff4500 60%, transparent 90%);
+  animation: flickerLarge 0.3s infinite alternate ease-in-out;
+  filter: blur(8px);
+  transform: translateX(-50%);
+}
+
+.flame-large:nth-child(2) {
+  left: 40%;
+  width: 35px;
+  height: 140px;
+  animation-delay: 0.1s;
+  background: radial-gradient(ellipse at center, #ffa500 10%, #ff6347 60%, transparent 90%);
+}
+
+.flame-large:nth-child(3) {
+  left: 60%;
+  width: 30px;
+  height: 130px;
+  animation-delay: 0.2s;
+  background: radial-gradient(ellipse at center, #ffd700 10%, #ff8c00 60%, transparent 90%);
+}
+
+@keyframes flickerLarge {
+  0% { 
+    transform: translateX(-50%) scale(1) rotate(-1deg); 
+    opacity: 0.9; 
+    height: 120px;
+  }
+  100% { 
+    transform: translateX(-50%) scale(1.15) rotate(1deg); 
+    opacity: 0.7; 
+    height: 140px;
+  }
+}
+
+
+/* CAHAYA API YANG LEBIH BESAR */
+.glow-large {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 800px;
+  height: 500px;
+  background: radial-gradient(
+    ellipse at center, 
+    rgba(255, 180, 80, 0.4) 0%, 
+    rgba(255, 120, 40, 0.2) 30%, 
+    transparent 70%
+  );
+  filter: blur(60px);
+  z-index: 0;
+}
+
+/* OBOR-OBOR KECIL DI SISI */
+.side-torch {
+  position: absolute;
+  bottom: 50px;
+  width: 80px;
+  height: 150px;
+  z-index: 4;
+}
+
+.side-torch.left {
+  left: 100px;
+}
+
+.side-torch.right {
+  right: 100px;
+}
+
+.small-torch {
+  width: 12px;
+  height: 80px;
+  background: linear-gradient(to bottom, #8b4513, #5d2906);
+  border-radius: 6px 6px 0 0;
+  margin: 0 auto;
+}
+
+.small-flame {
+  width: 30px;
+  height: 60px;
+  background: radial-gradient(ellipse at center, #ff8c00 10%, #ff4500 60%, transparent 90%);
+  border-radius: 50% 50% 20% 20%;
+  margin: -10px auto 0;
+  animation: flickerSmall 0.4s infinite alternate;
+  filter: blur(5px);
+}
+
+@keyframes flickerSmall {
+  0% { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(1.1); opacity: 0.6; }
+}
+
+/* ARTEFAK DENGAN EFEK GUA DAN TEPI BLUR HALUS */
+.artifacts-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* Setiap artefak hanya berupa gambar bercahaya */
+.artifact {
+  position: absolute;
+  cursor: pointer;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  overflow: visible;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.4s ease, filter 0.4s ease;
+  animation: float 6s infinite ease-in-out alternate;
+  z-index: 5;
+  filter: drop-shadow(0 0 15px rgba(255, 210, 120, 0.4));
+}
+
+.artifact:hover {
+  transform: scale(1.2) rotate(4deg);
+  filter: drop-shadow(0 0 25px rgba(255, 220, 150, 0.8));
+  z-index: 10;
+}
+
+/* Efek lembut di sekitar gambar, seolah ada kabut gua */
+.artifact::before {
+  content: "";
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  top: -50%;
+  left: -50%;
+  background: radial-gradient(circle, rgba(255, 220, 150, 0.25), transparent 70%);
+  filter: blur(25px);
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+}
+
+.artifact:hover::before {
+  opacity: 1;
+}
+
+/* Gambar utama */
+.artifact img {
+  width: 130%;
+  height: 130%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px rgba(255, 240, 200, 0.3))
+          blur(1.5px);
+  border-radius: 50%;
+  position: relative;
+  z-index: 2;
+}
+
+/* Efek melayang lembut */
+@keyframes float {
+  0%   { transform: translateY(0px) rotate(0deg); }
+  50%  { transform: translateY(-10px) rotate(2deg); }
+  100% { transform: translateY(0px) rotate(-2deg); }
+}
+
+
+@keyframes float {
+  from { transform: translateY(0px) rotate(-1deg); }
+  to { transform: translateY(-15px) rotate(1deg); }
+}
+
+/* PETUNJUK UNLOCK LEVEL TANPA BORDER */
+.unlock-hint {
+  position: absolute;
+  bottom: 140px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(40, 25, 10, 0.9);
+  padding: 20px 35px;
+  border-radius: 25px;
+  color: #ffe9c4;
+  text-align: center;
+  backdrop-filter: blur(15px);
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.5);
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.unlock-hint.show {
+  opacity: 1;
+}
+
+.unlock-hint i {
+  color: #ffd27f;
+  margin-right: 10px;
+  font-size: 1.2rem;
+}
+
+/* QUIZ STYLES */
+#quiz {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 500px;
+  background: rgba(30, 18, 8, 0.95);
+  border-radius: 25px;
+  padding: 35px;
+  text-align: center;
+  color: #ffe9c4;
+  backdrop-filter: blur(25px);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.7);
+  z-index: 100;
+  animation: popupAppear 0.4s ease-out;
+}
+
+.quiz-question {
+  font-size: 1.3rem;
+  margin-bottom: 25px;
+  color: #ffd27f;
+  font-weight: 600;
+}
+
+.quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 25px;
+}
+
+.quiz-option {
+  background: rgba(60, 40, 20, 0.7);
+  padding: 15px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: left;
+  border: 2px solid transparent;
+}
+
+.quiz-option:hover {
+  background: rgba(80, 50, 25, 0.8);
+  transform: translateY(-2px);
+}
+
+.quiz-option.correct {
+  background: rgba(76, 175, 80, 0.3);
+  border-color: #4caf50;
+}
+
+.quiz-option.incorrect {
+  background: rgba(244, 67, 54, 0.3);
+  border-color: #f44336;
+}
+
+.quiz-result {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 12px;
+  font-weight: 600;
+  display: none;
+}
+
+.quiz-result.success {
+  background: rgba(76, 175, 80, 0.3);
+  color: #c8e6c9;
+  display: block;
+}
+
+.quiz-result.error {
+  background: rgba(244, 67, 54, 0.3);
+  color: #ffcdd2;
+  display: block;
+}
+
+/* POPUP MODERN TANPA BORDER - DIPERBAIKI */
+#popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 800px;
+  max-height: 85vh;
+  background: rgba(30, 18, 8, 0.95);
+  border-radius: 25px;
+  padding: 0;
+  color: #ffe9c4;
+  backdrop-filter: blur(25px);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.7);
+  z-index: 100;
+  animation: popupAppear 0.4s ease-out;
+  overflow: hidden;
+}
+
+.popup-content {
+  display: flex;
+  height: 100%;
+}
+
+.popup-left {
+  flex: 1;
+  padding: 35px;
+  overflow-y: auto;
+  max-height: 75vh;
+}
+
+.popup-right {
+  flex: 0 0 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  background: rgba(40, 25, 10, 0.7);
+  border-left: 1px solid rgba(255, 210, 127, 0.2);
+}
+
+#popup h2 {
+  color: #ffd27f;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+#popupImg {
+  width: 100%;
+  max-width: 280px;
+  height: auto;
+  object-fit: contain;
+  border-radius: 15px;
+  background: rgba(40, 25, 10, 0.8);
+  padding: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  margin-bottom: 20px;
+}
+
+.article-content {
+  line-height: 1.7;
+  color: #e6d5b8;
+  font-size: 1.05rem;
+  text-align: justify;
+}
+
+.article-content p {
+  margin-bottom: 20px;
+}
+
+.article-content h3 {
+  color: #ffd27f;
+  margin: 25px 0 15px;
+  font-size: 1.3rem;
+}
+
+.article-content ul {
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
+
+.article-content li {
+  margin-bottom: 8px;
+}
+
+.popup-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 25px;
+  flex-wrap: wrap;
+}
+
+#popupLink {
+  color: #ffd27f;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(60, 40, 20, 0.7);
+  padding: 12px 20px;
+  border-radius: 12px;
+  margin-top: 10px;
+}
+
+#popupLink:hover {
+  color: #ffb347;
+  background: rgba(80, 50, 25, 0.8);
+}
+
+@keyframes popupAppear {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* TOMBOL MODERN TANPA BORDER */
+.btn {
+  background: linear-gradient(135deg, #9b5a2a 0%, #7a451f 100%);
+  border: none;
+  padding: 16px 32px;
+  color: #fff;
+  border-radius: 15px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1.05rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(135deg, #b06a32 0%, #8b5124 100%);
+}
+
+.btn:hover::before {
+  left: 100%;
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #b8945f 0%, #9b7b4f 100%);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #c8a86f 0%, #ad8a57 100%);
+}
+
+/* TOMBOL KEMBALI TANPA BORDER */
+#backBtn {
+  display: none;
+  position: fixed;
+  bottom: 35px;
+  right: 35px;
+  z-index: 50;
+  padding: 18px 32px;
+  font-size: 1.1rem;
+  background: linear-gradient(135deg, #2d6a4f 0%, #1b4332 100%);
+}
+
+#backBtn:hover {
+  background: linear-gradient(135deg, #40916c 0%, #2d6a4f 100%);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  #hud {
+    left: 10px;
+    top: 10px;
+  }
+  
+  #location {
+    font-size: 1rem;
+    padding: 12px 20px;
+    max-width: 200px;
+  }
+  
+  .progress-container {
+    right: 10px;
+    top: 10px;
+    padding: 12px 15px;
+    max-width: 180px;
+  }
+  
+  .progress-bar {
+    width: 80px;
+  }
+  
+  .artifact {
+    width: 80px;
+    height: 80px;
+  }
+  
+  #popup, #quiz {
+    width: 95%;
+    padding: 25px;
+  }
+  
+  .side-torch {
+    display: none;
+  }
+  
+  .torch-container {
+    width: 150px;
+  }
+  
+  .popup-content {
+    flex-direction: column-reverse;
+  }
+  
+  .popup-right {
+    border-left: none;
+    border-top: 1px solid rgba(255, 210, 127, 0.2);
+    padding: 20px;
+  }
+  
+  .popup-left {
+    padding: 25px;
+  }
+  
+  #popup {
+    max-height: 90vh;
+  }
+}
+
+/* ANIMASI UNTUK PETUNJUK LEVEL */
+@keyframes pulseHint {
+  0% { transform: translateX(-50%) scale(1); }
+  50% { transform: translateX(-50%) scale(1.05); }
+  100% { transform: translateX(-50%) scale(1); }
+}
+
+.unlock-hint.show {
+  animation: pulseHint 2s infinite;
+}
+
+/* AUDIO CONTROLS */
+.audio-controls {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 100;
+  display: flex;
+  gap: 10px;
+}
+
+.audio-btn {
+  background: rgba(40, 25, 10, 0.85);
+  border: none;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  color: #ffd27f;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+}
+
+.audio-btn:hover {
+  transform: scale(1.1);
+  background: rgba(50, 30, 15, 0.9);
+}
+</style>
+</head>
+<body>
+
+<!-- BACKGROUND GUA -->
+<div class="cave-bg"></div>
+<div class="cave-pattern"></div>
+<div class="rock-left"></div>
+<div class="rock-right"></div>
+
+<!-- HUD MODERN DI KIRI ATAS -->
+<div id="hud">
+  <div id="location">Zaman Manusia Purba</div>
+</div>
+
+<!-- PROGRESS INDICATOR DI KANAN ATAS -->
+<div class="progress-container">
+  <i class="fas fa-scroll"></i>
+  <span>Penemuan:</span>
+  <div class="progress-bar">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+  <span id="progressText">0/7</span>
+</div>
+
+<!-- PETUNJUK UNLOCK LEVEL -->
+<div class="unlock-hint" id="unlockHint">
+  <i class="fas fa-lock-open"></i> 
+  <strong>Pengetahuan Meningkat!</strong> Baca juga artikel Kerajaan Nusantara
+</div>
+
+<!-- QUIZ CONTAINER -->
+<div id="quiz">
+  <h2><i class="fas fa-brain"></i> Quiz Manusia Purba</h2>
+  <p class="quiz-question" id="quizQuestion">Memuat pertanyaan...</p>
+  
+  <div class="quiz-options" id="quizOptions">
+    <!-- Opsi jawaban akan diisi oleh JavaScript -->
+  </div>
+  
+  <div class="quiz-result" id="quizResult"></div>
+  
+  <div class="popup-buttons">
+    <button id="nextQuizBtn" class="btn" style="display:none;">
+      <i class="fas fa-arrow-right"></i> Pertanyaan Berikutnya
+    </button>
+    <button id="finishQuizBtn" class="btn btn-primary" style="display:none;">
+      <i class="fas fa-trophy"></i> Selesaikan Quiz
+    </button>
+  </div>
+</div>
+
+<!-- CAHAYA API BESAR -->
+<div class="glow-large"></div>
+
+<!-- OBOR BESAR TENGAH -->
+<div class="torch-container">
+  <div class="torch-stand"></div>
+  <div class="torch-head"></div>
+  <div class="fire-large">
+    <div class="flame-large"></div>
+    <div class="flame-large"></div>
+    <div class="flame-large"></div>
+  </div>
+</div>
+
+<!-- OBOR-OBOR KECIL -->
+<div class="side-torch left">
+  <div class="small-torch"></div>
+  <div class="small-flame"></div>
+</div>
+
+<div class="side-torch right">
+  <div class="small-torch"></div>
+  <div class="small-flame"></div>
+</div>
+
+<!-- ARTEFAK -->
+<div class="artifacts-container">
+  <div class="artifact" style="top:20%;left:15%;" data-title="Homo Erectus" data-desc="Manusia purba yang hidup sekitar 1,5 juta tahun lalu. Fosilnya ditemukan di Trinil dan Sangiran, Jawa Tengah. Mereka sudah bisa berjalan tegak dan menggunakan alat batu." data-link="https://id.wikipedia.org/wiki/Homo_erectus">
+    <div class="artifact-bg"></div>
+    <img src="Homo_erectus_lantianensis.jpg" alt="Homo Erectus" loading="lazy">
+  </div>
+  
+  <div class="artifact" style="top:60%;left:20%;" data-title="Kapak Genggam" data-desc="Alat batu digunakan untuk memotong, menguliti hewan buruan, dan memproses kayu. Dibuat dengan membentuk batu menjadi ujung yang tajam melalui proses pemukulan." data-link="https://id.wikipedia.org/wiki/Kapak_genggam">
+    <div class="artifact-bg"></div>
+    <img src="kapak.jpg" alt="Kapak genggam" loading="lazy">
+  </div>
+  
+  <div class="artifact" style="top:15%;left:45%;" data-title="Lukisan Dinding Gua" data-desc="Lukisan gua di Maros, Sulawesi Selatan berusia sekitar 40.000 tahun. Menunjukkan ekspresi seni awal manusia purba dan kehidupan mereka sehari-hari." data-link="https://www.dw.com/id/lukisan-gua-di-sulawesi-tertua-di-dunia/a-17986287">
+    <div class="artifact-bg"></div>
+    <img src="lukisan.png" alt="Lukisan Gua" loading="lazy">
+  </div>
+  
+  <div class="artifact" style="top:50%;left:50%;" data-title="Homo Floresiensis" data-desc="Manusia purba bertubuh kecil dari Flores, dijuluki 'Hobbit'. Tingginya hanya sekitar 1 meter dan hidup sekitar 50.000-100.000 tahun lalu." data-link="https://www.kompas.com/stori/read/2021/04/15/174344479/homo-floresiensis-penemu-ciri-ciri-dan-kontroversi">
+    <div class="artifact-bg"></div>
+    <img src="floresiens.png" alt="Homo Floresiensis" loading="lazy">
+  </div>
+  
+  <div class="artifact" style="top:30%;left:70%;" data-title="Homo Wajakensis" data-desc="Ditemukan di Tulungagung, Jawa Timur sekitar 40.000 tahun lalu. Fosil ini menunjukkan ciri-ciri campuran antara manusia purba dan modern." data-link="https://www.kompas.com/stori/read/2021/04/15/174846479/homo-wajakensis-penemu-kehidupan-dan-ciri-ciri">
+    <div class="artifact-bg"></div>
+    <img src="wajakensis.jpeg" alt="Homo Wajakensis" loading="lazy">
+  </div>
+  
+  <div class="artifact" style="top:65%;left:65%;" data-title="Leang Tedongnge" data-desc="Lukisan figuratif hewan tertua di dunia, berusia sekitar **45.500 tahun**, ditemukan di **Gua Leang Tedongnge**, Sulawesi Selatan. Menggambarkan babi kutil Sulawesi (Sus celebensis)." data-link="https://id.wikipedia.org/wiki/Leang_Tedongnge">
+    <div class="artifact-bg"></div>
+    <img src="leang.png" alt="Leang Tedongnge" loading="lazy">
+  </div>
+  
+  <div class="artifact" style="top:45%;left:85%;" data-title="Fosil Tulang" data-desc="Fosil tulang manusia purba ditemukan di berbagai gua di Jawa. Penemuan ini membantu ilmuwan memahami evolusi manusia di Indonesia." data-link="https://regional.kompas.com/read/2022/08/02/201825478/7-fosil-manusia-purba-di-indonesia-dan-lokasi-penemuan?page=all"">
+    <div class="artifact-bg"></div>
+    <img src="tulang.png" alt="Fosil Tulang" loading="lazy">
+  </div>
+</div>
+
+<!-- POPUP INFORMASI - DIPERBAIKI -->
+<div id="popup">
+  <div class="popup-content">
+    <div class="popup-left">
+      <h2 id="popupTitle">Judul Artefak</h2>
+      <div class="article-content" id="popupDesc">
+        <!-- Konten artikel akan diisi oleh JavaScript -->
+      </div>
+      <div class="popup-buttons">
+        <a id="popupLink" target="_blank"><i class="fas fa-external-link-alt"></i> Baca artikel lebih lanjut</a>
+        <button id="closePopup" class="btn"><i class="fas fa-times"></i> Tutup</button>
+      </div>
+    </div>
+    <div class="popup-right">
+      <img id="popupImg" src="" alt="">
+    </div>
+  </div>
+</div>
+
+<!-- TOMBOL KEMBALI -->
+<button id="backBtn" class="btn"><i class="fas fa-arrow-left"></i> Kembali ke Gerbang Silam</button>
+
+<!-- AUDIO CONTROLS -->
+<div class="audio-controls">
+  <button id="bgMusicToggle" class="audio-btn">
+    <i class="fas fa-volume-up"></i>
+  </button>
+  <button id="sfxToggle" class="audio-btn">
+    <i class="fas fa-bell"></i>
+  </button>
+</div>
+
+<!-- AUDIO ELEMENTS - MENGGUNAKAN BASE64 AUDIO UNTUK KEANDALAN -->
+<audio id="bgMusic" loop>
+  <source src="shaman-ritual-firewav-14791.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="clickSound" preload="auto">
+  <source src="data:audio/mpeg;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU4Ljc2LjEwMAAAAAAAAAAAAAAA//tQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAABAAACcQCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////8AAABQTEFNRTMuMTAwBKkAAAAAAAAAADUgJAOHQQAB9AAACHDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//tQxAAAAAAAAAAAAAAAAAAAAAAAASAAAAAAA" type="audio/mpeg">
+</audio>
+
+<audio id="successSound" preload="auto">
+  <source src="data:audio/mpeg;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU4Ljc2LjEwMAAAAAAAAAAAAAAA//tQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAABAAACcQCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////8AAABQTEFNRTMuMTAwBKkAAAAAAAAAADUgJAOHQQAB9AAACHDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//tQxAAAAAAAAAAAAAAAAAAAAAAAASAAAAAAA" type="audio/mpeg">
+</audio>
+
+<script>
+// === SISTEM PROGRESS LEVEL - DISISIPKAN ===
+const levelOrder = ['purba', 'kerajaan', 'penjajahan', 'kemerdekaan'];
+
+function getPlayerProgress() {
+  return JSON.parse(localStorage.getItem('playerProgress')) || {
+    completedLevels: [],
+    currentLevel: 'purba'
+  };
+}
+
+function savePlayerProgress(progress) {
+  localStorage.setItem('playerProgress', JSON.stringify(progress));
+}
+
+function completeLevel(level) {
+  const progress = getPlayerProgress();
+  
+  if (!progress.completedLevels.includes(level)) {
+    progress.completedLevels.push(level);
+    
+    const currentIndex = levelOrder.indexOf(level);
+    if (currentIndex < levelOrder.length - 1) {
+      progress.currentLevel = levelOrder[currentIndex + 1];
+    }
+    
+    savePlayerProgress(progress);
+    return true;
+  }
+  return false;
+}
+
+// === INISIALISASI ===
+document.addEventListener('DOMContentLoaded', function() {
+  // === VARIABEL ===
+  const artifacts = document.querySelectorAll('.artifact');
+  const popup = document.getElementById('popup');
+  const popupTitle = document.getElementById('popupTitle');
+  const popupImg = document.getElementById('popupImg');
+  const popupDesc = document.getElementById('popupDesc');
+  const popupLink = document.getElementById('popupLink');
+  const closePopup = document.getElementById('closePopup');
+  const backBtn = document.getElementById('backBtn');
+  const progressFill = document.getElementById('progressFill');
+  const progressText = document.getElementById('progressText');
+  const unlockHint = document.getElementById('unlockHint');
+  
+  // Audio elements
+  const bgMusic = document.getElementById('bgMusic');
+  const clickSound = document.getElementById('clickSound');
+  const successSound = document.getElementById('successSound');
+  const bgMusicToggle = document.getElementById('bgMusicToggle');
+  const sfxToggle = document.getElementById('sfxToggle');
+  
+  // Quiz elements
+  const quiz = document.getElementById('quiz');
+  const quizQuestion = document.getElementById('quizQuestion');
+  const quizOptions = document.getElementById('quizOptions');
+  const quizResult = document.getElementById('quizResult');
+  const nextQuizBtn = document.getElementById('nextQuizBtn');
+  const finishQuizBtn = document.getElementById('finishQuizBtn');
+  
+  let visited = new Set();
+  let allArtifactsRead = false;
+  let quizCompleted = false;
+  let currentQuestion = 0;
+  let score = 0;
+  let bgMusicEnabled = true;
+  let sfxEnabled = true;
+
+  // Data quiz
+  const quizData = [
+    {
+      question: "Manusia purba apakah yang ditemukan di Trinil, Jawa Tengah?",
+      options: ["Homo Erectus", "Homo Floresiensis", "Homo Wajakensis", "Homo Sapiens"],
+      correct: 0
+    },
+    {
+      question: "Alat apakah yang paling penting bagi manusia purba untuk memotong dan berburu?",
+      options: ["Tombak Bambu", "Pisau Logam", "Kapak Genggam", "Busur Panah"],
+      correct: 2
+    },
+    {
+      question: "Manusia purba dari Flores yang bertubuh kecil dijuluki apa?",
+      options: ["Kerdil", "Hobbit",  "Pygmy", "Lilliput"],
+      correct: 1
+    }
+  ];
+
+  // === MULAI APLIKASI ===
+  function initApp() {
+    // Preload gambar dengan lazy loading
+    preloadImages();
+    
+    // Update progress
+    updateProgress();
+    
+    // Setup audio controls
+    setupAudioControls();
+    
+    // Mulai background music setelah interaksi pertama
+    setupAudioInteraction();
+  }
+
+  // === SETUP AUDIO CONTROLS ===
+  function setupAudioControls() {
+    // Background music toggle
+    bgMusicToggle.addEventListener('click', () => {
+      bgMusicEnabled = !bgMusicEnabled;
+      if (bgMusicEnabled) {
+        bgMusic.play().catch(e => console.log("Autoplay prevented:", e));
+        bgMusicToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
+      } else {
+        bgMusic.pause();
+        bgMusicToggle.innerHTML = '<i class="fas fa-volume-mute"></i>';
+      }
+    });
+    
+    // Sound effects toggle
+    sfxToggle.addEventListener('click', () => {
+      sfxEnabled = !sfxEnabled;
+      if (sfxEnabled) {
+        sfxToggle.innerHTML = '<i class="fas fa-bell"></i>';
+      } else {
+        sfxToggle.innerHTML = '<i class="fas fa-bell-slash"></i>';
+      }
+    });
+  }
+
+  // === SETUP AUDIO INTERACTION ===
+  function setupAudioInteraction() {
+    // Set volume untuk semua audio
+    bgMusic.volume = 0.3;
+    
+    // Tunggu interaksi pertama untuk memulai audio
+    const startAudio = () => {
+      if (bgMusicEnabled) {
+        bgMusic.play().catch(e => console.log("Audio play error:", e));
+      }
+      
+      // Hapus event listeners setelah interaksi pertama
+      document.removeEventListener('click', startAudio);
+      document.removeEventListener('touchstart', startAudio);
+    };
+    
+    document.addEventListener('click', startAudio);
+    document.addEventListener('touchstart', startAudio);
+  }
+
+  // === PLAY SOUND EFFECT ===
+  function playSoundEffect(type) {
+    if (!sfxEnabled) return;
+    
+    try {
+      // Buat audio context untuk sound effect yang lebih andal
+      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+      
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+      
+      if (type === 'click') {
+        // Sound effect untuk klik - pendek dan tajam
+        oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+        oscillator.type = 'sine';
+        gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+        oscillator.start(audioContext.currentTime);
+        oscillator.stop(audioContext.currentTime + 0.1);
+      } else if (type === 'success') {
+        // Sound effect untuk sukses - lebih cerah
+        oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime); // C5
+        oscillator.frequency.setValueAtTime(659.25, audioContext.currentTime + 0.1); // E5
+        oscillator.frequency.setValueAtTime(783.99, audioContext.currentTime + 0.2); // G5
+        oscillator.type = 'sine';
+        gainNode.gain.setValueAtTime(0.4, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+        oscillator.start(audioContext.currentTime);
+        oscillator.stop(audioContext.currentTime + 0.5);
+      }
+    } catch (e) {
+      console.log("Web Audio API tidak didukung:", e);
+      // Fallback menggunakan HTML5 Audio
+      try {
+        const sound = type === 'click' ? clickSound : successSound;
+        const soundClone = sound.cloneNode();
+        soundClone.volume = 0.5;
+        soundClone.play().catch(err => console.log("Fallback audio error:", err));
+      } catch (fallbackError) {
+        console.log("Semua metode audio gagal");
+      }
+    }
+  }
+
+  // === PRELOAD IMAGES ===
+  function preloadImages() {
+    artifacts.forEach(artifact => {
+      const img = artifact.querySelector('img');
+      if (img.complete) {
+        artifact.classList.add('loaded');
+      } else {
+        img.addEventListener('load', () => {
+          artifact.classList.add('loaded');
+        });
+        img.addEventListener('error', () => {
+          console.warn('Gagal memuat gambar:', img.src);
+        });
+      }
+    });
+  }
+
+  // === UPDATE PROGRESS ===
+  function updateProgress() {
+    const progress = (visited.size / artifacts.length) * 100;
+    progressFill.style.width = `${progress}%`;
+    progressText.textContent = `${visited.size}/${artifacts.length}`;
+    
+    // Jika semua artefak sudah dikunjungi
+    if (visited.size === artifacts.length && !allArtifactsRead) {
+      allArtifactsRead = true;
+      showUnlockHint();
+    }
+  }
+
+  // === TAMPILKAN PETUNJUK UNLOCK LEVEL ===
+  function showUnlockHint() {
+    unlockHint.classList.add('show');
+    playSoundEffect('success');
+    
+    // Setelah 3 detik, tampilkan quiz
+    setTimeout(() => {
+      unlockHint.classList.remove('show');
+      startQuiz();
+    }, 3000);
+  }
+
+  // === MULAI QUIZ ===
+  function startQuiz() {
+    currentQuestion = 0;
+    score = 0;
+    quizCompleted = false;
+    showQuestion();
+    quiz.style.display = 'block';
+  }
+
+  // === TAMPILKAN PERTANYAAN QUIZ ===
+  function showQuestion() {
+    if (currentQuestion >= quizData.length) {
+      finishQuiz();
+      return;
+    }
+
+    const question = quizData[currentQuestion];
+    quizQuestion.textContent = question.question;
+    quizOptions.innerHTML = '';
+    quizResult.className = 'quiz-result';
+    quizResult.style.display = 'none';
+    nextQuizBtn.style.display = 'none';
+    finishQuizBtn.style.display = 'none';
+
+    question.options.forEach((option, index) => {
+      const optionElement = document.createElement('div');
+      optionElement.className = 'quiz-option';
+      optionElement.textContent = option;
+      optionElement.addEventListener('click', () => checkAnswer(index));
+      quizOptions.appendChild(optionElement);
+    });
+  }
+
+  // === CEK JAWABAN QUIZ ===
+  function checkAnswer(selectedIndex) {
+    const question = quizData[currentQuestion];
+    const options = quizOptions.querySelectorAll('.quiz-option');
+    
+    // Nonaktifkan semua opsi
+    options.forEach(option => {
+      option.style.pointerEvents = 'none';
+    });
+
+    // Tandai jawaban yang benar dan salah
+    options[question.correct].classList.add('correct');
+    if (selectedIndex !== question.correct) {
+      options[selectedIndex].classList.add('incorrect');
+    }
+
+    // Tampilkan hasil
+    if (selectedIndex === question.correct) {
+      score++;
+      quizResult.textContent = 'Benar! 🎉';
+      quizResult.className = 'quiz-result success';
+      playSoundEffect('success');
+    } else {
+      quizResult.textContent = 'Salah! Coba lagi.';
+      quizResult.className = 'quiz-result error';
+    }
+    quizResult.style.display = 'block';
+
+    // Tampilkan tombol berikutnya
+    if (currentQuestion < quizData.length - 1) {
+      nextQuizBtn.style.display = 'block';
+    } else {
+      finishQuizBtn.style.display = 'block';
+    }
+  }
+
+  // === PERTANYAAN BERIKUTNYA ===
+  nextQuizBtn.addEventListener('click', () => {
+    currentQuestion++;
+    showQuestion();
+  });
+
+  // === SELESAI QUIZ - DIPERBAIKI ===
+  function finishQuiz() {
+    quizCompleted = true;
+    quiz.style.display = 'none';
+    
+    // Tampilkan tombol kembali
+    backBtn.style.display = 'block';
+    
+    // SIMPAN PROGRESS KE LOCALSTORAGE - INI YANG PENTING!
+    if (completeLevel('purba')) {
+      console.log('Level purba berhasil diselesaikan!');
+    }
+    
+    // Tampilkan hasil akhir
+    setTimeout(() => {
+      alert(`🎉 Quiz selesai! Skor Anda: ${score}/${quizData.length}\n\nLevel Kerajaan Nusantara sekarang terbuka!\n\nKlik tombol "Kembali ke Gerbang Silam" untuk melanjutkan.`);
+    }, 500);
+  }
+
+  finishQuizBtn.addEventListener('click', finishQuiz);
+
+  // === INTERAKSI ARTEFAK ===
+  artifacts.forEach(artifact => {
+    artifact.addEventListener('click', () => {
+      const title = artifact.dataset.title;
+      const desc = artifact.dataset.desc;
+      const link = artifact.dataset.link;
+      const imgSrc = artifact.querySelector('img').src;
+      
+      // Play click sound effect
+      playSoundEffect('click');
+      
+      // Tampilkan popup
+      popupTitle.textContent = title;
+      popupImg.src = imgSrc;
+      popupLink.href = link;
+      
+      // Isi konten artikel berdasarkan artefak yang diklik
+      const articleContent = generateArticleContent(title, desc);
+      popupDesc.innerHTML = articleContent;
+      
+      popup.style.display = 'block';
+      
+      // Tambah ke daftar kunjungan jika belum
+      if (!visited.has(title)) {
+        visited.add(title);
+        updateProgress();
+      }
+    });
+  });
+
+  // === FUNGSI UNTUK MEMBUAT KONTEN ARTIKEL PANJANG ===
+  function generateArticleContent(title, baseDesc) {
+    // Artikel untuk setiap jenis artefak
+    const articles = {
+      "Homo Erectus": `
+        <p>${baseDesc}</p>
+        
+        <h3>Penemuan dan Sejarah</h3>
+        <p>Fosil Homo erectus pertama kali ditemukan oleh Eugene Dubois pada tahun 1891 di Trinil, Jawa Tengah. Penemuan ini menjadi sangat penting karena merupakan salah satu fosil manusia purba tertua yang ditemukan di luar Afrika.</p>
+        
+        <h3>Ciri-Ciri Fisik</h3>
+        <p>Homo erectus memiliki ciri-ciri fisik yang khas:</p>
+        <ul>
+          <li>Tinggi badan sekitar 165-180 cm untuk jantan dan 150 cm untuk betina</li>
+          <li>Volume otak sekitar 900-1100 cc, lebih besar dari manusia purba sebelumnya</li>
+          <li>Tulang kening yang menonjol (torus supraorbitalis)</li>
+          <li>Rahang yang kuat dengan gigi yang besar</li>
+        </ul>
+      `,
+      
+      "Kapak Genggam": `
+        <p>${baseDesc}</p>
+        
+        <h3>Jenis-Jenis Kapak Genggam</h3>
+        <p>Kapak Genggam yang digunakan manusia purba memiliki berbagai bentuk dan fungsi:</p>
+        <ul>
+          <li><strong>Kapak Perimbas:</strong> Digunakan untuk merimbas kayu dan memecah tulang</li>
+          <li><strong>Kapak Penetak:</strong> Untuk menebang pohon dan memotong kayu</li>
+          <li><strong>Kapak Genggam:</strong> Serbaguna, digunakan untuk berbagai keperluan</li>
+        </ul>
+      `,
+      
+      "Lukisan Dinding Gua": `
+        <p>${baseDesc}</p>
+        
+        <h3>Lokasi Penemuan di Indonesia</h3>
+        <p>Selain di Maros, Sulawesi Selatan, lukisan gua purba juga ditemukan di berbagai lokasi di Indonesia:</p>
+        <ul>
+          <li>Gua Leang-Leang, Sulawesi Selatan</li>
+          <li>Gua Tabuhan, Jawa Timur</li>
+          <li>Gua Pettakere, Sulawesi Selatan</li>
+        </ul>
+      `,
+      
+      "Homo Floresiensis": `
+        <p>${baseDesc}</p>
+        
+        <h3>Penemuan Mengejutkan</h3>
+        <p>Homo floresiensis ditemukan pada tahun 2003 di Gua Liang Bua, Flores, Indonesia oleh tim arkeolog Australia dan Indonesia.</p>
+        
+        <h3>Ciri-Ciri Fisik</h3>
+        <p>Homo floresiensis memiliki karakteristik fisik yang unik:</p>
+        <ul>
+          <li>Tinggi badan hanya sekitar 106 cm untuk betina dan 110 cm untuk jantan</li>
+          <li>Volume otak sekitar 380-420 cc, sangat kecil bahkan dibandingkan dengan kera</li>
+          <li>Struktur tubuh proporsional seperti manusia modern namun dalam ukuran mini</li>
+        </ul>
+      `,
+      
+      "Homo Wajakensis": `
+        <p>${baseDesc}</p>
+        
+        <h3>Penemuan dan Signifikansi</h3>
+        <p>Homo wajakensis ditemukan oleh B.D. van Rietschoten pada tahun 1889 di dekat Tulungagung, Jawa Timur.</p>
+        
+        <h3>Ciri-Ciri Fisik</h3>
+        <p>Homo wajakensis memiliki campuran karakteristik purba dan modern:</p>
+        <ul>
+          <li>Volume otak sekitar 1300-1600 cc, sebanding dengan manusia modern</li>
+          <li>Tulang kening yang masih menonjol tetapi tidak setebal Homo erectus</li>
+          <li>Struktur wajah yang lebih datar dan modern</li>
+        </ul>
+      `,
+      
+      "Leang Tedongnge": `
+        <p>${baseDesc}</p>
+        
+        <h3>Lokasi Leang Tedongnge</h3>
+        <p>'Gua Kerbau') atau Gua Tedongnge adalah situs arkeologi berupa gua prasejarah yang terletak di kawasan Karst Maros-Pangkep, Taman Nasional Bantimurung Bulusaraung.</p>
+      `,
+      
+      "Fosil Tulang": `
+        <p>${baseDesc}</p>
+        
+        <h3>Proses Fosilisasi</h3>
+        <p>Fosilisasi adalah proses yang langka dan membutuhkan kondisi khusus:</p>
+        <ul>
+          <li>Penguburan cepat untuk mencegah decomposisi</li>
+          <li>Mineralisasi dimana material organik digantikan oleh mineral</li>
+          <li>Tekanan dan waktu yang cukup (biasanya ribuan hingga jutaan tahun)</li>
+        </ul>
+      `
+    };
+    
+    // Kembalikan artikel yang sesuai atau artikel default
+    return articles[title] || `<p>${baseDesc}</p>`;
+  }
+
+  // === TUTUP POPUP ===
+  closePopup.addEventListener('click', () => {
+    popup.style.display = 'none';
+  });
+
+  // === KEMBALI KE LOBI - DIPERBAIKI ===
+  backBtn.addEventListener('click', () => {
+    // Hanya bisa kembali jika quiz sudah selesai
+    if (quizCompleted) {
+      // Animasi keluar sebelum kembali
+      document.body.style.opacity = '0';
+      document.body.style.transition = 'opacity 0.5s ease';
+      
+      setTimeout(() => {
+        // Kembali ke index.html (lobby)
+        window.location.href = 'index.html';
+      }, 500);
+    } else {
+      alert('Selesaikan quiz terlebih dahulu untuk membuka level berikutnya!');
+    }
+  });
+
+  // === INISIALISASI APLIKASI ===
+  initApp();
+});
+
+// === OPTIMASI PERFORMANCE ===
+// Mencegah behavior drag pada gambar
+document.addEventListener('dragstart', (e) => {
+  if (e.target.tagName === 'IMG') {
+    e.preventDefault();
+  }
+});
+</script>
+</body>
+</html>

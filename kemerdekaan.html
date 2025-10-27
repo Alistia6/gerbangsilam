@@ -1,0 +1,1670 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gerbang Silam - Sejarah Indonesia</title>
+<link rel="icon" type="image/x-icon" href="logogs.ico">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+  background: 
+    linear-gradient(rgba(139, 0, 0, 0.375), rgba(154, 133, 133, 0.6)), /* gradasi kemerahan */
+    url('kemerdekaan.jpg') center center / cover no-repeat;
+  color: #fff;
+}
+
+.side-panel {
+  position: absolute;
+  top: 0;
+  z-index: -1;
+}
+
+
+/* HEADER DI ATAS KIRI */
+#hud {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 10;
+}
+
+#location {
+  background: rgba(255, 0, 0, 0.9);
+  padding: 15px 25px;
+  border-radius: 25px;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 1.1rem;
+  backdrop-filter: blur(15px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  letter-spacing: 1px;
+  max-width: 280px;
+  border: 2px solid #ffffff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* PROGRESS INDICATOR DI ATAS KANAN */
+.progress-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 15px 20px;
+  border-radius: 25px;
+  backdrop-filter: blur(15px);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #ff0000;
+  font-size: 0.9rem;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+  z-index: 10;
+  max-width: 220px;
+  border: 2px solid #ff0000;
+}
+
+.progress-bar {
+  width: 100px;
+  height: 8px;
+  background: rgba(255, 0, 0, 0.3);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ff0000, #b22222, #8b0000);
+  border-radius: 4px;
+  transition: width 0.5s ease;
+  width: 0%;
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-fill::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+/* ARTEFAK DENGAN EFEK GUA DAN TEPI BLUR HALUS */
+.artifacts-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* Setiap artefak hanya berupa gambar bercahaya */
+.artifact {
+  position: absolute;
+  cursor: pointer;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  overflow: visible;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.4s ease, filter 0.4s ease;
+  animation: float 6s infinite ease-in-out alternate;
+  z-index: 5;
+  filter: drop-shadow(0 0 15px rgba(255, 210, 120, 0.4));
+}
+
+.artifact:hover {
+  transform: scale(1.2) rotate(4deg);
+  filter: drop-shadow(0 0 25px rgba(255, 220, 150, 0.8));
+  z-index: 10;
+}
+
+/* Efek lembut di sekitar gambar, seolah ada kabut gua */
+.artifact::before {
+  content: "";
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  top: -50%;
+  left: -50%;
+  background: radial-gradient(circle, rgba(255, 220, 150, 0.25), transparent 70%);
+  filter: blur(25px);
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+}
+
+.artifact:hover::before {
+  opacity: 1;
+}
+
+/* Gambar utama */
+.artifact img {
+  width: 130%;
+  height: 130%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px rgba(255, 240, 200, 0.3))
+          blur(1.5px);
+  border-radius: 50%;
+  position: relative;
+  z-index: 2;
+}
+
+@keyframes float {
+  from { transform: translateY(0px) rotate(-1deg); }
+  to { transform: translateY(-15px) rotate(1deg); }
+}
+
+/* PETUNJUK UNLOCK LEVEL */
+.unlock-hint {
+  position: absolute;
+  bottom: 140px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 0, 0, 0.9);
+  padding: 20px 35px;
+  border-radius: 25px;
+  color: #ffffff;
+  text-align: center;
+  backdrop-filter: blur(15px);
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.5);
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 0.5s;
+  border: 2px solid #ffffff;
+}
+
+.unlock-hint.show {
+  opacity: 1;
+}
+
+.unlock-hint i {
+  color: #ffffff;
+  margin-right: 10px;
+  font-size: 1.2rem;
+}
+
+/* QUIZ STYLES */
+#quiz {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 500px;
+  background: rgba(255, 0, 0, 0.95);
+  border-radius: 25px;
+  padding: 35px;
+  text-align: center;
+  color: #ffffff;
+  backdrop-filter: blur(25px);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.7);
+  z-index: 100;
+  animation: popupAppear 0.4s ease-out;
+  border: 3px solid #ffffff;
+}
+
+.quiz-question {
+  font-size: 1.3rem;
+  margin-bottom: 25px;
+  color: #ffffff;
+  font-weight: 600;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 25px;
+}
+
+.quiz-option {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 15px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: left;
+  border: 2px solid transparent;
+  color: #ffffff;
+}
+
+.quiz-option:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.quiz-option.correct {
+  background: rgba(34, 123, 24, 0.468);
+  border-color: #27933254;
+}
+
+.quiz-option.incorrect {
+  background: rgba(139, 0, 0, 0.6);
+  border-color: #8b0000;
+}
+
+.quiz-result {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 12px;
+  font-weight: 600;
+  display: none;
+}
+
+.quiz-result.success {
+  background: rgba(12, 132, 14, 0.375);
+  color: #ffffff;
+  display: block;
+  border: 2px solid #ffffff;
+}
+
+.quiz-result.error {
+  background: rgba(139, 0, 0, 0.6);
+  color: #ffffff;
+  display: block;
+  border: 2px solid #8b0000;
+}
+
+/* POPUP INFORMASI YANG DIPERBAIKI */
+#popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 850px;
+  max-height: 85vh;
+  background: rgba(255, 0, 0, 0.95);
+  border-radius: 25px;
+  padding: 0;
+  color: #ffffff;
+  backdrop-filter: blur(25px);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.7);
+  z-index: 100;
+  animation: popupAppear 0.4s ease-out;
+  border: 3px solid #ffffff;
+  overflow: hidden;
+}
+
+.popup-content {
+  display: flex;
+  height: 100%;
+}
+
+.popup-left {
+  flex: 1;
+  padding: 35px;
+  overflow-y: auto;
+  max-height: 75vh;
+}
+
+.popup-right {
+  flex: 0 0 35%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  background: rgba(178, 34, 34, 0.7);
+  border-left: 2px solid #ffffff;
+}
+
+@keyframes popupAppear {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+#popup h2 {
+  color: #ffffff;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+
+#popupImg {
+  width: 100%;
+  max-width: 250px;
+  height: auto;
+  object-fit: contain;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  margin-bottom: 20px;
+  border: 2px solid #ffffff;
+}
+
+.article-content {
+  line-height: 1.7;
+  color: #ffffff;
+  font-size: 1.05rem;
+  text-align: justify;
+}
+
+.article-content p {
+  margin-bottom: 20px;
+}
+
+.article-content h3 {
+  color: #ffffff;
+  margin: 25px 0 15px;
+  font-size: 1.3rem;
+  border-bottom: 1px solid #ffffff;
+  padding-bottom: 5px;
+}
+
+.article-content ul {
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
+
+.article-content li {
+  margin-bottom: 8px;
+  position: relative;
+  padding-left: 10px;
+}
+
+.article-content li:before {
+  content: "•";
+  color: #ffffff;
+  position: absolute;
+  left: -15px;
+}
+
+.popup-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 25px;
+  flex-wrap: wrap;
+}
+
+#popupLink {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 12px 20px;
+  border-radius: 12px;
+  margin-top: 10px;
+  border: 2px solid #ffffff;
+}
+
+#popupLink:hover {
+  color: #ff0000;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+/* TOMBOL */
+.btn {
+  background: linear-gradient(135deg, #b22222 0%, #8b0000 100%);
+  border: none;
+  padding: 14px 28px;
+  color: #fff;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid #ffffff;
+}
+
+.btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(135deg, #ff0000 0%, #b22222 100%);
+}
+
+.btn:hover::before {
+  left: 100%;
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f8f8 100%);
+  color: #ff0000;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #f8f8f8 0%, #ffffff 100%);
+}
+
+/* TOMBOL KEMBALI */
+#backBtn {
+  display: none;
+  position: fixed;
+  bottom: 35px;
+  right: 35px;
+  z-index: 50;
+  padding: 16px 28px;
+  font-size: 1rem;
+  background: linear-gradient(135deg, #2d6a4f 0%, #1b4332 100%);
+}
+
+#backBtn:hover {
+  background: linear-gradient(135deg, #40916c 0%, #2d6a4f 100%);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  #hud {
+    left: 10px;
+    top: 10px;
+  }
+  
+  #location {
+    font-size: 1rem;
+    padding: 12px 20px;
+    max-width: 200px;
+  }
+  
+  .progress-container {
+    right: 10px;
+    top: 10px;
+    padding: 12px 15px;
+    max-width: 180px;
+  }
+  
+  .progress-bar {
+    width: 80px;
+  }
+  
+  .artifact {
+    width: 80px;
+    height: 80px;
+  }
+  
+  #popup, #quiz {
+    width: 95%;
+    padding: 20px;
+  }
+  
+  .side-panel {
+    width: 60px;
+  }
+  
+  .popup-content {
+    flex-direction: column-reverse;
+  }
+  
+  .popup-right {
+    border-left: none;
+    border-top: 2px solid #ffffff;
+    padding: 20px;
+  }
+  
+  .popup-left {
+    padding: 25px;
+  }
+  
+  #popup {
+    max-height: 90vh;
+  }
+}
+
+/* ANIMASI UNTUK PETUNJUK LEVEL */
+@keyframes pulseHint {
+  0% { transform: translateX(-50%) scale(1); }
+  50% { transform: translateX(-50%) scale(1.05); }
+  100% { transform: translateX(-50%) scale(1); }
+}
+
+.unlock-hint.show {
+  animation: pulseHint 2s infinite;
+}
+
+/* AUDIO CONTROLS */
+.audio-controls {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 100;
+  display: flex;
+  gap: 10px;
+}
+
+.audio-btn {
+  background: rgba(255, 0, 0, 0.9);
+  border: none;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  border: 2px solid #ffffff;
+}
+
+.audio-btn:hover {
+  transform: scale(1.1);
+  background: rgba(178, 34, 34, 0.9);
+}
+
+/* FINAL POPUP SERTIFIKAT */
+#finalPopup {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.8);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 9999;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+}
+
+.certificate {
+    background: linear-gradient(145deg, #fff8dc, #fff);
+    color: #333;
+    border: 6px solid gold;
+    border-radius: 20px;
+    padding: 40px 60px;
+    text-align: center;
+    box-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
+    animation: fadeInScale 0.8s ease forwards;
+}
+
+.certificate h1 {
+    color: #d4af37;
+    font-size: 2rem;
+}
+
+.certificate .player-name {
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin: 10px 0;
+}
+
+/* Tambahkan di bagian CSS untuk tombol sertifikat */
+.certificate .popup-buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 25px;
+}
+
+.certificate .btn {
+  background: linear-gradient(135deg, #2d6a4f 0%, #1b4332 100%);
+  border: 2px solid #ffffff;
+  padding: 12px 24px;
+  color: #ffffff;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.certificate .btn:hover {
+  background: linear-gradient(135deg, #40916c 0%, #2d6a4f 100%);
+  transform: translateY(-2px);
+}
+
+.certificate .signature {
+    margin-top: 20px;
+    font-style: italic;
+    color: #555;
+}
+
+.countdown {
+    margin-top: 25px;
+    font-size: 1.1rem;
+    color: #FFD700;
+}
+
+@keyframes fadeInScale {
+    from { transform: scale(0.5); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* Confetti */
+.confetti-container {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    top: -10px;
+    opacity: 0.9;
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+/* Achievement stats */
+.achievement-stats {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 20px 0;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    display: block;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #8b0000;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.celebration-text {
+    font-size: 1.2rem;
+    color: #8b0000;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.badge {
+    font-size: 3rem;
+    margin: 15px 0;
+    color: #d4af37;
+}
+</style>
+
+</head>
+<body>
+
+<!-- BACKGROUND WARNA MERAH SEDERHANA -->
+<div class="background-red"></div>
+<div class="white-overlay"></div>
+<div class="side-panel left"></div>
+<div class="side-panel right"></div>
+
+<!-- HUD DI KIRI ATAS -->
+<div id="hud">
+  <div id="location">Kemerdekaan Indonesia</div>
+</div>
+
+<!-- PROGRESS INDICATOR DI KANAN ATAS -->
+<div class="progress-container">
+  <i class="fas fa-flag"></i>
+  <span>Penemuan:</span>
+  <div class="progress-bar">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+  <span id="progressText">0/6</span>
+</div>
+
+<!-- PETUNJUK UNLOCK LEVEL -->
+<div class="unlock-hint" id="unlockHint">
+  <i class="fas fa-lock-open"></i> 
+  <strong>Pengetahuan Meningkat!</strong> Terus belajar...
+</div>
+
+<!-- ARTEFAK KEMERDEKAAN -->
+<div class="artifacts-container">
+  <div class="artifact" style="top:20%;left:15%;" data-title="Proklamasi 1945" data-desc="Pembacaan teks Proklamasi Kemerdekaan Indonesia oleh Soekarno-Hatta pada 17 Agustus 1945 di Jalan Pegangsaan Timur 56, Jakarta. Momen bersejarah ini menandai lahirnya negara Republik Indonesia setelah berabad-abad dijajah." data-link="https://id.wikipedia.org/wiki/Proklamasi_Kemerdekaan_Indonesia">
+    <div class="artifact-bg"></div>
+    <img src="proklamasi.jpg" alt="Proklamasi 1945" loading="lazy">
+  </div>
+
+  <div class="artifact" style="top:60%;left:20%;" data-title="Bendera Merah Putih" data-desc="Bendera Sang Saka Merah Putih pertama kali dikibarkan setelah proklamasi kemerdekaan. Bendera dijahit oleh Ibu Fatmawati dan menjadi simbol persatuan dan keberanian bangsa Indonesia." data-link="https://id.wikipedia.org/wiki/Bendera_Indonesia">
+    <div class="artifact-bg"></div>
+    <img src="bendera.png" alt="Bendera Merah Putih" loading="lazy">
+  </div>
+
+  <div class="artifact" style="top:15%;left:45%;" data-title="Pancasila" data-desc="Dasar negara Indonesia yang dirumuskan oleh para pendiri bangsa. Pancasila terdiri dari lima sila yang menjadi pedoman hidup berbangsa dan bernegara bagi seluruh rakyat Indonesia." data-link="https://id.wikipedia.org/wiki/Pancasila">
+    <div class="artifact-bg"></div>
+    <img src="pancasila.jpg" alt="Pancasila" loading="lazy">
+  </div>
+
+  <div class="artifact" style="top:50%;left:50%;" data-title="UUD 1945" data-desc="Undang-Undang Dasar Negara Republik Indonesia Tahun 1945 merupakan konstitusi negara yang disahkan sehari setelah proklamasi kemerdekaan. UUD 1945 menjadi dasar hukum tertinggi di Indonesia." data-link="https://id.wikipedia.org/wiki/Undang-Undang_Dasar_Negara_Republik_Indonesia_Tahun_1945">
+    <div class="artifact-bg"></div>
+    <img src="uud.jpg" alt="UUD 1945" loading="lazy">
+  </div>
+
+  <div class="artifact" style="top:30%;left:70%;" data-title="Pahlawan Nasional" data-desc="Para pahlawan yang berjuang merebut dan mempertahankan kemerdekaan Indonesia. Mulai dari Bung Karno, Bung Hatta, hingga pahlawan revolusi yang gugur membela negara." data-link="https://id.wikipedia.org/wiki/Daftar_pahlawan_nasional_Indonesia">
+    <div class="artifact-bg"></div>
+    <img src="PahlawanNasional.jpg" alt="Pahlawan Nasional" loading="lazy">
+  </div>
+
+  <div class="artifact" style="top:65%;left:65%;" data-title="Perjuangan Diplomasi" data-desc="Perjuangan diplomasi Indonesia di forum internasional untuk mendapatkan pengakuan kedaulatan. Termasuk Konferensi Meja Bundar dan perjuangan di PBB untuk mendapatkan pengakuan dunia." data-link="https://www.liputan6.com/feeds/read/5784067/perjuangan-diplomasi-adalah-kunci-mempertahankan-kemerdekaan-indonesia?page=5">
+    <div class="artifact-bg"></div>
+    <img src="diplomasi.jpg" alt="Perjuangan Diplomasi" loading="lazy">
+  </div>
+</div>
+
+<!-- POPUP INFORMASI YANG DIPERBAIKI -->
+<div id="popup">
+  <div class="popup-content">
+    <div class="popup-left">
+      <h2 id="popupTitle">Judul Artefak</h2>
+      <div class="article-content" id="popupDesc">
+        <!-- Konten artikel akan diisi oleh JavaScript -->
+      </div>
+      <div class="popup-buttons">
+        <a id="popupLink" target="_blank"><i class="fas fa-external-link-alt"></i> Baca artikel lebih lanjut</a>
+        <button id="closePopup" class="btn"><i class="fas fa-times"></i> Tutup</button>
+      </div>
+    </div>
+    <div class="popup-right">
+      <img id="popupImg" src="" alt="">
+    </div>
+  </div>
+</div>
+
+<!-- QUIZ CONTAINER -->
+<div id="quiz">
+  <h2><i class="fas fa-flag"></i> Quiz Kemerdekaan Indonesia</h2>
+  <p class="quiz-question" id="quizQuestion">Memuat pertanyaan...</p>
+
+  <div class="quiz-options" id="quizOptions"></div>
+
+  <div class="quiz-result" id="quizResult"></div>
+
+  <div class="popup-buttons">
+    <button id="nextQuizBtn" class="btn" style="display:none;">
+      <i class="fas fa-arrow-right"></i> Pertanyaan Berikutnya
+    </button>
+    <button id="finishQuizBtn" class="btn btn-primary" style="display:none;">
+      <i class="fas fa-trophy"></i> Selesaikan Quiz
+    </button>
+  </div>
+</div>
+
+<!-- FINAL POPUP SERTIFIKAT -->
+<div id="finalPopup" aria-hidden="true"></div>
+
+<!-- TOMBOL KEMBALI -->
+<button id="backBtn" class="btn" style="display:none;"><i class="fas fa-arrow-left"></i> Kembali ke Gerbang Silam</button>
+
+<!-- AUDIO CONTROLS -->
+<div class="audio-controls">
+  <button id="bgMusicToggle" class="audio-btn">
+    <i class="fas fa-volume-up"></i>
+  </button>
+  <button id="sfxToggle" class="audio-btn">
+    <i class="fas fa-bell"></i>
+  </button>
+</div>
+
+<!-- AUDIO ELEMENTS -->
+<audio id="bgMusic" loop>
+  <source src="Indonesia Pusaka.mp3" type="audio/mpeg">
+</audio>
+<audio id="clickSound" preload="auto">
+  <source src="data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQQAAAAAAA==" type="audio/wav">
+</audio>
+<audio id="successSound" preload="auto">
+  <source src="data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQQAAAAAAA==" type="audio/wav">
+</audio>
+
+<script>
+  // === SISTEM PROGRESS LEVEL ===
+const levelOrder = ['purba', 'kerajaan', 'penjajahan', 'kemerdekaan'];
+
+function getPlayerProgress() {
+  return JSON.parse(localStorage.getItem('playerProgress')) || { completedLevels: [], currentLevel: 'purba' };
+}
+
+function savePlayerProgress(progress) {
+  localStorage.setItem('playerProgress', JSON.stringify(progress));
+}
+
+function completeLevel(level) {
+  const progress = getPlayerProgress();
+  if (!progress.completedLevels.includes(level)) {
+    progress.completedLevels.push(level);
+    const currentIndex = levelOrder.indexOf(level);
+    if (currentIndex < levelOrder.length - 1) {
+      progress.currentLevel = levelOrder[currentIndex + 1];
+    }
+    savePlayerProgress(progress);
+    return true;
+  }
+  return false;
+}
+
+// CEK AKSES LEVEL KEMERDEKAAN
+const progress = getPlayerProgress();
+if (!progress.completedLevels.includes('penjajahan')) {
+  alert('Anda harus menyelesaikan level Masa Penjajahan terlebih dahulu!');
+  window.location.href = 'penjajahan.html';
+}
+document.addEventListener('DOMContentLoaded', () => {
+  // Elemen utama
+  const artifacts = document.querySelectorAll('.artifact');
+  const popup = document.getElementById('popup');
+  const popupTitle = document.getElementById('popupTitle');
+  const popupImg = document.getElementById('popupImg');
+  const popupDesc = document.getElementById('popupDesc');
+  const popupLink = document.getElementById('popupLink');
+  const closePopup = document.getElementById('closePopup');
+  const backBtn = document.getElementById('backBtn');
+  const progressFill = document.getElementById('progressFill');
+  const progressText = document.getElementById('progressText');
+  const unlockHint = document.getElementById('unlockHint');
+
+  const finalPopup = document.getElementById('finalPopup');
+
+  // Audio
+  const bgMusic = document.getElementById('bgMusic');
+  const clickSound = document.getElementById('clickSound');
+  const successSound = document.getElementById('successSound');
+  const bgMusicToggle = document.getElementById('bgMusicToggle');
+  const sfxToggle = document.getElementById('sfxToggle');
+
+  // Quiz
+  const quiz = document.getElementById('quiz');
+  const quizQuestion = document.getElementById('quizQuestion');
+  const quizOptions = document.getElementById('quizOptions');
+  const quizResult = document.getElementById('quizResult');
+  const nextQuizBtn = document.getElementById('nextQuizBtn');
+  const finishQuizBtn = document.getElementById('finishQuizBtn');
+
+  // State
+  let visited = new Set();
+  let allArtifactsRead = false;
+  let quizCompleted = false;
+  let currentQuestion = 0;
+  let score = 0;
+  let bgMusicEnabled = true;
+  let sfxEnabled = true;
+  let confettiTimeoutId = null;
+
+  // Quiz data
+  const quizData = [
+    {
+      question: "Kapan Proklamasi Kemerdekaan Indonesia dibacakan?",
+      options: ["17 Agustus 1945", "17 Agustus 1946", "17 Agustus 1944", "17 Agustus 1947"],
+      correct: 0
+    },
+    {
+      question: "Siapa yang menjahit bendera Merah Putih pertama?",
+      options: ["Ibu Kartini", "Ibu Dewi Sartika", "Ibu Cut Nyak Dien", "Ibu Fatmawati"],
+      correct: 3
+    },
+    {
+      question: "Di mana teks Proklamasi pertama kali dibacakan?",
+      options: ["Istana Merdeka", "Gedung Proklamasi", "Jalan Pegangsaan Timur 56", "Lapangan Ikada"],
+      correct: 2
+    }
+  ];
+
+  // Inisialisasi
+  function initApp(){
+    preloadImages();
+    updateProgress();
+    setupAudioControls();
+    setupAudioInteraction();
+  }
+
+  // Audio controls
+  function setupAudioControls() {
+    if (!bgMusicToggle || !sfxToggle) return;
+    bgMusicToggle.addEventListener('click', () => {
+      bgMusicEnabled = !bgMusicEnabled;
+      if (bgMusicEnabled) {
+        bgMusic.play().catch(e => console.log('Autoplay prevented:', e));
+        bgMusicToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
+      } else {
+        bgMusic.pause();
+        bgMusicToggle.innerHTML = '<i class="fas fa-volume-mute"></i>';
+      }
+    });
+
+    sfxToggle.addEventListener('click', () => {
+      sfxEnabled = !sfxEnabled;
+      sfxToggle.innerHTML = sfxEnabled ? '<i class="fas fa-bell"></i>' : '<i class="fas fa-bell-slash"></i>';
+    });
+  }
+
+  function setupAudioInteraction() {
+    if (!bgMusic) return;
+    bgMusic.volume = 0.3;
+    const startAudio = () => {
+      if (bgMusicEnabled) {
+        bgMusic.play().catch(e => console.log('Audio play error:', e));
+      }
+      document.removeEventListener('click', startAudio);
+      document.removeEventListener('touchstart', startAudio);
+    };
+    document.addEventListener('click', startAudio);
+    document.addEventListener('touchstart', startAudio);
+  }
+
+  function playSoundEffect(type){
+    if (!sfxEnabled) return;
+    try {
+      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+
+      if (type === 'click') {
+        oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+        oscillator.type = 'sine';
+        gainNode.gain.setValueAtTime(0.25, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.12);
+        oscillator.start(audioContext.currentTime);
+        oscillator.stop(audioContext.currentTime + 0.12);
+      } else if (type === 'success') {
+        oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime);
+        oscillator.frequency.setValueAtTime(659.25, audioContext.currentTime + 0.08);
+        oscillator.frequency.setValueAtTime(783.99, audioContext.currentTime + 0.16);
+        oscillator.type = 'sine';
+        gainNode.gain.setValueAtTime(0.35, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.5);
+        oscillator.start(audioContext.currentTime);
+        oscillator.stop(audioContext.currentTime + 0.5);
+      }
+    } catch (e) {
+      // fallback to HTML audio
+      try {
+        const sound = type === 'click' ? clickSound : successSound;
+        const clone = sound.cloneNode();
+        clone.volume = 0.6;
+        clone.play().catch(err => console.log('fallback audio error', err));
+      } catch (_) { /* ignore */ }
+    }
+  }
+
+  // Preload images (safeguard)
+  function preloadImages(){
+    artifacts.forEach(a => {
+      const img = a.querySelector('img');
+      if (!img) return;
+      if (img.complete) a.classList.add('loaded');
+      else {
+        img.addEventListener('load', () => a.classList.add('loaded'));
+        img.addEventListener('error', () => {
+          console.warn('Gagal memuat gambar:', img.src);
+          img.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjZmYwMDAwIi8+CjxwYXRoIGQ9Ik01MCAyNVY3NU03NSA1MEgyNSIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjgiLz4KPC9zdmc+';
+        });
+      }
+    });
+  }
+
+  // Update progress bar
+  function updateProgress(){
+    if (!progressFill || !progressText) return;
+    const progress = (visited.size / artifacts.length) * 100;
+    progressFill.style.width = `${progress}%`;
+    progressText.textContent = `${visited.size}/${artifacts.length}`;
+    if (visited.size === artifacts.length && !allArtifactsRead) {
+      allArtifactsRead = true;
+      showUnlockHint();
+    }
+  }
+
+  function showUnlockHint(){
+    if (!unlockHint) return;
+    unlockHint.classList.add('show');
+    playSoundEffect('success');
+    setTimeout(() => {
+      unlockHint.classList.remove('show');
+      startQuiz();
+    }, 2000);
+  }
+
+  // Quiz functions
+  function startQuiz(){
+    currentQuestion = 0;
+    score = 0;
+    quizCompleted = false;
+    showQuestion();
+    if (quiz) quiz.style.display = 'block';
+  }
+
+  function showQuestion(){
+    if (!quizData || quizData.length === 0) return;
+    if (currentQuestion >= quizData.length) {
+      finishQuiz();
+      return;
+    }
+    const q = quizData[currentQuestion];
+    if (quizQuestion) quizQuestion.textContent = q.question;
+    if (quizOptions) quizOptions.innerHTML = '';
+    if (quizResult) { quizResult.className = 'quiz-result'; quizResult.style.display = 'none'; }
+    if (nextQuizBtn) nextQuizBtn.style.display = 'none';
+    if (finishQuizBtn) finishQuizBtn.style.display = 'none';
+
+    q.options.forEach((opt, idx) => {
+      const el = document.createElement('div');
+      el.className = 'quiz-option';
+      el.textContent = opt;
+      el.addEventListener('click', () => checkAnswer(idx));
+      quizOptions.appendChild(el);
+    });
+  }
+
+  function checkAnswer(selectedIndex){
+    const q = quizData[currentQuestion];
+    const optionsEls = quizOptions.querySelectorAll('.quiz-option');
+    optionsEls.forEach(o => o.style.pointerEvents = 'none');
+
+    if (optionsEls[q.correct]) optionsEls[q.correct].classList.add('correct');
+    if (selectedIndex !== q.correct && optionsEls[selectedIndex]) optionsEls[selectedIndex].classList.add('incorrect');
+
+    if (selectedIndex === q.correct) {
+      score++;
+      if (quizResult) { quizResult.textContent = 'Benar! 🎉'; quizResult.className = 'quiz-result success'; }
+      playSoundEffect('success');
+    } else {
+      if (quizResult) { quizResult.textContent = 'Salah! Coba lagi.'; quizResult.className = 'quiz-result error'; }
+    }
+    if (quizResult) quizResult.style.display = 'block';
+
+    if (currentQuestion < quizData.length - 1 && nextQuizBtn) nextQuizBtn.style.display = 'block';
+    else if (finishQuizBtn) finishQuizBtn.style.display = 'block';
+  }
+
+  if (nextQuizBtn) nextQuizBtn.addEventListener('click', () => {
+    currentQuestion++;
+    showQuestion();
+  });
+
+  if (finishQuizBtn) finishQuizBtn.addEventListener('click', finishQuiz);
+
+  // finishQuiz (memeriksa level Purba)
+  function finishQuiz(){
+  quizCompleted = true;
+  if (quiz) quiz.style.display = 'none';
+  
+  // SIMPAN PROGRESS KE LOCALSTORAGE - INI YANG PENTING!
+  if (completeLevel('kemerdekaan')) {
+    console.log('Level kemerdekaan berhasil diselesaikan!');
+  }
+  
+  // Tampilkan tombol kembali
+  if (backBtn) backBtn.style.display = 'block';
+  
+  // Tampilkan hasil akhir dengan progress info
+  const progress = getPlayerProgress();
+  const completedLevels = progress.completedLevels.length;
+  const totalLevels = levelOrder.length;
+  
+  setTimeout(() => {
+    alert(`🎉 Quiz selesai! Skor Anda: ${score}/${quizData.length}\n\nSelamat! Anda telah menyelesaikan SEMUA level sejarah Indonesia!\n\nLevel yang diselesaikan: ${completedLevels}/${totalLevels}\n\nKlik tombol "Kembali ke Gerbang Silam" untuk melihat pencapaian akhir.`);
+  }, 500);
+  
+  showLevelCompletionPopup();
+}
+
+// Popup penyelesaian level (tanpa perlu level purba)
+function showLevelCompletionPopup(){
+    let playerName = 'Pahlawan Kemerdekaan';
+    try {
+      const stored = localStorage.getItem('playerName');
+      if (stored && stored.trim().length) playerName = stored;
+    } catch(e){}
+
+    const totalArtifacts = artifacts.length;
+    const quizScore = `${score}/${quizData.length}`;
+    
+    finalPopup.innerHTML = `
+      <div class="certificate" role="dialog" aria-modal="true" aria-labelledby="certificateTitle">
+        <h1 id="certificateTitle">SERTIFIKAT PENGHARGAAN</h1>
+        <div class="badge">
+          <p>🎖️</p>
+        </div>
+        <p class="celebration-text">Diberikan Kepada:</p>
+        <h2 class="player-name"><u>Ananda</u></h2>
+        <p>Sebagai bentuk apresiasi atas partisipasinya dalam menjelajahi dan mempelajari seluruh artikel sejarah di <b>Gerbang Silam</b>, serta menyelesaikan</p>
+        <div class="achievement-stats">
+          <div class="stat-item">
+            <span class="stat-number">4</span>
+            <span class="stat-label">Perjalanan Zaman</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">26</span>
+            <span class="stat-label">Artikel Pembelajaran</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">12</span>
+            <span class="stat-label">Total Soal Quiz</span>
+          </div>
+        </div>
+        
+        <p><strong>Dengan dedikasi dan semangat tinggi, Anda telah menunjukkan pemahaman yang mendalam mengenai sejarah perjalanan Indonesia dan nilai-nilai perjuangan bangsa.</strong></p>
+        <p>Terima kasih telah menjadi bagian dari perjalanan waktu kami — menembus gerbang masa silam untuk mengenal jati diri Indonesia.</p>
+        <p class="signature">"Belajar Sejarah dengan Cara yang Hidup"</p>
+        <p class="signature">Gerbang Silam 🕰️</p>
+        
+        <div id="countdown" class="countdown">Kembali ke Gerbang Silam dalam 30 detik...</div>
+        
+        <div class="popup-buttons" style="margin-top: 20px;">
+          <button id="manualBackBtn" class="btn btn-primary" style="background: linear-gradient(135deg, #2d6a4f 0%, #1b4332 100%);">
+            <i class="fas fa-home"></i> Kembali ke Gerbang Silam Sekarang
+          </button>
+        </div>
+      </div>
+    `;
+    
+    finalPopup.style.display = 'flex';
+    playSoundEffect('success');
+    createConfetti();
+    
+    // Setup tombol kembali manual
+    const manualBackBtn = document.getElementById('manualBackBtn');
+    if (manualBackBtn) {
+      manualBackBtn.addEventListener('click', () => {
+        clearInterval(countdownInterval);
+        navigateToMainPage();
+      });
+    }
+    
+    // Countdown 30 detik
+    let countdown = 30;
+    const countdownElement = document.getElementById('countdown');
+    const countdownInterval = setInterval(() => {
+      countdown--;
+      if (countdownElement) {
+        countdownElement.textContent = `Kembali ke Gerbang Silam dalam ${countdown} detik...`;
+      }
+      if (countdown <= 0) {
+        clearInterval(countdownInterval);
+        navigateToMainPage();
+      }
+    }, 1000);
+  }
+
+  // Fungsi untuk navigasi kembali ke halaman utama
+  function navigateToMainPage(){
+    try {
+      localStorage.removeItem('purbaLevelCompleted');
+      localStorage.removeItem('kemerdekaanLevelCompleted');
+    } catch(e){}
+    
+    document.body.style.transition = 'opacity 0.8s ease';
+    document.body.style.opacity = '0';
+    setTimeout(() => {
+      window.location.href = 'index.html';
+    }, 800);
+  }
+
+  // Confetti (membuat elemen confetti; otomatis dihapus setelah 6 detik)
+  function createConfetti(){
+    const existing = document.querySelector('.confetti-container');
+    if (existing) existing.remove();
+
+    const container = document.createElement('div');
+    container.className = 'confetti-container';
+    const colors = ['#FFD700', '#FF4500', '#00BFFF', '#32CD32', '#C71585', '#FF69B4', '#8B0000', '#FFFFFF'];
+    const count = 150;
+    
+    for (let i = 0; i < count; i++){
+      const c = document.createElement('div');
+      c.className = 'confetti';
+      c.style.left = Math.random() * 100 + 'vw';
+      c.style.width = (8 + Math.random() * 15) + 'px';
+      c.style.height = (8 + Math.random() * 15) + 'px';
+      c.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+      c.style.opacity = (0.7 + Math.random() * 0.3);
+      c.style.transform = `rotate(${Math.random() * 360}deg)`;
+      c.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+      c.style.animationDuration = (3 + Math.random() * 4) + 's';
+      c.style.animationDelay = (Math.random() * 2) + 's';
+      container.appendChild(c);
+    }
+    document.body.appendChild(container);
+
+    if (confettiTimeoutId) clearTimeout(confettiTimeoutId);
+    confettiTimeoutId = setTimeout(() => {
+      container.remove();
+    }, 10000);
+  }
+
+  // Utility sederhana untuk meng-escape teks nama pemain
+  function escapeHtml(unsafe) {
+    return unsafe.replace(/[&<"'>]/g, function(m) {
+      return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[m];
+    });
+  }
+
+  // === FUNGSI UNTUK MEMBUAT KONTEN ARTIKEL PANJANG ===
+  function generateArticleContent(title, baseDesc) {
+    // Artikel untuk setiap topik kemerdekaan
+    const articles = {
+      "Proklamasi 1945": `
+        <p>${baseDesc}</p>
+        
+        <h3>Persiapan Menuju Proklamasi</h3>
+        <p>Peristiwa Rengasdengklok pada 16 Agustus 1945 menjadi momentum penting sebelum proklamasi. Para pemuda membawa Soekarno dan Hatta ke Rengasdengklok untuk menjauhkan mereka dari pengaruh Jepang dan mendesak agar proklamasi segera dilaksanakan.</p>
+        
+        <h3>Perumusan Teks Proklamasi</h3>
+        <p>Teks proklamasi dirumuskan pada dini hari 17 Agustus 1945 di rumah Laksamana Maeda. Para perumus teks proklamasi adalah:</p>
+        <ul>
+          <li>Ir. Soekarno - Penulis konsep teks</li>
+          <li>Dr. Mohammad Hatta - Memberikan masukan dan saran</li>
+          <li>Achmad Soebardjo - Turut serta dalam perumusan</li>
+          <li>Sukarni - Mengusulkan penandatanganan oleh Soekarno-Hatta atas nama bangsa Indonesia</li>
+        </ul>
+        
+        <h3>Detik-Detik Proklamasi</h3>
+        <p>Upacara proklamasi dilaksanakan secara sederhana di Jalan Pegangsaan Timur No. 56, Jakarta, pada hari Jumat, 17 Agustus 1945, pukul 10.00 WIB. Acara dihadiri oleh sekitar 500 orang dan berlangsung sekitar satu jam.</p>
+        
+        <h3>Isi Teks Proklamasi</h3>
+        <p style="font-style: italic; text-align: center; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 10px;">
+          "Kami bangsa Indonesia dengan ini menjatakan kemerdekaan Indonesia.<br>
+          Hal-hal jang mengenai pemindahan kekoeasaan d.l.l., diselenggarakan<br>
+          dengan tjara saksama dan dalam tempo jang sesingkat-singkatnja."<br><br>
+          Djakarta, hari 17 boelan 8 tahoen 05<br>
+          Atas nama bangsa Indonesia.<br>
+          Soekarno/Hatta
+        </p>
+        
+        <h3>Penyebaran Berita Proklamasi</h3>
+        <p>Berita proklamasi disebarluaskan melalui berbagai cara:</p>
+        <ul>
+          <li>Radio Domei (sekarang Kantor Berita ANTARA)</li>
+          <li>Surat kabar dan selebaran</li>
+          <li>Para pemuda yang menyebarkan dari mulut ke mulut</li>
+          <li>Penyiaran melalui radio luar negeri</li>
+        </ul>
+        
+        <h3>Makna dan Dampak Proklamasi</h3>
+        <p>Proklamasi kemerdekaan memiliki makna yang sangat dalam:</p>
+        <ul>
+          <li>Puncak perjuangan bangsa Indonesia</li>
+          <li>Tonggak sejarah berdirinya negara Indonesia</li>
+          <li>Sumber hukum bagi pembentukan negara kesatuan Republik Indonesia</li>
+          <li>Momentum perubahan dari bangsa terjajah menjadi bangsa merdeka</li>
+        </ul>
+      `,
+      
+      "Bendera Merah Putih": `
+        <p>${baseDesc}</p>
+        
+        <h3>Sejarah dan Makna Warna</h3>
+        <p>Bendera Merah Putih memiliki akar sejarah yang panjang dalam kebudayaan Indonesia. Warna merah dan putih sudah digunakan sejak zaman kerajaan-kerajaan Nusantara, seperti Majapahit yang menggunakan panji-panji berwarna merah dan putih.</p>
+        
+        <h3>Proses Pembuatan Bendera Pertama</h3>
+        <p>Bendera Sang Saka Merah Putih pertama dijahit oleh Ibu Fatmawati, istri Presiden Soekarno. Bendera ini dibuat dari kain wool import berukuran 276 x 200 cm. Proses penjahitan dilakukan dengan penuh khidmat beberapa hari sebelum proklamasi.</p>
+        
+        <h3>Pengibaran Pertama</h3>
+        <p>Bendera Merah Putih pertama kali dikibarkan pada upacara proklamasi 17 Agustus 1945. Pengibaran dilakukan oleh:</p>
+        <ul>
+          <li>Latief Hendraningrat - Yang mengibarkan bendera</li>
+          <li>Suhud Sastro Kusumo - Yang membantu mengibarkan</li>
+          <li>SK Trimurti - Yang membawa bantal berisi bendera</li>
+        </ul>
+        
+        <h3>Perjalanan Bendera Pusaka</h3>
+        <p>Bendera pusaka memiliki perjalanan sejarah yang panjang:</p>
+        <ul>
+          <li>1945-1946: Digunakan dalam berbagai upacara kenegaraan</li>
+          <li>1946-1949: Dibawa berpindah-pindah selama agresi militer Belanda</li>
+          <li>1969-sekarang: Disimpan di Istana Merdeka dan hanya dikibarkan replica-nya</li>
+        </ul>
+        
+        <h3>Makna Filosofis</h3>
+        <p>Warna bendera memiliki makna yang dalam:</p>
+        <ul>
+          <li><strong>Merah:</strong> Melambangkan keberanian, perjuangan, dan semangat yang menyala-nyala</li>
+          <li><strong>Putih:</strong> Melambangkan kesucian, kebenaran, dan niat yang tulus</li>
+          <li><strong>Kombinasi:</strong> Melambangkan kesempurnaan dan keseimbangan dalam kehidupan</li>
+        </ul>
+        
+        <h3>Penggunaan dalam Berbagai Momen</h3>
+        <p>Bendera Merah Putih digunakan dalam berbagai momen penting:</p>
+        <ul>
+          <li>Upacara kenegaraan</li>
+          <li>Perayaan hari kemerdekaan</li>
+          <li>Olimpiade dan even olahraga internasional</li>
+          <li>Kedutaan besar Indonesia di luar negeri</li>
+          <li>Kapal-kapal dan pesawat milik Indonesia</li>
+        </ul>
+      `,
+      
+      "Pancasila": `
+        <p>${baseDesc}</p>
+        
+        <h3>Sejarah Perumusan</h3>
+        <p>Pancasila dirumuskan melalui proses yang panjang dalam sidang BPUPKI (Badan Penyelidik Usaha-usaha Persiapan Kemerdekaan Indonesia). Sidang pertama berlangsung dari 29 Mei hingga 1 Juni 1945, dimana Soekarno menyampaikan pidato tentang dasar negara yang kemudian disebut Pancasila.</p>
+        
+        <h3>Lima Sila Pancasila</h3>
+        <p>Pancasila terdiri dari lima sila yang saling berkaitan:</p>
+        <ul>
+          <li><strong>Ketuhanan Yang Maha Esa</strong> - Landasan spiritual bangsa Indonesia</li>
+          <li><strong>Kemanusiaan yang Adil dan Beradab</strong> - Penghormatan terhadap hak asasi manusia</li>
+          <li><strong>Persatuan Indonesia</strong> - Semangat kebangsaan dan nasionalisme</li>
+          <li><strong>Kerakyatan yang Dipimpin oleh Hikmat Kebijaksanaan dalam Permusyawaratan/Perwakilan</strong> - Sistem demokrasi Indonesia</li>
+          <li><strong>Keadilan Sosial bagi Seluruh Rakyat Indonesia</strong> - Kesejahteraan sosial yang merata</li>
+        </ul>
+        
+        <h3>Piagam Jakarta</h3>
+        <p>Sebelum menjadi Pancasila seperti sekarang, terdapat Piagam Jakarta yang disusun pada 22 Juni 1945. Piagam ini memuat sila pertama yang berbunyi "Ketuhanan dengan kewajiban menjalankan syariat Islam bagi pemeluk-pemeluknya". Namun, sila ini diubah sebelum pengesahan UUD 1945 untuk menjaga persatuan bangsa.</p>
+        
+        <h3>Kedudukan dalam Negara</h3>
+        <p>Pancasila memiliki kedudukan yang sangat penting:</p>
+        <ul>
+          <li>Dasar negara Republik Indonesia</li>
+          <li>Pandangan hidup bangsa Indonesia</li>
+          <li>Kepribadian bangsa Indonesia</li>
+          <li>Jiwa dan sumber dari segala sumber hukum</li>
+          <li>Perjanjian luhur bangsa Indonesia</li>
+        </ul>
+        
+        <h3>Implementasi dalam Kehidupan</h3>
+        <p>Pancasila diimplementasikan dalam berbagai aspek kehidupan:</p>
+        <ul>
+          <li><strong>Politik:</strong> Sistem demokrasi Pancasila</li>
+          <li><strong>Ekonomi:</strong> Ekonomi kerakyatan</li>
+          <li><strong>Sosial:</strong> Gotong royong dan toleransi</li>
+          <li><strong>Budaya:</strong> Bhinneka Tunggal Ika</li>
+          <li><strong>Pertahanan:</strong> Sistem pertahanan dan keamanan rakyat semesta</li>
+        </ul>
+      `,
+      
+      "UUD 1945": `
+        <p>${baseDesc}</p>
+        
+        <h3>Sejarah Penyusunan</h3>
+        <p>UUD 1945 disusun oleh Badan Penyelidik Usaha-usaha Persiapan Kemerdekaan Indonesia (BPUPKI) yang dibentuk pada 29 April 1945. Panitia Sembilan yang diketuai oleh Soekarno berhasil merumuskan Piagam Jakarta yang menjadi cikal bakal Pembukaan UUD 1945.</p>
+        
+        <h3>Struktur UUD 1945</h3>
+        <p>UUD 1945 terdiri dari beberapa bagian penting:</p>
+        <ul>
+          <li><strong>Pembukaan</strong> - Memuat dasar-dasar filosofis negara</li>
+          <li><strong>Batang Tubuh</strong> - Berisi pasal-pasal tentang sistem ketatanegaraan</li>
+          <li><strong>Penjelasan</strong> - Penjelasan terhadap pasal-pasal (tidak berlaku setelah amandemen)</li>
+        </ul>
+        
+        <h3>Isi Pembukaan UUD 1945</h3>
+        <p>Pembukaan UUD 1945 memuat empat alinea yang sangat penting:</p>
+        <ul>
+          <li><strong>Alinea 1:</strong> Pernyataan kemerdekaan sebagai hak segala bangsa</li>
+          <li><strong>Alinea 2:</strong> Cita-cita dan tujuan nasional</li>
+          <li><strong>Alinea 3:</strong> Pernyataan kemerdekaan Indonesia</li>
+          <li><strong>Alinea 4:</strong> Tujuan negara dan dasar negara</li>
+        </ul>
+        
+        <h3>Perubahan (Amandemen) UUD 1945</h3>
+        <p>UUD 1945 telah mengalami empat kali amandemen:</p>
+        <ul>
+          <li><strong>Amandemen I (1999):</strong> Membatasi kekuasaan presiden dan memperkuat DPR</li>
+          <li><strong>Amandemen II (2000):</strong> Otonomi daerah dan HAM</li>
+          <li><strong>Amandemen III (2001):</strong> Pemilihan presiden langsung dan impeachment</li>
+          <li><strong>Amandemen IV (2002):</strong> Pendidikan, ekonomi, dan lembaga negara</li>
+        </ul>
+        
+        <h3>Sistem Ketatanegaraan</h3>
+        <p>UUD 1945 mengatur sistem ketatanegaraan Indonesia:</p>
+        <ul>
+          <li>Sistem presidensial</li>
+          <li>Pemisahan kekuasaan (legislatif, eksekutif, yudikatif)</li>
+          <li>Check and balances antar lembaga negara</li>
+          <li>Otonomi daerah</li>
+          <li>Perlindungan Hak Asasi Manusia</li>
+        </ul>
+      `,
+      
+      "Pahlawan Nasional": `
+        <p>${baseDesc}</p>
+        
+        <h3>Kategori Pahlawan Nasional</h3>
+        <p>Pahlawan nasional Indonesia dapat dikategorikan berdasarkan periode perjuangan:</p>
+        <ul>
+          <li><strong>Pahlawan Pra-Kemerdekaan:</strong> Pejuang melawan penjajahan sebelum 1945</li>
+          <li><strong>Pahlawan Revolusi:</strong> Pejuang dalam mempertahankan kemerdekaan</li>
+          <li><strong>Pahlawan Pembangunan:</strong> Tokoh yang berjasa dalam pembangunan nasional</li>
+        </ul>
+        
+        <h3>Tokoh-Tokoh Utama Proklamasi</h3>
+        <p>Beberapa tokoh utama dalam proklamasi kemerdekaan:</p>
+        <ul>
+          <li><strong>Ir. Soekarno:</strong> Proklamator dan Presiden pertama RI</li>
+          <li><strong>Dr. Mohammad Hatta:</strong> Proklamator dan Wakil Presiden pertama RI</li>
+          <li><strong>Achmad Soebardjo:</strong> Menteri Luar Negeri pertama</li>
+          <li><strong>Sukarni:</strong> Tokoh pemuda yang mendesak proklamasi</li>
+          <li><strong>Fatmawati:</strong> Penjahit bendera pusaka</li>
+        </ul>
+        
+        <h3>Pahlawan Revolusi 1945-1949</h3>
+        <p>Para pahlawan yang gugur dalam mempertahankan kemerdekaan:</p>
+        <ul>
+          <li><strong>Jenderal Sudirman:</strong> Panglima Besar TNI pertama</li>
+          <li><strong>Bung Tomo:</strong> Tokoh Pertempuran 10 November Surabaya</li>
+          <li><strong>Jenderal A.H. Nasution:</strong> Tokoh militer dan Pahlawan Nasional</li>
+          <li><strong>I Gusti Ngurah Rai:</strong> Pahlawan dari Bali</li>
+          <li><strong>Teuku Nyak Arief:</strong> Pahlawan dari Aceh</li>
+        </ul>
+        
+        <h3>Pahlawan Perempuan Indonesia</h3>
+        <p>Perempuan Indonesia juga memiliki peran penting dalam perjuangan:</p>
+        <ul>
+          <li><strong>R.A. Kartini:</strong> Pelopor emansipasi perempuan</li>
+          <li><strong>Cut Nyak Dien:</strong> Pejuang dari Aceh</li>
+          <li><strong>Martha Christina Tiahahu:</strong> Pejuang dari Maluku</li>
+          <li><strong>Nyi Ageng Serang:</strong> Pejuang dari Jawa Tengah</li>
+          <li><strong>Rasuna Said:</strong> Pejuang perempuan dan politisi</li>
+        </ul>
+        
+        <h3>Proses Penetapan Pahlawan Nasional</h3>
+        <p>Proses penetapan pahlawan nasional melalui tahapan:</p>
+        <ul>
+          <li>Usulan dari pemerintah daerah</li>
+          <li>Kajian sejarah oleh tim ahli</li>
+          <li>Persetujuan DPR</li>
+          <li>Penetapan oleh Presiden</li>
+          <li>Penganugerahan gelar pada Hari Pahlawan 10 November</li>
+        </ul>
+      `,
+      
+      "Perjuangan Diplomasi": `
+        <p>${baseDesc}</p>
+        
+        <h3>Strategi Diplomasi Awal</h3>
+        <p>Setelah proklamasi kemerdekaan, Indonesia menggunakan dua strategi sekaligus: perjuangan bersenjata dan diplomasi. Diplomasi dilakukan untuk mendapatkan pengakuan kedaulatan dari dunia internasional.</p>
+        
+        <h3>Perjanjian Linggarjati (1947)</h3>
+        <p>Perjanjian pertama antara Indonesia dan Belanda yang menghasilkan:</p>
+        <ul>
+          <li>Pengakuan Belanda atas kekuasaan de facto Republik Indonesia atas Jawa, Madura, dan Sumatra</li>
+          <li>Pembentukan Republik Indonesia Serikat</li>
+          <li>Kerjasama dalam membentuk Uni Indonesia-Belanda</li>
+        </ul>
+        
+        <h3>Perjanjian Renville (1948)</h3>
+        <p>Perjanjian yang ditandatangani di atas kapal perang USS Renville:</p>
+        <ul>
+          <li>Penarikan pasukan Indonesia dari wilayah-wilayah yang diduduki Belanda</li>
+          <li>Pengakuan garis van Mook sebagai batas wilayah</li>
+          <li>Persiapan pemilu untuk membentuk pemerintahan federal</li>
+        </ul>
+        
+        <h3>Konferensi Meja Bundar (1949)</h3>
+        <p>Konferensi penting yang menghasilkan:</p>
+        <ul>
+          <li>Pengakuan kedaulatan Indonesia oleh Belanda</li>
+          <li>Pembentukan Republik Indonesia Serikat</li>
+          <li>Penyelesaian masalah Irian Barat dalam waktu satu tahun</li>
+          <li>Pembubaran KNIL dan penggabungan dengan TNI</li>
+        </ul>
+        
+        <h3>Perjuangan di PBB</h3>
+        <p>Indonesia aktif memperjuangkan kepentingannya di PBB:</p>
+        <ul>
+          <li>Keanggotaan Indonesia di PBB (1950)</li>
+          <li>Perjuangan merebut Irian Barat melalui diplomasi (1962)</li>
+          <li>Konfrontasi dengan Malaysia (1963-1966)</li>
+          <li>Pendirian ASEAN (1967)</li>
+        </ul>
+        
+        <h3>Tokoh-Tokoh Diplomasi Indonesia</h3>
+        <p>Beberapa tokoh penting dalam diplomasi Indonesia:</p>
+        <ul>
+          <li><strong>Achmad Soebardjo:</strong> Menteri Luar Negeri pertama</li>
+          <li><strong>H. Agus Salim:</strong> Diplomat ulung dan negarawan</li>
+          <li><strong>Soedjarwo Tjondronegoro:</strong> Diplomat dalam KMB</li>
+          <li><strong>Ali Sastroamidjojo:</strong> Pelopor Konferensi Asia-Afrika</li>
+          <li><strong>Adam Malik:</strong> Menteri Luar Negeri dan Ketua Majelis Umum PBB</li>
+        </ul>
+        
+        <h3>Pencapaian Diplomasi Indonesia</h3>
+        <p>Beberapa pencapaian penting diplomasi Indonesia:</p>
+        <ul>
+          <li>Pengakuan kedaulatan oleh negara-negara dunia</li>
+          <li>Penyelenggaraan Konferensi Asia-Afrika 1955</li>
+          <li>Pembebasan Irian Barat melalui Perjanjian New York</li>
+          <li>Pendirian ASEAN</li>
+          <li>Peran aktif dalam Gerakan Non-Blok</li>
+        </ul>
+      `
+    };
+    
+    // Kembalikan artikel yang sesuai atau artikel default
+    return articles[title] || `
+      <p>${baseDesc}</p>
+      
+      <h3>Signifikansi Sejarah</h3>
+      <p>Momen ini memiliki arti penting dalam perjalanan sejarah kemerdekaan Indonesia dan menjadi bagian tak terpisahkan dari identitas bangsa.</p>
+      
+      <h3>Warisan untuk Generasi Muda</h3>
+      <p>Nilai-nilai perjuangan dan semangat kemerdekaan harus terus dilestarikan dan diwariskan kepada generasi muda Indonesia sebagai bekal membangun masa depan yang lebih baik.</p>
+    `;
+  }
+
+  // Interaksi artefak - DIPERBAIKI
+  artifacts.forEach(a => {
+    a.addEventListener('click', () => {
+      const title = a.dataset.title || 'Artefak';
+      const desc = a.dataset.desc || '';
+      const link = a.dataset.link || '#';
+      const img = a.querySelector('img');
+      const imgSrc = img ? img.src : '';
+
+      playSoundEffect('click');
+
+      if (popupTitle) popupTitle.textContent = title;
+      if (popupImg) popupImg.src = imgSrc;
+      if (popupLink) { popupLink.href = link; popupLink.style.display = link === '#' ? 'none' : 'inline-flex'; }
+      
+      // Isi konten artikel berdasarkan artefak yang diklik
+      const articleContent = generateArticleContent(title, desc);
+      if (popupDesc) popupDesc.innerHTML = articleContent;
+      
+      if (popup) popup.style.display = 'block';
+
+      if (!visited.has(title)) {
+        visited.add(title);
+        updateProgress();
+      }
+    });
+  });
+
+  // Tutup popup artefak
+  if (closePopup) closePopup.addEventListener('click', () => {
+    if (popup) popup.style.display = 'none';
+  });
+
+  // Tombol kembali
+  if (backBtn) backBtn.addEventListener('click', () => {
+    if (quizCompleted) {
+      document.body.style.transition = 'opacity 0.5s ease';
+      document.body.style.opacity = '0';
+      setTimeout(() => { window.location.href = 'index.html'; }, 500);
+    } else {
+      alert('Selesaikan quiz terlebih dahulu untuk menyelesaikan level!');
+    }
+  });
+
+  // Inisialisasi app
+  initApp();
+});
+
+// Di halaman level (misal: purba.html)
+function selesaikanLevel() {
+  // Kode untuk menyelesaikan level...
+  
+  // Simpan progress
+  if (window.opener) {
+    window.opener.completeLevel('purba');
+  } else {
+    // Alternatif: redirect ke lobby dengan parameter
+    window.location.href = 'lobby.html?completed=true';
+  }
+}
+</script>
+</body>
+</html>

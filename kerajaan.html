@@ -1,0 +1,1471 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gerbang Silam - Sejarah Indonesia</title>
+<link rel="icon" type="image/x-icon" href="logogs.ico">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+  background: #0a0602;
+  color: #fff;
+}
+
+.palace-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw; /* lebar layar laptop */
+  height: 100vh; /* tinggi layar laptop */
+  background: 
+    linear-gradient(rgba(19, 39, 139, 0.24), rgba(151, 101, 78, 0.618)),
+    url('kerajaan.jpg') center center no-repeat;
+  background-size: auto 100%; /* gambar menyesuaikan tinggi, lebar otomatis */
+  z-index: -2;
+}
+
+/* CORAK KERAJAAN DI SISI-SISI */
+.pattern-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(circle at 20% 30%, rgba(241, 196, 15, 0.1) 2%, transparent 10%),
+    radial-gradient(circle at 80% 70%, rgba(241, 196, 15, 0.1) 2%, transparent 10%),
+    radial-gradient(circle at 40% 80%, rgba(205, 127, 50, 0.1) 2%, transparent 10%);
+  z-index: -1;
+}
+
+/* PILLAR KIRI KANAN */
+.pillar-left, .pillar-right {
+  position: absolute;
+  top: 0;
+  width: 120px;
+  height: 100%;
+  background: 
+    linear-gradient(90deg, rgba(139, 69, 19, 0.8), transparent),
+    url('https://images.unsplash.com/photo-1589652718067-95f44ab52c76?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80') left/cover;
+  z-index: -1;
+}
+
+.pillar-left {
+  left: 0;
+}
+
+.pillar-right {
+  right: 0;
+  transform: rotateY(180deg);
+}
+
+/* HEADER DI ATAS KIRI */
+#hud {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 10;
+}
+
+#location {
+  background: rgb(8, 17, 77);
+  padding: 15px 25px;
+  border-radius: 25px;
+  color: #f1c40f;
+  font-weight: 700;
+  font-size: 1.1rem;
+  backdrop-filter: blur(15px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  letter-spacing: 1px;
+  max-width: 250px;
+  border: 2px solid #d4af37;
+}
+
+/* PROGRESS INDICATOR DI ATAS KANAN */
+.progress-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgb(8, 17, 77);
+  padding: 15px 20px;
+  border-radius: 25px;
+  backdrop-filter: blur(15px);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #f1c40f;
+  font-size: 0.9rem;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+  z-index: 10;
+  max-width: 220px;
+  border: 2px solid #d4af37;
+}
+
+.progress-bar {
+  width: 100px;
+  height: 8px;
+  background: rgba(160, 82, 45, 0.7);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #f1c40f, #d4af37, #cd7f32);
+  border-radius: 4px;
+  transition: width 0.5s ease;
+  width: 0%;
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-fill::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+/* CAHAYA EMAS DARI CANDI */
+.golden-glow {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 400px;
+  background: radial-gradient(
+    ellipse at center, 
+    rgba(241, 196, 15, 0.4) 0%, 
+    rgba(212, 175, 55, 0.2) 30%, 
+    transparent 70%
+  );
+  filter: blur(40px);
+  z-index: 0;
+  animation: glowPulse 5s infinite alternate;
+}
+
+@keyframes glowPulse {
+  0% { 
+    opacity: 0.4;
+    transform: translateX(-50%) scale(1);
+  }
+  100% { 
+    opacity: 0.7;
+    transform: translateX(-50%) scale(1.1);
+  }
+}
+
+/* LENTERA KECIL DI SISI */
+.lantern {
+  position: absolute;
+  bottom: 100px;
+  width: 60px;
+  height: 80px;
+  z-index: 4;
+}
+
+.lantern.left {
+  left: 100px;
+}
+
+.lantern.right {
+  right: 100px;
+}
+
+.lantern-stand {
+  width: 8px;
+  height: 40px;
+  background: linear-gradient(to bottom, #8b4513, #a0522d);
+  border-radius: 4px 4px 0 0;
+  margin: 0 auto;
+}
+
+.lantern-body {
+  width: 30px;
+  height: 40px;
+  background: radial-gradient(ellipse at center, #f1c40f 10%, rgb(8, 17, 77) 60%, transparent 90%);
+  border-radius: 10px 10px 5px 5px;
+  margin: -5px auto 0;
+  animation: lanternGlow 2s infinite alternate;
+  filter: blur(3px);
+  border: 2px solid rgb(8, 17, 77);
+}
+
+@keyframes lanternGlow {
+  0% { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(1.1); opacity: 0.6; }
+}
+
+/* ARTEFAK DENGAN EFEK GUA DAN TEPI BLUR HALUS */
+.artifacts-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* Setiap artefak hanya berupa gambar bercahaya */
+.artifact {
+  position: absolute;
+  cursor: pointer;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  overflow: visible;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.4s ease, filter 0.4s ease;
+  animation: float 6s infinite ease-in-out alternate;
+  z-index: 5;
+  filter: drop-shadow(0 0 15px rgba(255, 210, 120, 0.4));
+}
+
+.artifact:hover {
+  transform: scale(1.2) rotate(4deg);
+  filter: drop-shadow(0 0 25px rgba(255, 220, 150, 0.8));
+  z-index: 10;
+}
+
+/* Efek lembut di sekitar gambar, seolah ada kabut gua */
+.artifact::before {
+  content: "";
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  top: -50%;
+  left: -50%;
+  background: radial-gradient(circle, rgba(255, 220, 150, 0.25), transparent 70%);
+  filter: blur(25px);
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+}
+
+.artifact:hover::before {
+  opacity: 1;
+}
+
+/* Gambar utama */
+.artifact img {
+  width: 130%;
+  height: 130%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px rgba(255, 240, 200, 0.3))
+          blur(1.5px);
+  border-radius: 50%;
+  position: relative;
+  z-index: 2;
+}
+
+@keyframes float {
+  from { transform: translateY(0px) rotate(-1deg); }
+  to { transform: translateY(-15px) rotate(1deg); }
+}
+
+/* PETUNJUK UNLOCK LEVEL */
+.unlock-hint {
+  position: absolute;
+  bottom: 140px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(139, 69, 19, 0.9);
+  padding: 20px 35px;
+  border-radius: 25px;
+  color: #f1c40f;
+  text-align: center;
+  backdrop-filter: blur(15px);
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.5);
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 0.5s;
+  border: 2px solid #d4af37;
+}
+
+.unlock-hint.show {
+  opacity: 1;
+}
+
+.unlock-hint i {
+  color: #f1c40f;
+  margin-right: 10px;
+  font-size: 1.2rem;
+}
+
+/* QUIZ STYLES */
+#quiz {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 500px;
+  background: rgba(139, 69, 19, 0.95);
+  border-radius: 25px;
+  padding: 35px;
+  text-align: center;
+  color: #f1c40f;
+  backdrop-filter: blur(25px);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.7);
+  z-index: 100;
+  animation: popupAppear 0.4s ease-out;
+  border: 3px solid #d4af37;
+}
+
+.quiz-question {
+  font-size: 1.3rem;
+  margin-bottom: 25px;
+  color: #f1c40f;
+  font-weight: 600;
+}
+
+.quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 25px;
+}
+
+.quiz-option {
+  background: rgba(160, 82, 45, 0.7);
+  padding: 15px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: left;
+  border: 2px solid transparent;
+}
+
+.quiz-option:hover {
+  background: rgba(205, 127, 50, 0.8);
+  transform: translateY(-2px);
+}
+
+.quiz-option.correct {
+  background: rgba(46, 204, 113, 0.3);
+  border-color: #2ecc71;
+}
+
+.quiz-option.incorrect {
+  background: rgba(231, 76, 60, 0.3);
+  border-color: #e74c3c;
+}
+
+.quiz-result {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 12px;
+  font-weight: 600;
+  display: none;
+}
+
+.quiz-result.success {
+  background: rgba(46, 204, 113, 0.3);
+  color: #c8e6c9;
+  display: block;
+}
+
+.quiz-result.error {
+  background: rgba(231, 76, 60, 0.3);
+  color: #ffcdd2;
+  display: block;
+}
+
+/* POPUP INFORMASI YANG DIPERBAIKI */
+#popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 850px;
+  max-height: 85vh;
+  background: rgba(139, 69, 19, 0.95);
+  border-radius: 25px;
+  padding: 0;
+  color: #f1c40f;
+  backdrop-filter: blur(25px);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.7);
+  z-index: 100;
+  animation: popupAppear 0.4s ease-out;
+  border: 3px solid #d4af37;
+  overflow: hidden;
+}
+
+.popup-content {
+  display: flex;
+  height: 100%;
+}
+
+.popup-left {
+  flex: 1;
+  padding: 35px;
+  overflow-y: auto;
+  max-height: 75vh;
+}
+
+.popup-right {
+  flex: 0 0 35%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  background: rgba(160, 82, 45, 0.7);
+  border-left: 2px solid #d4af37;
+}
+
+@keyframes popupAppear {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+#popup h2 {
+  color: #f1c40f;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+
+#popupImg {
+  width: 100%;
+  max-width: 250px;
+  height: auto;
+  object-fit: contain;
+  border-radius: 15px;
+  background: rgba(160, 82, 45, 0.8);
+  padding: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  margin-bottom: 20px;
+  border: 2px solid #d4af37;
+}
+
+.article-content {
+  line-height: 1.7;
+  color: #e6d5b8;
+  font-size: 1.05rem;
+  text-align: justify;
+}
+
+.article-content p {
+  margin-bottom: 20px;
+}
+
+.article-content h3 {
+  color: #f1c40f;
+  margin: 25px 0 15px;
+  font-size: 1.3rem;
+  border-bottom: 1px solid #d4af37;
+  padding-bottom: 5px;
+}
+
+.article-content ul {
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
+
+.article-content li {
+  margin-bottom: 8px;
+  position: relative;
+  padding-left: 10px;
+}
+
+.article-content li:before {
+  content: "•";
+  color: #f1c40f;
+  position: absolute;
+  left: -15px;
+}
+
+.popup-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 25px;
+  flex-wrap: wrap;
+}
+
+#popupLink {
+  color: #f1c40f;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(160, 82, 45, 0.7);
+  padding: 12px 20px;
+  border-radius: 12px;
+  margin-top: 10px;
+  border: 2px solid #d4af37;
+}
+
+#popupLink:hover {
+  color: #d4af37;
+  background: rgba(205, 127, 50, 0.8);
+}
+
+/* TOMBOL */
+.btn {
+  background: linear-gradient(135deg, #a0522d 0%, #8b4513 100%);
+  border: none;
+  padding: 14px 28px;
+  color: #fff;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(135deg, #cd7f32 0%, #a0522d 100%);
+}
+
+.btn:hover::before {
+  left: 100%;
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #d4af37 0%, #f1c40f 100%);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #f1c40f 0%, #d4af37 100%);
+}
+
+/* TOMBOL KEMBALI */
+#backBtn {
+  display: none;
+  position: fixed;
+  bottom: 35px;
+  right: 35px;
+  z-index: 50;
+  padding: 16px 28px;
+  font-size: 1rem;
+  background: linear-gradient(135deg, #2d6a4f 0%, #1b4332 100%);
+}
+
+#backBtn:hover {
+  background: linear-gradient(135deg, #40916c 0%, #2d6a4f 100%);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  #hud {
+    left: 10px;
+    top: 10px;
+  }
+  
+  #location {
+    font-size: 1rem;
+    padding: 12px 20px;
+    max-width: 200px;
+  }
+  
+  .progress-container {
+    right: 10px;
+    top: 10px;
+    padding: 12px 15px;
+    max-width: 180px;
+  }
+  
+  .progress-bar {
+    width: 80px;
+  }
+  
+  .artifact {
+    width: 80px;
+    height: 80px;
+  }
+  
+  #popup, #quiz {
+    width: 95%;
+    padding: 20px;
+  }
+  
+  .lantern {
+    display: none;
+  }
+  
+  .popup-content {
+    flex-direction: column-reverse;
+  }
+  
+  .popup-right {
+    border-left: none;
+    border-top: 2px solid #d4af37;
+    padding: 20px;
+  }
+  
+  .popup-left {
+    padding: 25px;
+  }
+  
+  #popup {
+    max-height: 90vh;
+  }
+}
+
+/* ANIMASI UNTUK PETUNJUK LEVEL */
+@keyframes pulseHint {
+  0% { transform: translateX(-50%) scale(1); }
+  50% { transform: translateX(-50%) scale(1.05); }
+  100% { transform: translateX(-50%) scale(1); }
+}
+
+.unlock-hint.show {
+  animation: pulseHint 2s infinite;
+}
+
+/* AUDIO CONTROLS */
+.audio-controls {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 100;
+  display: flex;
+  gap: 10px;
+}
+
+.audio-btn {
+  background: rgb(8, 17, 77);
+  border: none;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  color: #f1c40f;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  border: 2px solid #d4af37;
+}
+
+.audio-btn:hover {
+  transform: scale(1.1);
+  background: rgba(160, 82, 45, 0.9);
+}
+</style>
+</head>
+<body>
+
+<!-- BACKGROUND KERAJAAN -->
+<div class="palace-bg"></div>
+<div class="pattern-overlay"></div>
+<div class="pillar-left"></div>
+<div class="pillar-right"></div>
+
+<!-- HUD DI KIRI ATAS -->
+<div id="hud">
+  <div id="location">Kerajaan Nusantara</div>
+</div>
+
+<!-- PROGRESS INDICATOR DI KANAN ATAS -->
+<div class="progress-container">
+  <i class="fas fa-crown"></i>
+  <span>Kunjungan:</span>
+  <div class="progress-bar">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+  <span id="progressText">0/6</span>
+</div>
+
+<!-- PETUNJUK UNLOCK LEVEL -->
+<div class="unlock-hint" id="unlockHint">
+  <i class="fas fa-lock-open"></i> 
+  <strong>Pengetahuan Meningkat!</strong> Baca juga artikel Masa Penjajahan
+</div>
+
+<!-- CAHAYA EMAS DARI CANDI -->
+<div class="golden-glow"></div>
+
+<!-- LENTERA-LENTERA KECIL -->
+<div class="lantern left">
+  <div class="lantern-stand"></div>
+  <div class="lantern-body"></div>
+</div>
+
+<div class="lantern right">
+  <div class="lantern-stand"></div>
+  <div class="lantern-body"></div>
+</div>
+
+<!-- ARTEFAK KERAJAAN -->
+<div class="artifacts-container">
+  <div class="artifact" style="top:20%;left:15%;" data-title="Kerajaan Kutai" data-desc="Kerajaan Hindu tertua di Indonesia yang berdiri sekitar abad ke-4 M di Kalimantan Timur. Dikenal dengan peninggalan prasasti Yupa yang menceritakan kehidupan kerajaan dan sistem pemerintahan. Prasasti Yupa merupakan bukti tertulis pertama tentang keberadaan kerajaan di Nusantara." data-link="https://id.wikipedia.org/wiki/Kerajaan_Kutai">
+    <div class="artifact-bg"></div>
+    <img src="letak-kerajaan-kutai.jpg" alt="Kerajaan Kutai" loading="lazy">
+  </div>
+  
+  <div class="artifact" style="top:60%;left:20%;" data-title="Kerajaan Tarumanegara" data-desc="Kerajaan Hindu yang berkuasa di Jawa Barat sekitar abad ke-5 M. Meninggalkan prasasti Ciaruteun dan prasasti Tugu yang menunjukkan kemajuan dalam bidang pertanian dan pengairan. Kerajaan ini dikenal dengan sistem pengairan yang maju untuk pertanian." data-link="https://id.wikipedia.org/wiki/Kerajaan_Tarumanagara">
+    <div class="artifact-bg"></div>
+    <img src="tarumanagara.jpg" alt="Kerajaan Tarumanegara" loading="lazy">
+  </div>
+  
+  <div class="artifact" style="top:15%;left:45%;" data-title="Kerajaan Sriwijaya" data-desc="Kerajaan maritim Buddha yang menguasai perdagangan di Selat Malaka pada abad ke-7 hingga ke-13 M. Pusat pembelajaran agama Buddha terbesar di Asia Tenggara dengan banyak biksu yang belajar di sini. Sriwijaya menguasai jalur perdagangan rempah-rempah yang strategis." data-link="https://id.wikipedia.org/wiki/Kerajaan_Sriwijaya">
+    <div class="artifact-bg"></div>
+    <img src="sriwijaya.jpg" alt="Kerajaan Sriwijaya" loading="lazy">
+  </div>
+  
+  <div class="artifact" style="top:50%;left:50%;" data-title="Kerajaan Majapahit" data-desc="Kerajaan Hindu-Buddha terbesar di Nusantara yang berjaya pada abad ke-13 hingga ke-16 M. Dibawah Patih Gajah Mada dengan Sumpah Palapa, berhasil menyatukan wilayah yang luas. Majapahit mencapai puncak kejayaan pada masa pemerintahan Hayam Wuruk." data-link="https://id.wikipedia.org/wiki/Kerajaan_Majapahit">
+    <div class="artifact-bg"></div>
+    <img src="majapahit.jpg" alt="Kerajaan Majapahit" loading="lazy">
+  </div>
+  
+  <div class="artifact" style="top:30%;left:70%;" data-title="Kerajaan Singasari" data-desc="Kerajaan yang didirikan oleh Ken Arok pada tahun 1222 M. Menjadi cikal bakal Kerajaan Majapahit dan melahirkan raja-raja besar seperti Kertanegara. Singasari dikenal dengan candi-candi megah seperti Candi Singasari dan Candi Jago." data-link="https://id.wikipedia.org/wiki/Kerajaan_Singhasari">
+    <div class="artifact-bg"></div>
+    <img src="singasari.JPG" alt="Kerajaan Singasari" loading="lazy">
+  </div>
+  
+  <div class="artifact" style="top:65%;left:65%;" data-title="Kerajaan Demak" data-desc="Kerajaan Islam pertama di Jawa yang berdiri pada abad ke-15 M. Berperan penting dalam penyebaran Islam di Jawa dan dikenal dengan Masjid Agung Demak. Demak menjadi pusat dakwah Islam dan basis perlawanan terhadap penjajah Portugis." data-link="https://id.wikipedia.org/wiki/Kesultanan_Demak">
+    <div class="artifact-bg"></div>
+    <img src="demak.jpg" alt="Kerajaan Demak" loading="lazy">
+  </div>
+</div>
+
+<!-- POPUP INFORMASI YANG DIPERBAIKI -->
+<div id="popup">
+  <div class="popup-content">
+    <div class="popup-left">
+      <h2 id="popupTitle">Kerajaan</h2>
+      <div class="article-content" id="popupDesc">
+        <!-- Konten artikel akan diisi oleh JavaScript -->
+      </div>
+      <div class="popup-buttons">
+        <a id="popupLink" target="_blank"><i class="fas fa-external-link-alt"></i> Baca artikel lebih lanjut</a>
+        <button id="closePopup" class="btn"><i class="fas fa-times"></i> Tutup</button>
+      </div>
+    </div>
+    <div class="popup-right">
+      <img id="popupImg" src="" alt="">
+    </div>
+  </div>
+</div>
+
+<!-- QUIZ CONTAINER -->
+<div id="quiz">
+  <h2><i class="fas fa-crown"></i> Quiz Kerajaan Nusantara</h2>
+  <p class="quiz-question" id="quizQuestion">Memuat pertanyaan...</p>
+  
+  <div class="quiz-options" id="quizOptions">
+    <!-- Opsi jawaban akan diisi oleh JavaScript -->
+  </div>
+  
+  <div class="quiz-result" id="quizResult"></div>
+  
+  <div class="popup-buttons">
+    <button id="nextQuizBtn" class="btn" style="display:none;">
+      <i class="fas fa-arrow-right"></i> Pertanyaan Berikutnya
+    </button>
+    <button id="finishQuizBtn" class="btn btn-primary" style="display:none;">
+      <i class="fas fa-trophy"></i> Selesaikan Quiz
+    </button>
+  </div>
+</div>
+
+<!-- TOMBOL KEMBALI -->
+<button id="backBtn" class="btn"><i class="fas fa-arrow-left"></i> Kembali ke Gerbang Silam</button>
+
+<!-- AUDIO CONTROLS -->
+<div class="audio-controls">
+  <button id="bgMusicToggle" class="audio-btn">
+    <i class="fas fa-volume-up"></i>
+  </button>
+  <button id="sfxToggle" class="audio-btn">
+    <i class="fas fa-bell"></i>
+  </button>
+</div>
+
+<!-- AUDIO ELEMENTS - SAMA SEPERTI SEBELUMNYA -->
+<audio id="bgMusic" loop>
+  <source src="gamelan.mpeg" type="audio/mpeg">
+</audio>
+<audio id="clickSound" preload="auto">
+  <source src="data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQQAAAAAAA==" type="audio/wav">
+</audio>
+<audio id="successSound" preload="auto">
+  <source src="data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQQAAAAAAA==" type="audio/wav">
+</audio>
+
+<script>
+// === SISTEM PROGRESS LEVEL - TAMBAHKAN INI DI AWAL SCRIPT ===
+const levelOrder = ['purba', 'kerajaan', 'penjajahan', 'kemerdekaan'];
+
+function getPlayerProgress() {
+  return JSON.parse(localStorage.getItem('playerProgress')) || {
+    completedLevels: [],
+    currentLevel: 'purba'
+  };
+}
+
+function savePlayerProgress(progress) {
+  localStorage.setItem('playerProgress', JSON.stringify(progress));
+}
+
+function completeLevel(level) {
+  const progress = getPlayerProgress();
+  
+  if (!progress.completedLevels.includes(level)) {
+    progress.completedLevels.push(level);
+    
+    const currentIndex = levelOrder.indexOf(level);
+    if (currentIndex < levelOrder.length - 1) {
+      progress.currentLevel = levelOrder[currentIndex + 1];
+    }
+    
+    savePlayerProgress(progress);
+    return true;
+  }
+  return false;
+}
+
+// CEK AKSES LEVEL - TAMBAHKAN INI JUGA
+const progress = getPlayerProgress();
+if (!progress.completedLevels.includes('purba')) {
+  alert('Anda harus menyelesaikan level Zaman Purba terlebih dahulu!');
+  window.location.href = 'index.html';
+}
+
+
+// === INISIALISASI ===
+document.addEventListener('DOMContentLoaded', function() {
+  // === VARIABEL ===
+  const artifacts = document.querySelectorAll('.artifact');
+  const popup = document.getElementById('popup');
+  const popupTitle = document.getElementById('popupTitle');
+  const popupImg = document.getElementById('popupImg');
+  const popupDesc = document.getElementById('popupDesc');
+  const popupLink = document.getElementById('popupLink');
+  const closePopup = document.getElementById('closePopup');
+  const backBtn = document.getElementById('backBtn');
+  const progressFill = document.getElementById('progressFill');
+  const progressText = document.getElementById('progressText');
+  const unlockHint = document.getElementById('unlockHint');
+  
+  // Audio elements - sama seperti sebelumnya
+  const bgMusic = document.getElementById('bgMusic');
+  const clickSound = document.getElementById('clickSound');
+  const successSound = document.getElementById('successSound');
+  const bgMusicToggle = document.getElementById('bgMusicToggle');
+  const sfxToggle = document.getElementById('sfxToggle');
+  
+  // Quiz elements
+  const quiz = document.getElementById('quiz');
+  const quizQuestion = document.getElementById('quizQuestion');
+  const quizOptions = document.getElementById('quizOptions');
+  const quizResult = document.getElementById('quizResult');
+  const nextQuizBtn = document.getElementById('nextQuizBtn');
+  const finishQuizBtn = document.getElementById('finishQuizBtn');
+  
+  let visited = new Set();
+  let allArtifactsRead = false;
+  let quizCompleted = false;
+  let currentQuestion = 0;
+  let score = 0;
+  let bgMusicEnabled = true;
+  let sfxEnabled = true;
+
+  // Data quiz
+  const quizData = [
+    {
+      question: "Kerajaan Hindu tertua di Indonesia adalah?",
+      options: ["Kerajaan Sriwijaya", "Kerajaan Majapahit", "Kerajaan Tarumanegara", "Kerajaan Kutai"],
+      correct: 3
+    },
+    {
+      question: "Kerajaan maritim yang menguasai perdagangan di Selat Malaka adalah?",
+      options: ["Kerajaan Sriwijaya", "Kerajaan Majapahit", "Kerajaan Singasari", "Kerajaan Demak"],
+      correct: 0
+    },
+    {
+      question: "Kerajaan Islam pertama di Pulau Jawa adalah?",
+      options: ["Kerajaan Mataram", "Kerajaan Banten", "Kerajaan Demak", "Kerajaan Cirebon"],
+      correct: 2
+    }
+  ];
+
+  // === MULAI APLIKASI ===
+  function initApp() {
+    // Preload gambar dengan lazy loading
+    preloadImages();
+    
+    // Update progress
+    updateProgress();
+    
+    // Setup audio controls
+    setupAudioControls();
+    
+    // Mulai background music setelah interaksi pertama
+    setupAudioInteraction();
+  }
+
+  // === SETUP AUDIO CONTROLS ===
+  function setupAudioControls() {
+    // Background music toggle
+    bgMusicToggle.addEventListener('click', () => {
+      bgMusicEnabled = !bgMusicEnabled;
+      if (bgMusicEnabled) {
+        bgMusic.play().catch(e => console.log("Autoplay prevented:", e));
+        bgMusicToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
+      } else {
+        bgMusic.pause();
+        bgMusicToggle.innerHTML = '<i class="fas fa-volume-mute"></i>';
+      }
+    });
+    
+    // Sound effects toggle
+    sfxToggle.addEventListener('click', () => {
+      sfxEnabled = !sfxEnabled;
+      if (sfxEnabled) {
+        sfxToggle.innerHTML = '<i class="fas fa-bell"></i>';
+      } else {
+        sfxToggle.innerHTML = '<i class="fas fa-bell-slash"></i>';
+      }
+    });
+  }
+
+  // === SETUP AUDIO INTERACTION ===
+  function setupAudioInteraction() {
+    // Set volume untuk semua audio
+    bgMusic.volume = 0.3;
+    
+    // Tunggu interaksi pertama untuk memulai audio
+    const startAudio = () => {
+      if (bgMusicEnabled) {
+        bgMusic.play().catch(e => console.log("Audio play error:", e));
+      }
+      
+      // Hapus event listeners setelah interaksi pertama
+      document.removeEventListener('click', startAudio);
+      document.removeEventListener('touchstart', startAudio);
+    };
+    
+    document.addEventListener('click', startAudio);
+    document.addEventListener('touchstart', startAudio);
+  }
+
+  // === PLAY SOUND EFFECT - SAMA SEPERTI SEBELUMNYA ===
+  function playSoundEffect(type) {
+    if (!sfxEnabled) return;
+    
+    try {
+      // Buat audio context untuk sound effect yang lebih andal
+      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+      
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+      
+      if (type === 'click') {
+        // Sound effect untuk klik - pendek dan tajam
+        oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+        oscillator.type = 'sine';
+        gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+        oscillator.start(audioContext.currentTime);
+        oscillator.stop(audioContext.currentTime + 0.1);
+      } else if (type === 'success') {
+        // Sound effect untuk sukses - lebih cerah
+        oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime); // C5
+        oscillator.frequency.setValueAtTime(659.25, audioContext.currentTime + 0.1); // E5
+        oscillator.frequency.setValueAtTime(783.99, audioContext.currentTime + 0.2); // G5
+        oscillator.type = 'sine';
+        gainNode.gain.setValueAtTime(0.4, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+        oscillator.start(audioContext.currentTime);
+        oscillator.stop(audioContext.currentTime + 0.5);
+      }
+    } catch (e) {
+      console.log("Web Audio API tidak didukung:", e);
+      // Fallback menggunakan HTML5 Audio
+      try {
+        const sound = type === 'click' ? clickSound : successSound;
+        const soundClone = sound.cloneNode();
+        soundClone.volume = 0.5;
+        soundClone.play().catch(err => console.log("Fallback audio error:", err));
+      } catch (fallbackError) {
+        console.log("Semua metode audio gagal");
+      }
+    }
+  }
+
+  // === PRELOAD IMAGES ===
+  function preloadImages() {
+    artifacts.forEach(artifact => {
+      const img = artifact.querySelector('img');
+      if (img.complete) {
+        artifact.classList.add('loaded');
+      } else {
+        img.addEventListener('load', () => {
+          artifact.classList.add('loaded');
+        });
+        img.addEventListener('error', () => {
+          console.warn('Gagal memuat gambar:', img.src);
+          // Placeholder jika gambar gagal dimuat
+          img.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjOGI0NTEzIi8+CjxwYXRoIGQ9Ik01MCAyNVY3NU03NSA1MEgyNSIgc3Ryb2tlPSIjZjFjNDBmIiBzdHJva2Utd2lkdGg9IjgiLz4KPC9zdmc+';
+        });
+      }
+    });
+  }
+
+  // === UPDATE PROGRESS ===
+  function updateProgress() {
+    const progress = (visited.size / artifacts.length) * 100;
+    progressFill.style.width = `${progress}%`;
+    progressText.textContent = `${visited.size}/${artifacts.length}`;
+    
+    // Jika semua artefak sudah dikunjungi
+    if (visited.size === artifacts.length && !allArtifactsRead) {
+      allArtifactsRead = true;
+      showUnlockHint();
+    }
+  }
+
+  // === TAMPILKAN PETUNJUK UNLOCK LEVEL ===
+  function showUnlockHint() {
+    unlockHint.classList.add('show');
+    playSoundEffect('success');
+    
+    // Setelah 3 detik, tampilkan quiz
+    setTimeout(() => {
+      unlockHint.classList.remove('show');
+      startQuiz();
+    }, 3000);
+  }
+
+  // === MULAI QUIZ ===
+  function startQuiz() {
+    currentQuestion = 0;
+    score = 0;
+    quizCompleted = false;
+    showQuestion();
+    quiz.style.display = 'block';
+  }
+
+  // === TAMPILKAN PERTANYAAN QUIZ ===
+  function showQuestion() {
+    if (currentQuestion >= quizData.length) {
+      finishQuiz();
+      return;
+    }
+
+    const question = quizData[currentQuestion];
+    quizQuestion.textContent = question.question;
+    quizOptions.innerHTML = '';
+    quizResult.className = 'quiz-result';
+    quizResult.style.display = 'none';
+    nextQuizBtn.style.display = 'none';
+    finishQuizBtn.style.display = 'none';
+
+    question.options.forEach((option, index) => {
+      const optionElement = document.createElement('div');
+      optionElement.className = 'quiz-option';
+      optionElement.textContent = option;
+      optionElement.addEventListener('click', () => checkAnswer(index));
+      quizOptions.appendChild(optionElement);
+    });
+  }
+
+  // === CEK JAWABAN QUIZ ===
+  function checkAnswer(selectedIndex) {
+    const question = quizData[currentQuestion];
+    const options = quizOptions.querySelectorAll('.quiz-option');
+    
+    // Nonaktifkan semua opsi
+    options.forEach(option => {
+      option.style.pointerEvents = 'none';
+    });
+
+    // Tandai jawaban yang benar dan salah
+    options[question.correct].classList.add('correct');
+    if (selectedIndex !== question.correct) {
+      options[selectedIndex].classList.add('incorrect');
+    }
+
+    // Tampilkan hasil
+    if (selectedIndex === question.correct) {
+      score++;
+      quizResult.textContent = 'Benar! 🎉';
+      quizResult.className = 'quiz-result success';
+      playSoundEffect('success');
+    } else {
+      quizResult.textContent = 'Salah! Coba lagi.';
+      quizResult.className = 'quiz-result error';
+    }
+    quizResult.style.display = 'block';
+
+    // Tampilkan tombol berikutnya
+    if (currentQuestion < quizData.length - 1) {
+      nextQuizBtn.style.display = 'block';
+    } else {
+      finishQuizBtn.style.display = 'block';
+    }
+  }
+
+  // === PERTANYAAN BERIKUTNYA ===
+  nextQuizBtn.addEventListener('click', () => {
+    currentQuestion++;
+    showQuestion();
+  });
+
+// === SELESAI QUIZ - GANTI DENGAN INI ===
+function finishQuiz() {
+  quizCompleted = true;
+  quiz.style.display = 'none';
+  
+  // Tampilkan tombol kembali
+  backBtn.style.display = 'block';
+  
+  // SIMPAN PROGRESS KE LOCALSTORAGE - INI YANG PENTING!
+  if (completeLevel('kerajaan')) {
+    console.log('Level kerajaan berhasil diselesaikan!');
+  }
+  
+  // Tampilkan hasil akhir
+  setTimeout(() => {
+    alert(`🎉 Quiz selesai! Skor Anda: ${score}/${quizData.length}\n\nLevel Masa Penjajahan sekarang terbuka!\n\nKlik tombol "Kembali ke Gerbang Silam" untuk melanjutkan.`);
+  }, 500);
+}
+
+  finishQuizBtn.addEventListener('click', finishQuiz);
+
+  // === INTERAKSI ARTEFAK - DIPERBAIKI ===
+  artifacts.forEach(artifact => {
+    artifact.addEventListener('click', () => {
+      const title = artifact.dataset.title;
+      const desc = artifact.dataset.desc;
+      const link = artifact.dataset.link;
+      const imgSrc = artifact.querySelector('img').src;
+      
+      // Play click sound effect
+      playSoundEffect('click');
+      
+      // Tampilkan popup
+      popupTitle.textContent = title;
+      popupImg.src = imgSrc;
+      popupLink.href = link;
+      
+      // Isi konten artikel berdasarkan kerajaan yang diklik
+      const articleContent = generateArticleContent(title, desc);
+      popupDesc.innerHTML = articleContent;
+      
+      popup.style.display = 'block';
+      
+      // Tambah ke daftar kunjungan jika belum
+      if (!visited.has(title)) {
+        visited.add(title);
+        updateProgress();
+      }
+    });
+  });
+
+  // === FUNGSI UNTUK MEMBUAT KONTEN ARTIKEL PANJANG ===
+  function generateArticleContent(title, baseDesc) {
+    // Artikel untuk setiap kerajaan
+    const articles = {
+      "Kerajaan Kutai": `
+        <p>${baseDesc}</p>
+        
+        <h3>Sejarah Pendirian</h3>
+        <p>Kerajaan Kutai Martadipura merupakan kerajaan Hindu tertua di Indonesia yang berdiri sekitar abad ke-4 Masehi di daerah Muara Kaman, Kalimantan Timur. Kerajaan ini didirikan oleh Kudungga yang kemudian digantikan oleh putranya, Aswawarman, yang dianggap sebagai pembentuk dinasti.</p>
+        
+        <h3>Peninggalan Sejarah</h3>
+        <p>Bukti keberadaan Kerajaan Kutai ditemukan melalui tujuh prasasti Yupa yang ditulis menggunakan huruf Pallawa dan bahasa Sanskerta. Prasasti-prasasti ini berisi informasi tentang:</p>
+        <ul>
+          <li>Silsilah raja-raja Kutai</li>
+          <li>Upacara kurban yang dilakukan oleh keluarga kerajaan</li>
+          <li>Hadiah yang diberikan kepada kaum Brahmana</li>
+          <li>Kehidupan sosial dan ekonomi masyarakat</li>
+        </ul>
+        
+        <h3>Raja-Raja Terkenal</h3>
+        <p>Kerajaan Kutai dipimpin oleh beberapa raja yang terkenal:</p>
+        <ul>
+          <li><strong>Kudungga</strong> - Raja pertama dan pendiri kerajaan</li>
+          <li><strong>Aswawarman</strong> - Raja yang membentuk dinasti dan memperluas wilayah</li>
+          <li><strong>Mulawarman</strong> - Raja paling terkenal yang memimpin Kutai pada masa kejayaannya</li>
+        </ul>
+        
+        <h3>Kehidupan Sosial dan Ekonomi</h3>
+        <p>Masyarakat Kutai hidup dari pertanian, perdagangan, dan pertambangan. Mereka telah mengenal sistem irigasi untuk pertanian dan terlibat dalam perdagangan dengan kerajaan-kerajaan lain di Nusantara. Kerajaan Kutai juga dikenal dengan hasil tambangnya, terutama emas.</p>
+        
+        <h3>Pengaruh Hindu</h3>
+        <p>Kerajaan Kutai menunjukkan pengaruh Hindu yang kuat, terutama dalam sistem pemerintahan dan kepercayaan. Raja dianggap sebagai titisan dewa dan sistem kasta mulai diterapkan dalam masyarakat.</p>
+      `,
+      
+      "Kerajaan Tarumanegara": `
+        <p>${baseDesc}</p>
+        
+        <h3>Lokasi dan Wilayah Kekuasaan</h3>
+        <p>Kerajaan Tarumanegara berpusat di daerah Jawa Barat, dengan wilayah kekuasaan meliputi Banten, Jakarta, Bogor, hingga Cirebon. Kerajaan ini didirikan oleh Rajadirajaguru Jayasingawarman pada tahun 358 M.</p>
+        
+        <h3>Prasasti Peninggalan</h3>
+        <p>Tarumanegara meninggalkan tujuh prasasti penting:</p>
+        <ul>
+          <li><strong>Prasasti Ciaruteun</strong> - Terdapat cap telapak kaki Raja Purnawarman</li>
+          <li><strong>Prasasti Tugu</strong> - Menceritakan pembuatan saluran air Gomati</li>
+          <li><strong>Prasasti Kebon Kopi</strong> - Berisi cap telapak kaki gajah</li>
+          <li><strong>Prasasti Jambu</strong> - Menyebutkan Raja Purnawarman</li>
+          <li><strong>Prasasti Pasir Awi</strong> - Prasasti yang berada di perbukitan</li>
+          <li><strong>Prasasti Muara Cianten</strong> - Prasasti dengan tulisan yang sulit dibaca</li>
+          <li><strong>Prasasti Cidanghiang</strong> - Prasasti yang memuji keberanian Raja Purnawarman</li>
+        </ul>
+        
+        <h3>Sistem Pengairan</h3>
+        <p>Kerajaan Tarumanegara dikenal dengan kemajuan teknologi pengairannya. Raja Purnawarman memerintahkan pembuatan saluran air Gomati sepanjang 11 km untuk mengairi sawah dan mencegah banjir. Sistem pengairan ini menunjukkan kecanggihan teknik sipil pada masa itu.</p>
+        
+        <h3>Kehidupan Ekonomi</h3>
+        <p>Masyarakat Tarumanegara hidup dari pertanian, terutama padi. Mereka juga mengembangkan perdagangan dengan kerajaan-kerajaan lain. Letaknya yang strategis di pesisir utara Jawa membuat Tarumanegara menjadi pusat perdagangan yang penting.</p>
+      `,
+      
+      "Kerajaan Sriwijaya": `
+        <p>${baseDesc}</p>
+        
+        <h3>Kekuatan Maritim</h3>
+        <p>Sriwijaya merupakan kerajaan maritim terbesar dalam sejarah Nusantara. Armada lautnya yang kuat menguasai Selat Malaka dan Selat Sunda yang merupakan jalur perdagangan internasional yang vital antara China dan India.</p>
+        
+        <h3>Pusat Pembelajaran Buddha</h3>
+        <p>Sriwijaya menjadi pusat pembelajaran agama Buddha yang termasyhur di Asia Tenggara. Biksu-biksu dari China seperti I-Tsing belajar di Sriwijaya sebelum melanjutkan perjalanan ke India. Universitas Buddha di Sriwijaya menarik banyak pelajar dari berbagai negara.</p>
+        
+        <h3>Struktur Pemerintahan</h3>
+        <p>Kerajaan Sriwijaya memiliki sistem pemerintahan yang terorganisir dengan baik:</p>
+        <ul>
+          <li><strong>Maharaja</strong> - Pemimpin tertinggi kerajaan</li>
+          <li><strong>Datu</strong> - Penguasa daerah bawahan</li>
+          <li><strong>Senapati</strong> - Pemimpin angkatan perang</li>
+          <li><strong>Huluntuan</strong> - Pejabat tinggi kerajaan</li>
+        </ul>
+        
+        <h3>Ekspansi dan Pengaruh</h3>
+        <p>Sriwijaya melakukan ekspansi ke berbagai wilayah di Nusantara, termasuk Jawa, Sumatra, Semenanjung Malaya, dan Kalimantan. Pengaruhnya bahkan sampai ke Kamboja dan Filipina. Kerajaan ini mengendalikan perdagangan rempah-rempah, emas, dan hasil bumi lainnya.</p>
+        
+        <h3>Peninggalan Sejarah</h3>
+        <p>Beberapa peninggalan Sriwijaya yang penting antara lain Prasasti Kedukan Bukit, Prasasti Talang Tuo, dan Prasasti Kota Kapur. Candi-candi peninggalan Sriwijaya juga ditemukan di berbagai tempat, meskipun tidak sebanyak peninggalan kerajaan Jawa.</p>
+      `,
+      
+      "Kerajaan Majapahit": `
+        <p>${baseDesc}</p>
+        
+        <h3>Pendiri dan Masa Kejayaan</h3>
+        <p>Kerajaan Majapahit didirikan oleh Raden Wijaya pada tahun 1293 M. Kerajaan ini mencapai puncak kejayaannya pada masa pemerintahan Hayam Wuruk (1350-1389) dengan didampingi oleh Mahapatih Gajah Mada.</p>
+        
+        <h3>Sumpah Palapa</h3>
+        <p>Mahapatih Gajah Mada mengucapkan Sumpah Palapa yang berisi tekadnya untuk tidak menikmati kesenangan duniawi sebelum berhasil menyatukan Nusantara. Berkat sumpah ini, Majapahit berhasil menguasai wilayah yang sangat luas, meliputi hampir seluruh Indonesia modern, Singapura, Malaysia, Brunei, dan sebagian Filipina.</p>
+        
+        <h3>Sistem Pemerintahan</h3>
+        <p>Majapahit memiliki sistem pemerintahan yang terstruktur dengan baik:</p>
+        <ul>
+          <li><strong>Raja</strong> - Pemimpin tertinggi yang dianggap sebagai penjelmaan dewa</li>
+          <li><strong>Rakryan Mahamantri</strong> - Dewan penasihat kerajaan</li>
+          <li><strong>Dharmadyaksa</strong> - Pejabat yang menangani urusan keagamaan</li>
+          <li><strong>Bhayangkara</strong> - Pasukan khusus pengawal raja</li>
+        </ul>
+        
+        <h3>Karya Sastra</h3>
+        <p>Masa kejayaan Majapahit melahirkan karya sastra besar seperti:</p>
+        <ul>
+          <li><strong>Negarakertagama</strong> - Karya Mpu Prapanca yang menggambarkan kehidupan di Majapahit</li>
+          <li><strong>Sutasoma</strong> - Karya Mpu Tantular yang memuat semboyan "Bhinneka Tunggal Ika"</li>
+          <li><strong>Arjunawiwaha</strong> - Karya Mpu Kanwa yang menceritakan kisah Arjuna</li>
+        </ul>
+        
+        <h3>Peninggalan Arsitektur</h3>
+        <p>Majapahit meninggalkan banyak candi megah seperti Candi Panataran, Candi Sukuh, Candi Cetho, dan Gapura Bajang Ratu. Arsitektur Majapahit menunjukkan perpaduan harmonis antara unsur Hindu dan Buddha.</p>
+      `,
+      
+      "Kerajaan Singasari": `
+        <p>${baseDesc}</p>
+        
+        <h3>Pendirian oleh Ken Arok</h3>
+        <p>Kerajaan Singasari didirikan oleh Ken Arok pada tahun 1222 M setelah berhasil mengalahkan Kertajaya, raja terakhir Kerajaan Kediri. Ken Arok memulai dinasti baru yang kemudian melahirkan raja-raja besar di Jawa.</p>
+        
+        <h3>Raja-Raja Singasari</h3>
+        <p>Singasari dipimpin oleh beberapa raja yang penting:</p>
+        <ul>
+          <li><strong>Ken Arok</strong> (1222-1227) - Pendiri kerajaan</li>
+          <li><strong>Anusapati</strong> (1227-1248) - Putra Tunggul Ametung</li>
+          <li><strong>Tohjaya</strong> (1248) - Memerintah sangat singkat</li>
+          <li><strong>Ranggawuni</strong> (1248-1268) - Masa pemulihan kerajaan</li>
+          <li><strong>Kertanegara</strong> (1268-1292) - Raja terbesar Singasari</li>
+        </ul>
+        
+        <h3>Ekspansi Kertanegara</h3>
+        <p>Raja Kertanegara melakukan ekspansi besar-besaran untuk memperluas wilayah Singasari. Ia mengirim ekspedisi Pamalayu ke Sumatra untuk menjalin persekutuan dengan Kerajaan Melayu dan menghadapi ancaman Mongol.</p>
+        
+        <h3>Peninggalan Candi</h3>
+        <p>Singasari meninggalkan candi-candi megah seperti:</p>
+        <ul>
+          <li><strong>Candi Singasari</strong> - Candi pemakaman Raja Kertanegara</li>
+          <li><strong>Candi Jago</strong> - Candi dengan relief cerita Kunjarakarna dan Parthayajna</li>
+          <li><strong>Candi Kidal</strong> - Candi pemakaman Raja Anusapati</li>
+          <li><strong>Candi Jawi</strong> - Candi yang menggambarkan perpaduan Hindu-Buddha</li>
+        </ul>
+        
+        <h3>Hubungan dengan Majapahit</h3>
+        <p>Singasari merupakan cikal bakal Kerajaan Majapahit. Raden Wijaya, menantu Kertanegara, mendirikan Majapahit setelah keruntuhan Singasari. Banyak tradisi dan sistem pemerintahan Singasari diwarisi oleh Majapahit.</p>
+      `,
+      
+      "Kerajaan Demak": `
+        <p>${baseDesc}</p>
+        
+        <h3>Pusat Penyebaran Islam</h3>
+        <p>Kerajaan Demak didirikan oleh Raden Patah pada akhir abad ke-15 M. Demak menjadi kerajaan Islam pertama di Jawa dan pusat penyebaran agama Islam di Nusantara. Para wali songo berperan penting dalam perkembangan kerajaan ini.</p>
+        
+        <h3>Masjid Agung Demak</h3>
+        <p>Masjid Agung Demak merupakan simbol kekuatan Islam di Jawa. Masjid ini didirikan oleh para wali dan memiliki arsitektur yang unik dengan atap tumpang tiga. Beberapa tiang utama masjid konon dibuat oleh para wali songo.</p>
+        
+        <h3>Sistem Pemerintahan</h3>
+        <p>Demak dipimpin oleh sultan-sultan yang juga berperan sebagai pemimpin spiritual:</p>
+        <ul>
+          <li><strong>Raden Patah</strong> (1478-1518) - Pendiri dan sultan pertama</li>
+          <li><strong>Adipati Unus</strong> (1518-1521) - Dijuluki Pangeran Sabrang Lor karena menyerang Portugis di Malaka</li>
+          <li><strong>Sultan Trenggono</strong> (1521-1546) - Masa kejayaan Demak</li>
+        </ul>
+        
+        <h3>Peran Wali Songo</h3>
+        <p>Wali songo berperan penting dalam perkembangan Demak:</p>
+        <ul>
+          <li><strong>Sunan Kalijaga</strong> - Penasihat kerajaan dan ahli strategi</li>
+          <li><strong>Sunan Gunung Jati</strong> - Penyebar Islam di Jawa Barat</li>
+          <li><strong>Sunan Kudus</strong> - Panglima perang kerajaan</li>
+          <li><strong>Sunan Muria</strong> - Penyebar Islam di daerah pedalaman</li>
+        </ul>
+        
+        <h3>Perlawanan terhadap Portugis</h3>
+        <p>Demak memimpin perlawanan terhadap Portugis yang menguasai Malaka. Ekspedisi militer dipimpin oleh Adipati Unus pada tahun 1513, meskipun tidak berhasil mengusir Portugis, menunjukkan keberanian kerajaan-kerajaan Nusantara melawan penjajah.</p>
+      `
+    };
+    
+    // Kembalikan artikel yang sesuai atau artikel default
+    return articles[title] || `
+      <p>${baseDesc}</p>
+      
+      <h3>Signifikansi Sejarah</h3>
+      <p>Kerajaan ini memiliki peran penting dalam sejarah Nusantara dan memberikan kontribusi besar dalam perkembangan budaya, politik, dan ekonomi di Indonesia.</p>
+      
+      <h3>Warisan Budaya</h3>
+      <p>Peninggalan kerajaan ini masih dapat dilihat hingga sekarang dalam bentuk candi, prasasti, tradisi, dan nilai-nilai yang tetap hidup dalam masyarakat Indonesia modern.</p>
+    `;
+  }
+
+  // === TUTUP POPUP ===
+  closePopup.addEventListener('click', () => {
+    popup.style.display = 'none';
+  });
+
+  // === KEMBALI KE LOBI ===
+  backBtn.addEventListener('click', () => {
+    // Hanya bisa kembali jika quiz sudah selesai
+    if (quizCompleted) {
+      // Animasi keluar sebelum kembali
+      document.body.style.opacity = '0';
+      document.body.style.transition = 'opacity 0.5s ease';
+      
+      setTimeout(() => {
+        window.location.href = 'index.html';
+      }, 500);
+    } else {
+      alert('Selesaikan quiz terlebih dahulu untuk membuka level berikutnya!');
+    }
+  });
+
+  // === INISIALISASI APLIKASI ===
+  initApp();
+});
+
+// === OPTIMASI PERFORMANCE ===
+// Mencegah behavior drag pada gambar
+document.addEventListener('dragstart', (e) => {
+  if (e.target.tagName === 'IMG') {
+    e.preventDefault();
+  }
+});
+
+// Handle visibility change untuk optimasi
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) {
+    // Hentikan animasi saat tab tidak aktif
+    document.body.style.animationPlayState = 'paused';
+  } else {
+    document.body.style.animationPlayState = 'running';
+  }
+});
+
+// Di halaman level (misal: purba.html)
+function selesaikanLevel() {
+  // Kode untuk menyelesaikan level...
+  
+  // Simpan progress
+  if (window.opener) {
+    window.opener.completeLevel('purba');
+  } else {
+    // Alternatif: redirect ke lobby dengan parameter
+    window.location.href = 'lobby.html?completed=true';
+  }
+}
+</script>
+</body>
+</html>
