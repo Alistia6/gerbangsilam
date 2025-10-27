@@ -1307,11 +1307,11 @@ document.addEventListener('DOMContentLoaded', function() {
   function generateArticleContent(title, baseDesc) {
     // Artikel untuk setiap jenis artefak
     const articles = {
-      "Homo Erectus": `
+    "Homo Erectus": `
         <p>${baseDesc}</p>
         
         <h3>Penemuan dan Sejarah</h3>
-        <p>Fosil Homo erectus pertama kali ditemukan oleh Eugene Dubois pada tahun 1891 di Trinil, Jawa Tengah. Penemuan ini menjadi sangat penting karena merupakan salah satu fosil manusia purba tertua yang ditemukan di luar Afrika.</p>
+        <p>Fosil Homo erectus pertama kali ditemukan oleh Eugene Dubois pada tahun 1891 di Trinil, Jawa Tengah. Penemuan ini menjadi sangat penting karena merupakan salah satu fosil manusia purba tertua yang ditemukan di luar Afrika. Dubois menamakan temuannya <em>Pithecanthropus erectus</em> yang berarti "manusia kera yang berdiri tegak".</p>
         
         <h3>Ciri-Ciri Fisik</h3>
         <p>Homo erectus memiliki ciri-ciri fisik yang khas:</p>
@@ -1320,38 +1320,57 @@ document.addEventListener('DOMContentLoaded', function() {
           <li>Volume otak sekitar 900-1100 cc, lebih besar dari manusia purba sebelumnya</li>
           <li>Tulang kening yang menonjol (torus supraorbitalis)</li>
           <li>Rahang yang kuat dengan gigi yang besar</li>
+          <li>Tulang tengkorak yang tebal dan datar</li>
         </ul>
+        
+        <h3>Teknologi dan Budaya</h3>
+        <p>Homo erectus merupakan manusia purba pertama yang secara konsisten menggunakan alat batu yang dikenal sebagai Acheulean. Mereka juga merupakan manusia purba pertama yang diketahui menggunakan api secara terkendali. Penggunaan api ini memungkinkan mereka untuk memasak makanan, menghangatkan tubuh, dan melindungi diri dari predator.</p>
+        
+        <h3>Pola Hidup</h3>
+        <p>Homo erectus hidup sebagai pemburu-pengumpul dalam kelompok kecil. Mereka berburu hewan besar seperti gajah purba, kerbau, dan babi hutan. Temuan fosil menunjukkan bahwa mereka sudah mampu berkomunikasi secara sederhana, meskipun kemampuan bahasa yang kompleks mungkin belum berkembang sepenuhnya.</p>
+        
+        <h3>Penyebaran dan Kepunahan</h3>
+        <p>Homo erectus tersebar luas dari Afrika ke Asia, termasuk Indonesia. Di Indonesia, fosil mereka ditemukan di berbagai lokasi seperti Sangiran, Trinil, dan Ngandong. Spesies ini bertahan hidup selama hampir 2 juta tahun sebelum akhirnya punah sekitar 100.000 tahun yang lalu, kemungkinan karena perubahan iklim dan persaingan dengan manusia modern (Homo sapiens).</p>
       `,
       
-      "Kapak Genggam": `
+     "Kapak genggam": `
         <p>${baseDesc}</p>
         
-        <h3>Jenis-Jenis Kapak Genggam</h3>
-        <p>Kapak Genggam yang digunakan manusia purba memiliki berbagai bentuk dan fungsi:</p>
+        <h3>Jenis-Jenis Kapak genggam</h3>
+        <p>Kapak genggam yang digunakan manusia purba memiliki berbagai bentuk dan fungsi:</p>
         <ul>
           <li><strong>Kapak Perimbas:</strong> Digunakan untuk merimbas kayu dan memecah tulang</li>
           <li><strong>Kapak Penetak:</strong> Untuk menebang pohon dan memotong kayu</li>
           <li><strong>Kapak Genggam:</strong> Serbaguna, digunakan untuk berbagai keperluan</li>
+          <li><strong>Alat Serpih:</strong> Untuk menguliti hewan dan memotong daging</li>
         </ul>
-      `,
-      
-      "Lukisan Dinding Gua": `
-        <p>${baseDesc}</p>
         
-        <h3>Lokasi Penemuan di Indonesia</h3>
-        <p>Selain di Maros, Sulawesi Selatan, lukisan gua purba juga ditemukan di berbagai lokasi di Indonesia:</p>
+        <h3>Teknik Pembuatan</h3>
+        <p>Pembuatan Kapak genggam memerlukan keterampilan khusus. Teknik yang digunakan antara lain:</p>
         <ul>
-          <li>Gua Leang-Leang, Sulawesi Selatan</li>
-          <li>Gua Tabuhan, Jawa Timur</li>
-          <li>Gua Pettakere, Sulawesi Selatan</li>
+          <li><strong>Teknik Pangkas:</strong> Memangkas batu inti untuk mendapatkan bentuk yang diinginkan</li>
+          <li><strong>Teknik Pukulan Langsung:</strong> Memukul batu inti dengan batu pukul</li>
+          <li><strong>Teknik Tekan:</strong> Menggunakan tekanan untuk melepas serpihan yang lebih kecil dan presisi</li>
+        </ul>
+        
+        <h3>Perkembangan Teknologi Batu</h3>
+        <p>Teknologi pembuatan alat batu mengalami perkembangan yang signifikan selama zaman prasejarah. Dari alat-alat sederhana pada Paleolitik Bawah hingga alat-alat yang lebih halus dan spesifik pada Paleolitik Atas. Perkembangan ini mencerminkan peningkatan kemampuan kognitif manusia purba dalam memecahkan masalah.</p>
+        
+        <h3>Arti Penting dalam Arkeologi</h3>
+        <p>Alat batu merupakan bukti penting untuk memahami evolusi manusia. Melalui studi alat batu, arkeolog dapat merekonstruksi:</p>
+        <ul>
+          <li>Kemampuan kognitif manusia purba</li>
+          <li>Teknologi dan inovasi yang dikembangkan</li>
+          <li>Pola migrasi manusia purba</li>
+          <li>Interaksi dengan lingkungan dan adaptasi</li>
         </ul>
       `,
       
-      "Homo Floresiensis": `
+    "Homo Floresiensis": `
         <p>${baseDesc}</p>
         
         <h3>Penemuan Mengejutkan</h3>
-        <p>Homo floresiensis ditemukan pada tahun 2003 di Gua Liang Bua, Flores, Indonesia oleh tim arkeolog Australia dan Indonesia.</p>
+        <p>Homo floresiensis ditemukan pada tahun 2003 di Gua Liang Bua, Flores, Indonesia oleh tim arkeolog Australia dan Indonesia. Penemuan ini mengejutkan dunia ilmu pengetahuan karena ukuran tubuhnya yang sangat kecil, sehingga dijuluki "Hobbit".</p>
         
         <h3>Ciri-Ciri Fisik</h3>
         <p>Homo floresiensis memiliki karakteristik fisik yang unik:</p>
@@ -1359,14 +1378,24 @@ document.addEventListener('DOMContentLoaded', function() {
           <li>Tinggi badan hanya sekitar 106 cm untuk betina dan 110 cm untuk jantan</li>
           <li>Volume otak sekitar 380-420 cc, sangat kecil bahkan dibandingkan dengan kera</li>
           <li>Struktur tubuh proporsional seperti manusia modern namun dalam ukuran mini</li>
+          <li>Rahang yang menonjol tanpa dagu</li>
+          <li>Perawakan yang kekar dan kuat</li>
         </ul>
+        
+        <h3>Kontroversi Ilmiah</h3>
+        <p>Penemuan Homo floresiensis memicu perdebatan ilmiah yang intens. Beberapa ilmuwan awalnya mengira ini adalah manusia modern dengan kelainan genetik (microcephaly), namun penelitian lebih lanjut membuktikan bahwa ini adalah spesies manusia purba yang berbeda.</p>
+        
+        <h3>Adaptasi Lingkungan</h3>
+        <p>Homo floresiensis menunjukkan contoh menarik tentang "island dwarfism" - fenomena dimana spesies berevolusi menjadi lebih kecil di lingkungan pulau dengan sumber daya terbatas. Mereka berbagi pulau Flores dengan hewan-hewan raksasa seperti gajah purba (Stegodon) dan komodo.</p>
+        
+        <h3>Teknologi dan Alat</h3>
+        <p>Meskipun berukuran kecil, Homo floresiensis mampu membuat alat batu yang canggih untuk ukurannya. Mereka berburu Stegodon (gajah purba kerdil) dan menggunakan api. Kemampuan ini menunjukkan kecerdasan yang tinggi meskipun volume otaknya kecil.</p>
       `,
-      
-      "Homo Wajakensis": `
+  "Homo Wajakensis": `
         <p>${baseDesc}</p>
         
         <h3>Penemuan dan Signifikansi</h3>
-        <p>Homo wajakensis ditemukan oleh B.D. van Rietschoten pada tahun 1889 di dekat Tulungagung, Jawa Timur.</p>
+        <p>Homo wajakensis ditemukan oleh B.D. van Rietschoten pada tahun 1889 di dekat Tulungagung, Jawa Timur. Fosil ini sangat penting karena menunjukkan ciri-ciri transisi antara manusia purba dan manusia modern, memberikan wawasan tentang evolusi manusia di Asia Tenggara.</p>
         
         <h3>Ciri-Ciri Fisik</h3>
         <p>Homo wajakensis memiliki campuran karakteristik purba dan modern:</p>
@@ -1374,7 +1403,18 @@ document.addEventListener('DOMContentLoaded', function() {
           <li>Volume otak sekitar 1300-1600 cc, sebanding dengan manusia modern</li>
           <li>Tulang kening yang masih menonjol tetapi tidak setebal Homo erectus</li>
           <li>Struktur wajah yang lebih datar dan modern</li>
+          <li>Tinggi badan diperkirakan sekitar 160-170 cm</li>
+          <li>Rahang yang kuat tetapi tidak sekuat Homo erectus</li>
         </ul>
+        
+        <h3>Kontroversi Klasifikasi</h3>
+        <p>Status taksonomi Homo wajakensis masih diperdebatkan. Beberapa ilmuwan menganggapnya sebagai subspesies Homo sapiens (manusia modern), sementara yang lain menganggapnya sebagai spesies terpisah atau keturunan langsung dari Homo erectus yang berevolusi di Jawa.</p>
+        
+        <h3>Hubungan dengan Populasi Modern</h3>
+        <p>Beberapa penelitian menunjukkan bahwa Homo wajakensis mungkin memiliki hubungan genetik dengan populasi manusia modern di Asia Tenggara, khususnya dengan penduduk asli Australia (Aborigin) dan Papua. Hal ini menunjukkan kemungkinan percampuran genetik antara manusia purba dan modern di wilayah ini.</p>
+        
+        <h3>Konteks Budaya</h3>
+        <p>Homo wajakensis hidup pada periode ketika teknologi alat batu sudah lebih maju. Mereka menggunakan alat-alat yang lebih halus dan spesifik, dan kemungkinan sudah mengembangkan sistem kepercayaan dan praktik penguburan yang kompleks.</p>
       `,
       
       "Leang Tedongnge": `
@@ -1393,6 +1433,45 @@ document.addEventListener('DOMContentLoaded', function() {
           <li>Penguburan cepat untuk mencegah decomposisi</li>
           <li>Mineralisasi dimana material organik digantikan oleh mineral</li>
           <li>Tekanan dan waktu yang cukup (biasanya ribuan hingga jutaan tahun)</li>
+          <li>Lingkungan yang stabil secara geologis</li>
+        </ul>
+        
+        <h3>Teknik Analisis Fosil Modern</h3>
+        <p>Ilmuwan menggunakan berbagai teknik canggih untuk mempelajari fosil:</p>
+        <ul>
+          <li><strong>Dating Radiometrik:</strong> Menggunakan peluruhan radioaktif untuk menentukan usia</li>
+          <li><strong>CT Scan:</strong> Memeriksa struktur internal tanpa merusak fosil</li>
+          <li><strong>Analisis Isotop:</strong> Memahami pola makan dan migrasi</li>
+          <li><strong>DNA Kuno:</strong> Mengekstrak dan menganalisis materi genetik</li>
+          <li><strong>Rekonstruksi 3D:</strong> Membuat model digital untuk studi lebih lanjut</li>
+        </ul>
+        
+        <h3>Lokasi Penting di Indonesia</h3>
+        <p>Indonesia memiliki beberapa situs fosil manusia purba yang penting secara internasional:</p>
+        <ul>
+          <li><strong>Sangiran:</strong> Situs Warisan Dunia UNESCO dengan fosil Homo erectus terlengkap</li>
+          <li><strong>Trinil:</strong> Tempat penemuan pertama Pithecanthropus erectus</li>
+          <li><strong>Ngandong:</strong> Fosil Homo erectus termuda dari Jawa</li>
+          <li><strong>Liang Bua:</strong> Tempat penemuan Homo floresiensis</li>
+          <li><strong>Wajak:</strong> Tempat penemuan Homo wajakensis</li>
+        </ul>
+        
+        <h3>Kontribusi untuk Ilmu Pengetahuan</h3>
+        <p>Penemuan fosil di Indonesia telah memberikan kontribusi signifikan untuk pemahaman kita tentang evolusi manusia:</p>
+        <ul>
+          <li>Membuktikan bahwa manusia purba bermigrasi keluar dari Afrika lebih awal dari perkiraan sebelumnya</li>
+          <li>Menunjukkan adaptasi unik manusia purba di lingkungan tropis Asia Tenggara</li>
+          <li>Mengungkap keberagaman spesies manusia yang pernah hidup</li>
+          <li>Memberikan wawasan tentang interaksi antara manusia purba dan manusia modern</li>
+        </ul>
+        
+        <h3>Konservasi dan Tantangan</h3>
+        <p>Pelestarian fosil menghadapi berbagai tantangan:</p>
+        <ul>
+          <li>Penjarahan dan perdagangan ilegal fosil</li>
+          <li>Kerusakan akibat pembangunan dan aktivitas manusia</li>
+          <li>Dana terbatas untuk penelitian dan konservasi</li>
+          <li>Perlu pendidikan masyarakat tentang pentingnya warisan fosil</li>
         </ul>
       `
     };
@@ -1436,4 +1515,5 @@ document.addEventListener('dragstart', (e) => {
 });
 </script>
 </body>
+
 </html>
